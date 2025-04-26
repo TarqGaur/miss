@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewards & Prizes | Miss Banaras Competition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary-color: #F2B134; /* Warm gold */
+            --secondary-color: #D35269; /* Soft pink/rose */
+            --ghat-color: #8B6E4E; /* Rich sandstone */
+            --ghat-highlight: #A68B68; /* Lighter sandstone */
+            --accent-color: #E1673C; /* Rich vermilion */
+            --dark-color: #221A31; /* Deep indigo */
+            --light-color: #FFF8E8; /* Warm white */
+            --temple-color: #D9B17D; /* Sandstone */
+            --temple-detail: #C69C69; /* Darker sandstone for details */
+            --water-color: #4C96D7; /* Ganges blue */
+            --text-color: #333333; /* Dark gray for text */
+            --btn-gradient: linear-gradient(135deg, #F2B134, #D35269); /* Button gradient */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: var(--text-color);
+            background-color: var(--light-color);
+        }
+        
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D35269' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s;
+            background-color: transparent;
+        }
+        
+        header.scrolled {
+            background-color: rgba(255, 248, 232, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 1rem 3rem;
+        }
+        
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary-color), transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .logo:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-link {
+            margin: 0 1.2rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-color);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .rewards-container {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #F8F1E5, #FFF8E8);
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+        }
+        
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--dark-color);
+            position: relative;
+            padding-top: 2rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .intro-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .highlight {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .rewards-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+            flex-wrap: wrap;
+            /* Making sure cards are visible by default */
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .reward-card {
+            width: 320px;
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            /* Making sure cards are visible by default */
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            cursor: pointer;
+        }
+        
+        .reward-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .reward-card.clicked {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .reward-banner {
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-size: 1.7rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .first-prize {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+        }
+        
+        .second-prize {
+            background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
+        }
+        
+        .third-prize {
+            background: linear-gradient(135deg, #CD7F32, #A0522D);
+        }
+        
+        .reward-content {
+            padding: 2rem;
+            flex-grow: 1;
+        }
+        
+        .prize-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .reward-card:hover .prize-icon {
+            transform: scale(1.1);
+        }
+        
+        .prize-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+            text-align: center;
+        }
+        
+        .prize-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .shimmer {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+        
+        .ribbon {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            overflow: hidden;
+        }
+        
+        .ribbon-text {
+            position: absolute;
+            transform: rotate(45deg);
+            right: -35px;
+            top: 30px;
+            width: 170px;
+            background: var(--accent-color);
+            color: white;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 5px 0;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .reward-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+        
+        .reward-card:hover .reward-image {
+            transform: rotate(15deg);
+        }
+        
+        .reward-image img {
+            width: 70px;
+            height: auto;
+        }
+        
+        .trophy-img {
+            font-size: 4rem;
+            transition: transform 0.5s ease;
+        }
+        
+        .reward-card:hover .trophy-img {
+            transform: scale(1.1);
+        }
+        
+        .additional-rewards {
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* Ensuring visibility */
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .additional-rewards:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .additional-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        .benefits-list {
+            list-style: none;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            padding-left: 10px;
+            border-radius: 5px;
+        }
+        
+        .benefit-item:hover {
+            transform: translateX(10px);
+            background-color: rgba(242, 177, 52, 0.05);
+        }
+        
+        .benefit-item:last-child {
+            border-bottom: none;
+        }
+        
+        .benefit-icon {
+            margin-right: 1rem;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .benefit-item:hover .benefit-icon {
+            transform: scale(1.2);
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.07' fill-rule='evenodd'/%3E%3C/svg%3E");
+            z-index: 0;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-text {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--dark-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.9);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-icon {
+            margin-left: 10px;
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover .btn-icon {
+            transform: translateX(5px);
+        }
+        
+        .footer {
+            background-color: rgba(255, 248, 232, 0.95);
+            padding: 1.5rem 3rem;
+            text-align: center;
+            border-top: 1px solid rgba(211, 82, 105, 0.1);
+        }
+        
+        .footer-text {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .float-element {
+            position: absolute;
+            opacity: 0.05;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+        
+        /* Modal styles */
+        .prize-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .prize-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        
+        .prize-modal.active .modal-content {
+            transform: scale(1);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+        
+        .modal-image {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .modal-description {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        /* Mobile styles */
+        @media (max-width: 992px) {
+            .reward-card {
+                width: 280px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+                z-index: 101;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease;
+                z-index: 100;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-link {
+                margin: 1.5rem 0;
+                font-size: 1.2rem;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+            
+            header {
+                padding: 1rem 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .reward-card {
+                width: 100%;
+                max-width: 320px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .intro-text {
+                font-size: 1rem;
+            }
+            
+            .cta-title {
+                font-size: 1.8rem;
+            }
+            
+            .cta-text {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Progress tracker */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            z-index: 9999;
+            transition: width 0.1s linear;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            color: var(--dark-color);
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            transform: translateX(200%);
+            transition: transform 0.5s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-icon {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+        
+        /* Interactive tooltip */
+        .tooltip {
+            position: absolute;
+            background-color: var(--dark-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid var(--dark-color);
+        }
+        
+        .tooltip-trigger:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-10px);
+        }
+        
+        .tooltip-trigger {
+            position: relative;
+        }
+        
+        /* Confetti animation */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary-color);
+            animation: fall linear forwards;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll progress indicator -->
+    <div class="scroll-progress"></div>
+    
+    <!-- Confetti container for celebrations -->
+    <div class="confetti-container" id="confetti-container"></div>
+    
+    <div class="rewards-container">
+        <div class="bg-pattern"></div>
+        <div class="floating-elements">
+            <!-- Floating elements will be added via JavaScript -->
+        </div>
+        
+        <header>
+            <a href="index.html" class="logo">Miss Banaras</a>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="aboutus.html" class="nav-link">About</a></li>
+                <li><a href="reward.html" class="nav-link">Rewards</a></li>
+                <li><a href="Criteria.html" class="nav-link">Criteria</a></li>
+                <li><a href="Register.html" class="nav-link">Register</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </header>
+        
+        <section class="rewards-section">
+            <h1 class="section-title">Rewards & Prizes</h1>
+            <p class="intro-text">
+                The Miss Banaras Competition celebrates not just external beauty, but <span class="highlight">inner radiance, intellect, and purpose</span>. Our winners receive valuable prizes that honor their achievement and help them further their journey of personal and community growth.
+            </p>
+            
+            <div class="rewards-grid">
+                <div class="reward-card" data-prize="first">
+                    <div class="reward-banner first-prize">
+                        First Prize
+                        <div class="shimmer"></div>
+                    </div>
+                    <div class="ribbon">
+                        <div class="ribbon-text">WINNER</div>
+                    </div>
+                    <div class="reward-content">
+                        <div class="reward-image">
+                            <i class="fas fa-trophy trophy-img" style="color: #FFD700;"></i>
+                        </div>
+                        <h3 class="prize-title">₹5,000 Cash Prize</h3>
+                        <p class="prize-description">
+                            The Miss Banaras winner receives a cash prize of ₹5,000 to support her future endeavors and community initiatives, along with the prestigious Miss Banaras crown and title.
+                        </p>
+                        <div class="prize-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reward-card" data-prize="second">
+                    <div class="reward-banner second-prize">
+                        Second Prize
+                        <div class="shimmer"></div>
+                    </div>
+                    <div class="reward-content">
+                        <div class="reward-image">
+                            <i class="fas fa-award trophy-img" style="color: #C0C0C0;"></i>
+                        </div>
+                        <h3 class="prize-title">Pure Banarasi Saree</h3>
+                        <p class="prize-description">
+                            Our first runner-up receives an exquisite pure Banarasi silk saree, handcrafted by local artisans, showcasing the rich weaving heritage of Banaras.
+                        </p>
+                        <div class="prize-icon">
+                            <i class="fas fa-female"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reward-card" data-prize="third">
+                    <div class="reward-banner third-prize">
+                        Third Prize
+                        <div class="shimmer"></div>
+                    </div>
+                    <div class="reward-content">
+                        <div class="reward-image">
+                            <i class="fas fa-medal trophy-img" style="color: #CD7F32;"></i>
+                        </div>
+                        <h3 class="prize-title">Premium Package</h3>
+                        <p class="prize-description">
+                            Our second runner-up receives a Spotify Premium subscription and a Starbucks gift card, perfect for moments of inspiration and relaxation.
+                        </p>
+                        <div class="prize-icon">
+                            <i class="fas fa-headphones"></i>
+                            <i class="fas fa-coffee" style="margin-left: 10px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="additional-rewards">
+                <h2 class="additional-title">Additional Benefits For All Winners</h2>
+                <ul class="benefits-list">
+                    <li class="benefit-item tooltip-trigger">
+                        <span class="benefit-icon"><i class="fas fa-camera"></i></span>
+                        <span>Professional photoshoot with fashion photographers</span>
+                        <div class="tooltip">With fashion photographers</div>
+                    </li>
+                    <li class="benefit-item tooltip-trigger">
+                        <span class="benefit-icon"><i class="fas fa-microphone-alt"></i></span>
+                        <span>Media exposure and connection opportunities with brands</span>
+                        <div class="tooltip">Interniship offers </div>
+                    </li>
+                    <li class="benefit-item tooltip-trigger">
+                        <span class="benefit-icon"><i class="fas fa-handshake"></i></span>
+                        <span>Networking with influential community leaders</span>
+                        <div class="tooltip">Connect with industry professionals</div>
+                    </li>
+                    <li class="benefit-item tooltip-trigger">
+                        <span class="benefit-icon"><i class="fas fa-certificate"></i></span>
+                        <span>Certificate of achievement and recognition</span>
+                        <div class="tooltip">Officially recognized by the judges</div>
+                    </li>
+                    <li class="benefit-item tooltip-trigger">
+                        <span class="benefit-icon"><i class="fas fa-star"></i></span>
+                        <span>Opportunity to participate in cultural events throughout the year</span>
+                        <div class="tooltip">Year-long ambassador role</div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Showcase Your Inner Beauty?</h2>
+                <p class="cta-text">
+                    Join the Miss Banaras Competition and get a chance to win these amazing prizes while making a difference in your community.Let's see who embody the spirit of Banaras - cultural, intellectual, and compassionate.
+                </p>
+                <a href="Register.html" class="btn btn-primary" id="register-btn">
+                    Register Today
+                    <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+                </a>
+            </div>
+        </section>
+        
+        <footer class="footer">
+            <p class="footer-text">© 2025 Miss Banaras Competition. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <!-- Prize details modals -->
+    <div class="prize-modal" id="first-prize-modal">
+        <div class="modal-content">
+            <div class="modal-close"><i class="fas fa-times"></i></div>
+            <div class="modal-image">
+                <i class="fas fa-trophy" style="font-size: 4rem; color: #FFD700;"></i>
+            </div>
+            <h3 class="modal-title">First Prize Details</h3>
+            <p class="modal-description">
+                As the crowned Miss Banaras, you will receive:
+                <br><br>
+                • ₹5,000 cash prize<br>
+                • Custom-designed crown<br>
+                • Official sash and trophy<br>
+                • One-year help from our side<br>
+                • Opportunity to lead community initiatives
+            </p>
+            <button class="btn btn-primary">Amazing!</button>
+        </div>
+    </div>
+    
+    <div class="prize-modal" id="second-prize-modal">
+        <div class="modal-content">
+            <div class="modal-close"><i class="fas fa-times"></i></div>
+            <div class="modal-image">
+                <i class="fas fa-award" style="font-size: 4rem; color: #C0C0C0;"></i>
+            </div>
+            <h3 class="modal-title">Second Prize Details</h3>
+            <p class="modal-description">
+                As the first runner-up, you will receive:
+                <br><br>
+                • Hand-woven pure silk Banarasi saree <br>
+                • Certificate of excellence<br>
+                • A chance to feature in competition promotional materials<br>
+                • Mentorship from previous winners<br>
+            </p>
+            <button class="btn btn-primary">Wonderful!</button>
+        </div>
+    </div>
+    
+    <div class="prize-modal" id="third-prize-modal">
+        <div class="modal-content">
+            <div class="modal-close"><i class="fas fa-times"></i></div>
+            <div class="modal-image">
+                <i class="fas fa-medal" style="font-size: 4rem; color: #CD7F32;"></i>
+            </div>
+            <h3 class="modal-title">Third Prize Details</h3>
+            <p class="modal-description">
+                As the second runner-up, you will receive:
+                <br><br>
+                • Spotify Premium subscription<br>
+                • Starbucks gift card<br>
+                • Certificate of excellence<br>
+                 • Invitation to judge next year's preliminaries
+            </p>
+            <button class="btn btn-primary">Fantastic!</button>
+        </div>
+    </div>
+    
+    <!-- Notification pop-up -->
+    <div class="notification" id="notification">
+        <div class="notification-icon"><i class="fas fa-bell"></i></div>
+        <div>Don't miss out!</div>
+    </div>
+    
+    <script>
+        // Register ScrollTrigger plugin
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Create floating elements
+        function createFloatingElements() {
+            const container = document.querySelector('.floating-elements');
+            
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.classList.add('float-element');
+                
+                // Random size, position and opacity
+                const size = Math.random() * 50 + 20;
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const opacity = Math.random() * 0.05 + 0.02;
+                
+                element.style.width = size + 'px';
+                element.style.height = size + 'px';
+                element.style.left = x + '%';
+                element.style.top = y + '%';
+                element.style.opacity = opacity;
+                
+                container.appendChild(element);
+                
+                // Animate floating
+                gsap.to(element, {
+                    x: (Math.random() - 0.5) * 100,
+                    y: (Math.random() - 0.5) * 100,
+                    duration: Math.random() * 50 + 30,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+            }
+        }
+        
+        // Animation for the rewards cards and content
+        function animateContent() {
+            // IMPORTANT: Remove all opacity 0 initialization to ensure cards are always visible
+            
+            // Ensure cards are visible immediately
+            gsap.set(".reward-card, .additional-rewards", {
+                opacity: 1,
+                visibility: "visible"
+            });
+            
+            // Section title animation - starts visible and animates in
+            gsap.from(".section-title", {
+                scrollTrigger: {
+                    trigger: ".section-title",
+                    start: "top 80%",
+                },
+                y: 30,
+                opacity: 0.5, // Start partially visible
+                duration: 1,
+                ease: "power2.out"
+            });
+            
+            // Intro text animation - starts visible and animates in
+            gsap.from(".intro-text", {
+                scrollTrigger: {
+                    trigger: ".intro-text",
+                    start: "top 80%",
+                },
+                y: 30,
+                opacity: 0.5, // Start partially visible
+                duration: 1,
+                delay: 0.2,
+                ease: "power2.out"
+            });
+            
+            // Reward cards staggered animation - already visible but add subtle movement
+            // gsap.from(".reward-card", {
+            //     scrollTrigger: {
+            //         trigger: ".rewards-grid",
+            //         start: "top 105%",
+            //     },
+            //     y: 50,
+            //     opacity: 0.7, // Start mostly visible
+            //     duration: 0.8,
+            //     stagger: 0.2,
+            //     ease: "back.out(1.2)"
+            // });
+            
+            // Additional benefits animation - already visible but add subtle movement
+            gsap.from(".additional-rewards", {
+                scrollTrigger: {
+                    trigger: ".additional-rewards",
+                    start: "top 80%",
+                },
+                y: 40,
+                opacity: 0.7, // Start mostly visible
+                duration: 0.8,
+                ease: "power2.out"
+            });
+            
+            // Benefit items staggered animation
+            gsap.from(".benefit-item", {
+                scrollTrigger: {
+                    trigger: ".benefits-list",
+                    start: "top 85%",
+                },
+                x: -30,
+                opacity: 0.7, // Start mostly visible
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "power1.out"
+            });
+            
+            // CTA section animation
+            gsap.from(".cta-section .cta-content > *", {
+                scrollTrigger: {
+                    trigger: ".cta-section",
+                    start: "top 80%",
+                },
+                y: 30,
+                opacity: 0.7, // Start mostly visible
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+        }
+        
+        // Mobile menu toggle
+        function setupMobileMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+        }
+        
+        // Header scroll effect
+        function setupScrollHeader() {
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('header');
+                if (window.scrollY > 80) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+        
+        // Scroll progress tracker
+        function setupScrollProgress() {
+            window.addEventListener('scroll', () => {
+                const totalHeight = document.body.scrollHeight - window.innerHeight;
+                const progress = (window.pageYOffset / totalHeight) * 100;
+                document.querySelector('.scroll-progress').style.width = progress + '%';
+            });
+        }
+        
+        // Prize card click handlers
+        function setupPrizeCards() {
+            const cards = document.querySelectorAll('.reward-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Visual feedback
+                    card.classList.add('clicked');
+                    setTimeout(() => {
+                        card.classList.remove('clicked');
+                    }, 300);
+                    
+                    // Show modal
+                    const prize = card.getAttribute('data-prize');
+                    const modal = document.getElementById(`${prize}-prize-modal`);
+                    
+                    if (modal) {
+                        modal.classList.add('active');
+                        showConfetti();
+                    }
+                });
+            });
+            
+            // Close modal handlers
+            const closeButtons = document.querySelectorAll('.modal-close, .prize-modal .btn');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modals = document.querySelectorAll('.prize-modal');
+                    modals.forEach(modal => {
+                        modal.classList.remove('active');
+                    });
+                    
+                    stopConfetti();
+                });
+            });
+        }
+        
+        // Show notification after delay
+        function setupNotification() {
+            setTimeout(() => {
+                const notification = document.getElementById('notification');
+                notification.classList.add('show');
+                
+                // Hide after some time
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000);
+            }, 3000);
+        }
+        
+        // Create confetti effect
+        function showConfetti() {
+            const container = document.getElementById('confetti-container');
+            container.style.display = 'block';
+            container.innerHTML = '';
+            
+            // Create confetti pieces
+            const colors = ['#F2B134', '#D35269', '#E1673C', '#4C96D7', '#8B6E4E'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Random styling
+                const size = Math.random() * 10 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const left = Math.random() * 100;
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 3;
+                const rotation = Math.random() * 360;
+                
+                // Apply styles
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.backgroundColor = color;
+                confetti.style.left = `${left}%`;
+                confetti.style.animationDuration = `${duration}s`;
+                confetti.style.animationDelay = `${delay}s`;
+                confetti.style.transform = `rotate(${rotation}deg)`;
+                
+                // Shapes
+                if (Math.random() > 0.5) {
+                    confetti.style.borderRadius = '50%';
+                } else if (Math.random() > 0.5) {
+                    confetti.style.borderRadius = '0';
+                    confetti.style.transform += ' rotate(45deg)';
+                }
+                
+                container.appendChild(confetti);
+            }
+        }
+        
+        function stopConfetti() {
+            const container = document.getElementById('confetti-container');
+            setTimeout(() => {
+                container.style.display = 'none';
+            }, 1000);
+        }
+        
+        // Button hover effect
+        function setupButtonEffects() {
+            const btn = document.getElementById('register-btn');
+            
+            btn.addEventListener('mouseenter', () => {
+                gsap.to(btn, {
+                    scale: 1.05,
+                    duration: 0.3,
+                    ease: "back.out(1.5)"
+                });
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "back.out(1.5)"
+                });
+            });
+            
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Pulse animation
+                gsap.to(btn, {
+                    scale: 0.95,
+                    duration: 0.1,
+                    onComplete: () => {
+                        gsap.to(btn, {
+                            scale: 1,
+                            duration: 0.3,
+                            ease: "elastic.out(1, 0.3)"
+                        });
+                    }
+                });
+                
+                // Show notification
+                const notification = document.getElementById('notification');
+                notification.textContent = "Registration form opening soon!";
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            });
+        }
+        
+        // Initialize all functions on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Make sure cards are visible from the start
+            document.querySelectorAll('.reward-card, .additional-rewards').forEach(el => {
+                el.style.opacity = '1';
+                el.style.visibility = 'visible';
+            });
+            
+            createFloatingElements();
+            setupMobileMenu();
+            setupScrollHeader();
+            setupScrollProgress();
+            setupPrizeCards();
+            setupNotification();
+            setupButtonEffects();
+            
+            // Run animations with a slight delay to ensure everything is visible first
+            setTimeout(() => {
+                animateContent();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

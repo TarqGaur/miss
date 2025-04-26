@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miss Banaras Competition | Beauty Within</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- 
+    just add becaground video and above that the text shoould be writeen and remove the current white  background and replace it with video that autoplay and on loop make this code more good and next level and provide me full working one -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary-color: #F2B134; /* Warm gold */
+            --secondary-color: #D35269; /* Soft pink/rose */
+            --ghat-color: #8B6E4E; /* Rich sandstone */
+            --ghat-highlight: #A68B68; /* Lighter sandstone */
+            --accent-color: #E1673C; /* Rich vermilion */
+            --dark-color: #221A31; /* Deep indigo */
+            --light-color: #FFF8E8; /* Warm white */
+            --temple-color: #D9B17D; /* Sandstone */
+            --temple-detail: #C69C69; /* Darker sandstone for details */
+            --water-color: #4C96D7; /* Ganges blue */
+            --text-color: #333333; /* Dark gray for text */
+            --btn-gradient: linear-gradient(135deg, #F2B134, #D35269); /* Button gradient */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: var(--text-color);
+            background-color: #000;
+        }
+        
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(125deg, #101021, #221A31, #32294C);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        #loading-particles {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+        }
+        
+        .loading-text {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #F2B134, #F7E9A0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px rgba(242, 177, 52, 0.4);
+            z-index: 2;
+            letter-spacing: 2px;
+        }
+        
+        .scene-container {
+            width: 380px;
+            height: 240px;
+            position: relative;
+            margin-bottom: 40px;
+            perspective: 800px;
+            z-index: 2;
+        }
+        
+        .water {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 45px;
+            background: linear-gradient(to bottom, rgba(76, 150, 215, 0.8), rgba(41, 98, 155, 0.6));
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .water-ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+        }
+        
+        .ghat-scene {
+            position: absolute;
+            bottom: 45px; /* Above water */
+            left: 20px;
+            width: 340px;
+            height: 130px;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+        
+        .ghat-step {
+            position: relative;
+            border-radius: 2px 2px 0 0;
+            transform-origin: bottom;
+            transform: scaleY(0);
+            overflow: visible;
+        }
+        
+        .ghat-step:nth-child(odd) {
+            background-color: var(--ghat-color);
+        }
+        
+        .ghat-step:nth-child(even) {
+            background-color: var(--ghat-highlight);
+        }
+        
+        .step-detail {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 0, 0, 0.1);
+            bottom: 0;
+        }
+        
+        .temple {
+            position: absolute;
+            background-color: var(--temple-color);
+            border-radius: 2px 2px 0 0;
+            transform-origin: bottom;
+            transform: scaleY(0);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .temple-detail {
+            position: absolute;
+            background-color: var(--temple-detail);
+            transform-origin: bottom;
+            transform: scaleX(0);
+        }
+        
+        .temple-window {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.3);
+            transform-origin: center;
+            transform: scale(0);
+        }
+        
+        .temple-spire {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 35px solid var(--temple-color);
+            transform-origin: bottom;
+            transform: scaleY(0);
+        }
+        
+        .temple-flag {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            background-color: var(--accent-color);
+            transform-origin: left;
+            transform: scaleX(0);
+        }
+        
+        .palace {
+            position: absolute;
+            background-color: var(--temple-color);
+            border-radius: 2px 2px 0 0;
+            transform-origin: bottom;
+            transform: scaleY(0);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .palace-detail {
+            position: absolute;
+            background-color: var(--temple-detail);
+            transform-origin: bottom;
+            transform: scaleY(0);
+        }
+        
+        .palace-window {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 50% 50% 0 0;
+            transform-origin: center;
+            transform: scale(0);
+        }
+        
+        .boat {
+            position: absolute;
+            bottom: -30px;
+            width: 50px;
+            height: 18px;
+            background-color: #8B5A2B;
+            border-radius: 10px 15px 0 0;
+            transform: translateX(-60px);
+        }
+        
+        .boat-person {
+            position: absolute;
+            top: -15px;
+            left: 15px;
+            width: 10px;
+            height: 15px;
+            background-color: #555;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .boat-oar {
+    position: absolute;
+    top: -0.10px;
+    right: -2px; /* Changed from -10px to -5px to move closer to boat */
+    width: 25px;
+    height: 2px;
+    background-color: #6B4226;
+    transform: rotate(200deg);
+    animation: rowing 1.5s infinite ease-in-out; /* Changed from 3s to 1.5s for faster animation */
+    transform-origin: right center;
+}
+
+@keyframes rowing {
+    0% {
+        transform: rotate(200deg);
+    }
+    25% {
+        transform: rotate(240deg);
+    }
+    50% {
+        transform: rotate(260deg);
+    }
+    75% {
+        transform: rotate(240deg);
+    }
+    100% {
+        transform: rotate(200deg);
+    }
+}
+        
+        .diya {
+            position: absolute;
+            width: 6px;
+            height: 3px;
+            background-color: #CD853F;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .diya::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 2px;
+            width: 2px;
+            height: 4px;
+            background-color: #FFCC00;
+            border-radius: 50% 50% 0 0;
+            box-shadow: 0 0 5px #FFCC00, 0 0 10px #FFCC00;
+            opacity: 0;
+        }
+        
+        .realistic-crown {
+            width: 150px;
+            height: 100px;
+            position: relative;
+            margin-top: 20px;
+            z-index: 2;
+        }
+        
+        .crown-base {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 130px;
+            height: 30px;
+            background: linear-gradient(to right, #D4AF37, #F2CA52, #D4AF37);
+            border-radius: 5px 5px 10px 10px;
+            transform: scaleX(0);
+            box-shadow: 0 0 10px rgba(242, 177, 52, 0.5);
+        }
+        
+        .crown-point {
+            position: absolute;
+            bottom: 25px;
+            width: 0;
+            height: 0;
+            transform-origin: bottom;
+            transform: scaleY(0);
+        }
+        
+        .crown-main-point {
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 45px solid #F2CA52;
+            box-shadow: 0 0 5px rgba(242, 177, 52, 0.3);
+        }
+        
+        .crown-small-point {
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 35px solid #D4AF37;
+            box-shadow: 0 0 5px rgba(242, 177, 52, 0.3);
+        }
+        
+        .crown-jewel {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #D35269, #B01F46);
+            box-shadow: 0 0 8px rgba(211, 82, 105, 0.6);
+            opacity: 0;
+        }
+        
+        .loading-progress {
+            width: 280px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-top: 30px;
+            overflow: hidden;
+            z-index: 2;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+            transition: width 0.3s ease-out;
+            box-shadow: 0 0 10px rgba(242, 177, 52, 0.3);
+        }
+        
+        /* Main Content */
+        .welcome-container {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s;
+            background-color: transparent;
+        }
+        
+        header.scrolled {
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            padding: 1rem 3rem;
+        }
+        
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        .logo:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-link {
+            margin: 0 1.2rem;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+        .hero-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 2rem;
+    padding-left: 3rem; /* Increased left padding to shift content right */
+    position: relative;
+    overflow: hidden;
+}
+        
+        .content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 5 auto 0 auto; /* Change this line to adjust position */
+    position: relative;
+    z-index: 5;
+}
+        
+        .hero-content {
+            flex: 1;
+            padding-right: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .hero-photo {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .title-large {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+            color: #fff;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .title-script {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #fff;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+        }
+        
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: var(--btn-gradient);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 20px rgba(242, 177, 52, 0.3);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(242, 177, 52, 0.4);
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(242, 177, 52, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-icon {
+            margin-left: 10px;
+            font-size: 1rem;
+        }
+        
+        .floating-shine {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+            filter: blur(20px);
+            animation: float 8s infinite alternate ease-in-out;
+        }
+        
+        .floating-shine:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            background: radial-gradient(circle, rgba(242, 177, 52, 0.2) 0%, transparent 70%);
+            animation-delay: 0s;
+        }
+        
+        .floating-shine:nth-child(2) {
+            bottom: 30%;
+            right: 15%;
+            background: radial-gradient(circle, rgba(211, 82, 105, 0.15) 0%, transparent 70%);
+            animation-delay: 2s;
+        }
+        
+        .floating-shine:nth-child(3) {
+            top: 60%;
+            left: 30%;
+            background: radial-gradient(circle, rgba(225, 103, 60, 0.1) 0%, transparent 70%);
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-20px) scale(1.1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.3;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .content-wrapper {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content {
+                padding-right: 0;
+                margin-top: 3rem;
+            }
+            
+            .about-text {
+                margin: 0 auto 2.5rem;
+            }
+            
+            .btn-container {
+                justify-content: center;
+            }
+            
+            .title-large {
+                font-size: 3.2rem;
+            }
+            
+            .title-script {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 4rem 2rem;
+            }
+            
+            .title-large {
+                font-size: 2.5rem;
+            }
+            
+            .title-script {
+                font-size: 1.8rem;
+            }
+            
+            .about-text {
+                font-size: 1rem;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 101;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: rgba(0, 0, 0, 0.9);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease;
+                z-index: 100;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-link {
+                margin: 1.5rem 0;
+                font-size: 1.2rem;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+            
+            header {
+                padding: 1rem 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .title-large {
+                font-size: 2.2rem;
+            }
+            
+            .title-script {
+                font-size: 1.5rem;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div id="loading-particles"></div>
+        <h1 class="loading-text">Miss Banaras</h1>
+        
+        <!-- Improved Scene Animation -->
+        <div class="scene-container">
+            <!-- Water with ripple effect -->
+            <div class="water" id="water">
+                <!-- Ripples will be added via JavaScript -->
+            </div>
+            
+            <!-- Ghat Scene -->
+            <div class="ghat-scene">
+                <!-- Ghat steps -->
+                <div class="ghat-step" style="bottom: 0; left: 0; width: 340px; height: 20px;">
+                    <div class="step-detail"></div>
+                </div>
+                <div class="ghat-step" style="bottom: 20px; left: 15px; width: 310px; height: 20px;">
+                    <div class="step-detail"></div>
+                </div>
+                <div class="ghat-step" style="bottom: 40px; left: 30px; width: 280px; height: 20px;">
+                    <div class="step-detail"></div>
+                </div>
+                <div class="ghat-step" style="bottom: 60px; left: 45px; width: 250px; height: 20px;">
+                    <div class="step-detail"></div>
+                </div>
+                <div class="ghat-step" style="bottom: 80px; left: 60px; width: 220px; height: 20px;">
+                    <div class="step-detail"></div>
+                </div>
+                
+                <!-- Diyas on Steps -->
+                <div class="diya" style="bottom: 20px; left: 50px;"></div>
+                <div class="diya" style="bottom: 20px; left: 120px;"></div>
+                <div class="diya" style="bottom: 20px; right: 80px;"></div>
+                <div class="diya" style="bottom: 40px; left: 70px;"></div>
+                <div class="diya" style="bottom: 60px; left: 100px;"></div>
+                <div class="diya" style="bottom: 60px; right: 100px;"></div>
+                <div class="diya" style="bottom: 80px; left: 130px;"></div>
+                
+                <!-- Improved Temples on Steps -->
+                <div class="temple" style="bottom: 80px; right: 80px; width: 40px; height: 45px;"></div>
+                <div class="temple-detail" style="bottom: 115px; right: 80px; width: 40px; height: 10px;"></div>
+                <div class="temple-spire" style="bottom: 125px; right: 95px;"></div>
+                <div class="temple-window" style="bottom: 95px; right: 95px; width: 10px; height: 15px; border-radius: 5px 5px 0 0;"></div>
+                <div class="temple-flag" style="bottom: 160px; right: 87px;"></div>
+                
+                <div class="temple" style="bottom: 40px; left: 50px; width: 45px; height: 50px;"></div>
+                <div class="temple-detail" style="bottom: 80px; left: 50px; width: 45px; height: 10px;"></div>
+                <div class="temple-spire" style="bottom: 90px; left: 65px;"></div>
+                <div class="temple-window" style="bottom: 65px; left: 67px; width: 12px; height: 18px; border-radius: 6px 6px 0 0;"></div>
+                <div class="temple-flag" style="bottom: 125px; left: 73px;"></div>
+                
+                <!-- Improved Palace on Steps -->
+                <div class="palace" style="bottom: 60px; right: 40px; width: 70px; height: 60px;"></div>
+                <div class="palace-detail" style="bottom: 110px; right: 40px; width: 70px; height: 10px;"></div>
+                <div class="palace-detail" style="bottom: 75px; right: 50px; width: 12px; height: 25px;"></div>
+                <div class="palace-detail" style="bottom: 75px; right: 88px; width: 12px; height: 25px;"></div>
+                <div class="palace-window" style="bottom: 90px; right: 50px; width: 10px; height: 15px;"></div>
+                <div class="palace-window" style="bottom: 90px; right: 70px; width: 10px; height: 15px;"></div>
+                <div class="palace-window" style="bottom: 90px; right: 90px; width: 10px; height: 15px;"></div>
+                
+                <!-- Boat on river -->
+                <div class="boat" id="boat">
+                    <div class="boat-person"></div>
+                    <div class="boat-oar"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Improved Crown Animation -->
+        <div class="realistic-crown">
+            <div class="crown-base"></div>
+            <!-- Main points - improved geometry -->
+            <div class="crown-point crown-main-point" style="left: 20px;"></div>
+            <div class="crown-point crown-main-point" style="left: 65px;"></div>
+            <div class="crown-point crown-main-point" style="left: 110px;"></div>
+            <!-- Small points - improved geometry -->
+            <div class="crown-point crown-small-point" style="left: 43px;"></div>
+            <div class="crown-point crown-small-point" style="left: 88px;"></div>
+            <!-- Crown jewels -->
+            <div class="crown-jewel" style="top: 15px; left: 23px;"></div>
+            <div class="crown-jewel" style="top: 8px; left: 68px;"></div>
+            <div class="crown-jewel" style="top: 15px; left: 113px;"></div>
+            <div class="crown-jewel" style="top: 25px; left: 45px;"></div>
+            <div class="crown-jewel" style="top: 25px; left: 90px;"></div>
+        </div>
+        
+        <div class="loading-progress">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="welcome-container">
+        <!-- Video Background -->
+        <div class="video-background">
+            <video autoplay muted loop playsinline>
+                <source src="banarasi.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+        <!-- Overlay for better text readability -->
+        <div class="video-overlay"></div>
+        
+        <header id="main-header">
+            <a href="#" class="logo">Miss Banaras</a>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="aboutus.html" class="nav-link">About</a></li>
+                    <li><a href="reward.html" class="nav-link">Rewards</a></li>
+                    <li><a href="Criteria.html" class="nav-link">Criteria</a></li>
+                    <li><a href="Register.html" class="nav-link">Register</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <section class="hero-section">
+            <div class="floating-shine"></div>
+            <div class="floating-shine"></div>
+            <div class="floating-shine"></div>
+            
+            <div class="content-wrapper">
+                <div class="hero-content">
+                    <h1 class="title-large">Miss Banaras</h1>
+                    <h2 class="title-script">Celebrating Beauty Within</h2>
+                    <p class="about-text">
+                        Welcome to the most prestigious beauty pageant of the holy city. Miss Banaras is not just a competition, but a celebration of the <span class="highlight">inner beauty</span>, <span class="highlight">cultural heritage</span>, and <span class="highlight">divine elegance</span> of women who represent the soul of Varanasi - one of the world's oldest living cities.
+                    </p>
+                    <div class="btn-container">
+                        <a href="Register.html" class="btn btn-primary">Register Now <i class="fas fa-arrow-right btn-icon"></i></a>
+                        <a href="aboutus.html" class="btn btn-secondary">Learn More</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        // Particles.js Configuration for Loading Screen
+        document.addEventListener('DOMContentLoaded', function() {
+            // Particles configuration
+            particlesJS('loading-particles', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#F2B134" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: { enable: true, distance: 150, color: "#F2B134", opacity: 0.2, width: 1 },
+                    move: { enable: true, speed: 3, direction: "none", random: true, out_mode: "out" }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "repulse" },
+                        onclick: { enable: true, mode: "push" }
+                    },
+                    modes: {
+                        repulse: { distance: 100, duration: 0.4 },
+                        push: { particles_nb: 4 }
+                    }
+                }
+            });
+            
+            // Loading animation
+            const progressBar = document.getElementById('progress-bar');
+            let progress = 0;
+            const loadingInterval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 100) progress = 100;
+                progressBar.style.width = progress + '%';
+                
+                if (progress === 100) {
+                    clearInterval(loadingInterval);
+                    setTimeout(() => {
+                        document.getElementById('loading-screen').style.opacity = 0;
+                        setTimeout(() => {
+                            document.getElementById('loading-screen').style.display = 'none';
+                        }, 500);
+                    }, 500);
+                }
+            }, 200);
+            
+            // Animate Water Ripples
+            const water = document.getElementById('water');
+            const createRipple = () => {
+                const ripple = document.createElement('div');
+                ripple.classList.add('water-ripple');
+                
+                // Random position and size
+                const size = Math.random() * 15 + 5;
+                const posX = Math.random() * water.offsetWidth;
+                
+                ripple.style.width = size + 'px';
+                ripple.style.height = size + 'px';
+                ripple.style.left = posX + 'px';
+                ripple.style.bottom = '0';
+                
+                water.appendChild(ripple);
+                
+                // Animate ripple
+                gsap.to(ripple, {
+                    width: size * 3,
+                    height: size * 3,
+                    bottom: 25,
+                    opacity: 0,
+                    duration: 2,
+                    ease: "power1.out",
+                    onComplete: () => water.removeChild(ripple)
+                });
+            };
+            
+            // Create initial ripples
+            setInterval(createRipple, 800);
+            
+            // Animate boat
+            const boat = document.getElementById('boat');
+            gsap.to(boat, {
+                x: 400,
+                 // Remove the y and z movements to keep it on the water level
+                duration: 5,
+                ease: "power1.inOut",
+                repeat: -1,
+                yoyo: true
+            });
+            
+            // Animate Ghat Steps
+            const ghatSteps = document.querySelectorAll('.ghat-step');
+            gsap.fromTo(ghatSteps, 
+                { scaleY: 0 }, 
+                { scaleY: 1, duration: 1.5, stagger: 0.2, ease: "power2.out", delay: 0.5 }
+            );
+            
+            // Animate Temples
+            const temples = document.querySelectorAll('.temple');
+            gsap.fromTo(temples, 
+                { scaleY: 0 }, 
+                { scaleY: 1, duration: 1, stagger: 0.3, ease: "elastic.out(1, 0.5)", delay: 2 }
+            );
+            
+            const templeDetails = document.querySelectorAll('.temple-detail');
+            gsap.fromTo(templeDetails, 
+                { scaleX: 0 }, 
+                { scaleX: 1, duration: 0.8, stagger: 0.2, ease: "power2.out", delay: 2.5 }
+            );
+            
+            const templeWindows = document.querySelectorAll('.temple-window');
+            gsap.fromTo(templeWindows, 
+                { scale: 0 }, 
+                { scale: 1, duration: 0.5, stagger: 0.1, ease: "back.out(2)", delay: 3 }
+            );
+            
+            const templeSpires = document.querySelectorAll('.temple-spire');
+            gsap.fromTo(templeSpires, 
+                { scaleY: 0 }, 
+                { scaleY: 1, duration: 1, stagger: 0.3, ease: "elastic.out(1, 0.3)", delay: 3.2 }
+            );
+            
+            const templeFlags = document.querySelectorAll('.temple-flag');
+            gsap.fromTo(templeFlags, 
+                { scaleX: 0 }, 
+                { scaleX: 1, duration: 0.5, stagger: 0.2, ease: "power2.out", delay: 3.5 }
+            );
+            
+            // Animate Palace
+            const palaces = document.querySelectorAll('.palace');
+            gsap.fromTo(palaces, 
+                { scaleY: 0 }, 
+                { scaleY: 1, duration: 1, stagger: 0.3, ease: "elastic.out(1, 0.5)", delay: 2.2 }
+            );
+            
+            const palaceDetails = document.querySelectorAll('.palace-detail');
+            gsap.fromTo(palaceDetails, 
+                { scaleY: 0 }, 
+                { scaleY: 1, duration: 0.8, stagger: 0.2, ease: "power2.out", delay: 2.7 }
+            );
+            
+            const palaceWindows = document.querySelectorAll('.palace-window');
+            gsap.fromTo(palaceWindows, 
+                { scale: 0 }, 
+                { scale: 1, duration: 0.5, stagger: 0.1, ease: "back.out(2)", delay: 3.1 }
+            );
+            
+            // Animate Diyas and their flames
+            const diyas = document.querySelectorAll('.diya');
+            gsap.fromTo(diyas, 
+                { opacity: 0 }, 
+                { opacity: 1, duration: 0.3, stagger: 0.1, delay: 3.8 }
+            );
+            
+            // Animate diya flames
+            setTimeout(() => {
+                diyas.forEach(diya => {
+                    const flame = diya.querySelector('::after');
+                    gsap.to(diya, { 
+                        '--opacity': 1, 
+                        duration: 0.5,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                });
+            }, 4500);
+            
+            // Animate Crown
+            const crownBase = document.querySelector('.crown-base');
+            gsap.fromTo(crownBase, 
+                { scaleX: 0 }, 
+                { scaleX: 1, duration: 1, ease: "elastic.out(1, 0.5)", delay: 2.5 }
+            );
+            
+            const crownPoints = document.querySelectorAll('.crown-point');
+            gsap.fromTo(crownPoints, 
+                { scaleY: 0 }, 
+                { scaleY: 1, duration: 1.2, stagger: 0.15, ease: "elastic.out(1, 0.3)", delay: 3 }
+            );
+            
+            const crownJewels = document.querySelectorAll('.crown-jewel');
+            gsap.fromTo(crownJewels, 
+                { opacity: 0, scale: 0 }, 
+                { opacity: 1, scale: 1, duration: 0.8, stagger: 0.1, ease: "back.out(2)", delay: 3.5 }
+            );
+            
+            // Header scroll effect
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking a link
+            const navLinkElements = document.querySelectorAll('.nav-link');
+            navLinkElements.forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+            
+            // Animate hero content on load
+            gsap.from('.title-large', {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                delay: 6.5,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.title-script', {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                delay: 6.7,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.about-text', {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                delay: 6.9,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.btn-container', {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                delay: 7.1,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.hero-photo', {
+                x: 50,
+                opacity: 0,
+                duration: 1.2,
+                delay: 7.3,
+                ease: "power3.out"
+            });
+        });
+    </script>
+</body>
+</html>

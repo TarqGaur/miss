@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eligibility & Criteria | Miss Banaras Competition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary-color: #F2B134; /* Warm gold */
+            --secondary-color: #D35269; /* Soft pink/rose */
+            --ghat-color: #8B6E4E; /* Rich sandstone */
+            --ghat-highlight: #A68B68; /* Lighter sandstone */
+            --accent-color: #E1673C; /* Rich vermilion */
+            --dark-color: #221A31; /* Deep indigo */
+            --light-color: #FFF8E8; /* Warm white */
+            --temple-color: #D9B17D; /* Sandstone */
+            --temple-detail: #C69C69; /* Darker sandstone for details */
+            --water-color: #4C96D7; /* Ganges blue */
+            --text-color: #333333; /* Dark gray for text */
+            --btn-gradient: linear-gradient(135deg, #F2B134, #D35269); /* Button gradient */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: var(--text-color);
+            background-color: var(--light-color);
+        }
+        
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D35269' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s;
+            background-color: transparent;
+        }
+        
+        header.scrolled {
+            background-color: rgba(255, 248, 232, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 1rem 3rem;
+        }
+        
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary-color), transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .logo:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-link {
+            margin: 0 1.2rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-color);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .criteria-container {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #F8F1E5, #FFF8E8);
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+        }
+        
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--dark-color);
+            position: relative;
+            padding-top: 2rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .intro-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .highlight {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        
+        .criteria-content {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .tab-btn {
+            padding: 1rem 2rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            background: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+            color: var(--dark-color);
+        }
+        
+        .tab-indicator {
+            position: absolute;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            z-index: 0;
+        }
+        
+        .tab-btn.active {
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .eligibility-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .eligibility-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .card-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+        }
+        
+        .eligibility-list {
+            list-style: none;
+        }
+        
+        .eligibility-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            padding-left: 35px;
+            transition: transform 0.3s ease;
+        }
+        
+        .eligibility-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .eligibility-item:last-child {
+            border-bottom: none;
+        }
+        
+        .eligibility-icon {
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .eligibility-item:hover .eligibility-icon {
+            transform: scale(1.2);
+        }
+        
+        .info-tag {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 30px;
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+        }
+        
+        .scoring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .scoring-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scoring-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .scoring-percentage {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .scoring-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .scoring-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .scoring-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .scoring-card:hover .scoring-icon {
+            transform: rotate(15deg);
+        }
+        
+        .progress-container {
+            margin-top: 15px;
+            background-color: rgba(0,0,0,0.05);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
+            transition: width 1s ease;
+            width: 0;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-content {
+            position: relative;
+            width: calc(50% - 30px);
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            left: calc(50% + 30px);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover .timeline-dot {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 0 6px rgba(242, 177, 52, 0.2);
+        }
+        
+        .timeline-date {
+            display: inline-block;
+            padding: 5px 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .terms-section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            max-height: 400px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) rgba(0,0,0,0.05);
+        }
+        
+        .terms-section::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .terms-section::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+        
+        .terms-section::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        .terms-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        .terms-list {
+            list-style: none;
+        }
+        
+        .terms-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .terms-item:last-child {
+            border-bottom: none;
+        }
+        
+        .terms-item::before {
+            content: '•';
+            position: absolute;
+            left: 5px;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        
+        .custom-checkbox {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .custom-checkbox:hover input ~ .checkmark {
+            background-color: rgba(242, 177, 52, 0.1);
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: var(--primary-color);
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .custom-checkbox .checkmark:after {
+            left: 8px;
+            top: 4px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .agreement-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.07' fill-rule='evenodd'/%3E%3C/svg%3E");
+            z-index: 0;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-text {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--dark-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-icon {
+            margin-left: 10px;
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover .btn-icon {
+            transform: translateX(5px);
+        }
+        
+        .footer {
+            background-color: rgba(255, 248, 232, 0.95);
+            padding: 1.5rem 3rem;
+            text-align: center;
+            border-top: 1px solid rgba(211, 82, 105, 0.1);
+        }
+        
+        .footer-text {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            z-index: 9999;
+            transition: width 0.1s linear;
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            color: var(--dark-color);
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            transform: translateX(200%);
+            transition: transform 0.5s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-icon {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .float-element {
+            position: absolute;
+            opacity: 0.05;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+        
+        /* Interactive tooltip */
+        .tooltip {
+            position: absolute;
+            background-color: var(--dark-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            white-space: nowrap;
+            pointer-events: none;
+            width: max-content;
+            max-width: 250px;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid var(--dark-color);
+        }
+        
+        .tooltip-trigger:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-10px);
+        }
+        
+        .tooltip-trigger {
+            position: relative;
+            cursor: help;
+            text-decoration: underline dotted;
+            text-underline-offset: 4px;
+        }
+        
+        /* Accordion for FAQ */
+        .accordion {
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .accordion-header {
+            background-color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background-color: rgba(242, 177, 52, 0.05);
+        }
+        
+        .accordion-title {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-content {
+            background-color: white;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-inner {
+            padding: 0 1.2rem 1.2rem;
+        }
+        
+        .accordion.active .accordion-header {
+            background-color: rgba(242, 177, 52, 0.1);
+        }
+        
+        .accordion.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .accordion.active .accordion-content {
+            max-height: 500px;
+        }
+        
+        /* Media Queries */
+        @media screen and (max-width: 992px) {
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                left: 60px !important;
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .scoring-grid {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            
+            header.scrolled {
+                padding: 0.8rem 1rem;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--light-color);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                z-index: 99;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-link {
+                margin: 1.5rem 0;
+                font-size: 1.2rem;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 100;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .intro-text {
+                font-size: 1rem;
+            }
+            
+            .card-title {
+                font-size: 1.3rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                background: none;
+                box-shadow: none;
+            }
+            
+            .tab-btn {
+                margin-bottom: 10px;
+                border-radius: 8px;
+                background-color: white;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            }
+            
+            .tab-indicator {
+                display: none;
+            }
+        }
+        
+        @media screen and (max-width: 576px) {
+            .eligibility-card,
+            .scoring-card,
+            .timeline-content,
+            .terms-section {
+                padding: 1.2rem;
+            }
+            
+            .cta-title {
+                font-size: 1.8rem;
+            }
+            
+            .cta-text {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    </head>
+    <body>
+        <div class="criteria-container">
+            <div class="bg-pattern"></div>
+            <div class="floating-elements"></div>
+            
+            <div class="scroll-progress"></div>
+            
+            <header>
+                <a href="#" class="logo">Miss Banaras</a>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="aboutus.html" class="nav-link">About</a></li>
+                    <li><a href="reward.html" class="nav-link">Rewards</a></li>
+                    <li><a href="Criteria.html" class="nav-link">Criteria</a></li>
+                    <li><a href="Register.html" class="nav-link">Register</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </header>
+            
+            <section class="criteria-content">
+                <h1 class="section-title">Eligibility & Criteria</h1>
+                <p class="intro-text">The <span class="highlight">Miss Banaras Competition</span> celebrates the grace, talent, and cultural richness of Banaras through its women. This prestigious event is designed to showcase not just beauty, but intellect, cultural awareness, and social responsibility. Review our eligibility requirements and judging criteria below.</p>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="eligibility">Eligibility</button>
+                    <button class="tab-btn" data-tab="judging">Judging Criteria</button>
+                    <button class="tab-btn" data-tab="process">Competition Process</button>
+                    <button class="tab-btn" data-tab="terms">Terms & Conditions</button>
+                    <div class="tab-indicator"></div>
+                </div>
+                
+                <div class="tab-content active" id="eligibility">
+                    <div class="eligibility-card">
+                        <h3 class="card-title">Basic Requirements</h3>
+                        <ul class="eligibility-list">
+                            <li class="eligibility-item">
+                                <i class="fas fa-check-circle eligibility-icon"></i>
+                                Age between 14 to 30 years as of competition date
+                                <span class="info-tag">Required</span>
+                            </li>
+                            <li class="eligibility-item">
+                                <i class="fas fa-check-circle eligibility-icon"></i>
+                                Participants under 18 must have parental/guardian approval
+                                <span class="info-tag">Required</span>
+                            </li>
+                            <li class="eligibility-item">
+                                <i class="fas fa-check-circle eligibility-icon"></i>
+                                Must be a resident of Varanasi OR currently working/studying in Varanasi
+                            </li>
+                            <li class="eligibility-item">
+                                <i class="fas fa-check-circle eligibility-icon"></i>
+                                Must be able to communicate in Hindi (English is a plus but not mandatory)
+                            </li>
+                            <li class="eligibility-item">
+                                <i class="fas fa-check-circle eligibility-icon"></i>
+                                No prior professional modeling contract requirement
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="eligibility-card">
+                        <h3 class="card-title">Additional Requirements</h3>
+                        <ul class="eligibility-list">
+                            <li class="eligibility-item">
+                                <i class="fas fa-check-circle eligibility-icon"></i>
+                                Participants should stay actively involved throughout the competition.
+                            </li>
+                            <li class="eligibility-item">
+                                <i class="fas fa-check-circle eligibility-icon"></i>
+                                Should have knowledge about Varanasi's culture and heritage
+                            </li>
+                            <li class="eligibility-item">
+                                <i class="fas fa-check-circle eligibility-icon"></i>
+                                Must have a valid ID proof (Aadhar Card, Passport, School/College ID, etc.)
+                            </li>
+                            <li class="eligibility-item">
+                                <i class="fas fa-check-circle eligibility-icon"></i>
+                                Should be willing to participate in community service activities
+                            </li>
+                            <li class="eligibility-item">
+                                <i class="fas fa-check-circle eligibility-icon"></i>
+                                No criminal record or ongoing legal proceedings
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="judging">
+                    <h3 class="card-title">Judging Criteria & Weightage</h3>
+                    <p>Our judging process combines cutting-edge AI assessment with human expertise and public opinion to ensure a fair and comprehensive evaluation of each participant.</p>
+                    
+                    <div class="scoring-grid">
+                        <div class="scoring-card">
+                            <span class="scoring-percentage">80%</span>
+                            <h4 class="scoring-title">AI Assessment</h4>
+                            <p class="scoring-desc">Our proprietary AI model evaluates participants based on their images and answers, analyzing factors like presentation, confidence, cultural awareness, and communication skills.</p>
+                            <i class="fas fa-robot scoring-icon"></i>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="scoring-card">
+                            <span class="scoring-percentage">15%</span>
+                            <h4 class="scoring-title">Expert Panel</h4>
+                            <p class="scoring-desc">A panel of respected judges from fashion, arts, culture, and social work will evaluate participants on their talent, presence, and potential.</p>
+                            <i class="fas fa-star scoring-icon"></i>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 15%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="scoring-card">
+                            <span class="scoring-percentage">5%</span>
+                            <h4 class="scoring-title">Public Vote</h4>
+                            <p class="scoring-desc">Community engagement and popularity will contribute to the final score, enabling the public to have a voice in the selection process.</p>
+                            <i class="fas fa-users scoring-icon"></i>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: 5%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion">
+                        <div class="accordion-header">
+                            <h4 class="accordion-title">What qualities are assessed?</h4>
+                            <i class="fas fa-chevron-down accordion-icon"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-inner">
+                                <ul>
+                                    <li>Cultural knowledge and appreciation of Banaras heritage</li>
+                                    <li>Communication skills and articulation</li>
+                                    <li>Confidence and stage presence</li>
+                                    <li>Social awareness and community involvement</li>
+                                    <li>Talent showcase (performing arts, creative skills)</li>
+                                    <li>Poise and presentation</li>
+                                    <li>Leadership qualities and future vision</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="process">
+                    <h3 class="card-title">Competition Process</h3>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-date">Phase 1</div>
+                                <h4 class="timeline-title">Registration & Initial Screening</h4>
+                                <p>Submit your application online with required photos and answers to screening questions. Our AI will conduct initial assessment.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-date">Phase 2</div>
+                                <h4 class="timeline-title">Quarter Finals</h4>
+                                <p>Selected candidates participate in virtual or in-person cultural knowledge assessment and personality interviews.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-date">Phase 3</div>
+                                <h4 class="timeline-title">Semi Finals</h4>
+                                <p>Showcase your talent, participate in group discussions on social issues, and demonstrate your knowledge of Banaras culture.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-date">Phase 4</div>
+                                <h4 class="timeline-title">Public Voting</h4>
+                                <p>Profiles of semi-finalists will be available for public voting that contributes 5% to final scores.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-date">Final Event</div>
+                                <h4 class="timeline-title">Grand Finale</h4>
+                                <p>A spectacular celebration of Banaras culture where finalists showcase their journey, followed by announcement of Miss Banaras and runners-up.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="terms">
+                    <div class="terms-section">
+                        <h3 class="terms-title">Terms & Conditions</h3>
+                        <ul class="terms-list">
+                            <li class="terms-item">By registering for the Miss Banaras Competition, you confirm that all information provided is accurate and complete.</li>
+                            <li class="terms-item">Participants under 18 years of age should ensure they have the permission of their parent or guardian before registering.</li>
+                            <li class="terms-item">The organizers may verify your identity and eligibility at any stage of the competition.</li>
+                            <li class="terms-item">Photos, videos, and other submitted materials will be analyzed by our AI system for evaluation purposes and to improve future assessments.</li>
+                            <li class="terms-item">Participants are expected to remain actively engaged throughout the competition by responding promptly to communications and completing required activities.</li>
+                            <li class="terms-item">The decisions made by the judges and AI evaluation panel will be final and binding.</li>
+                            <li class="terms-item">Participants must maintain a positive and respectful public image throughout the competition.</li>
+                            <li class="terms-item">The organizers reserve the right to take appropriate action in case of misconduct or violation of rules.</li>
+                            <li class="terms-item">The organizers reserve the right to disqualify any participant for inappropriate behavior or violation of competition rules.</li>
+                            <li class="terms-item">The competition schedule may be subject to change, with updates provided through registered contact details.</li>
+                            <li class="terms-item">Winners are expected to fulfill their title-holder responsibilities as and when required.</li>
+                            <li class="terms-item">Prizes are non-transferable and cannot be exchanged for cash or alternatives.</li>
+                            <li class="terms-item">Winners must fulfill their responsibilities as title holders, including appearances at community events.</li>
+                            <li class="terms-item">By registering, you confirm that you have read, understood, and agreed to all the stated terms, as well as any additional rules, guidelines, or requirements communicated by the organizers during the course of the competition.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checkbox-container">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="terms-agreement">
+                            <span class="checkmark"></span>
+                        </label>
+                        <p class="agreement-text">I have read and agree to the terms and conditions of the Miss Banaras Competition. I confirm that I meet all the eligibility requirements and will abide by the rules of the competition.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="cta-section">
+                <div class="cta-content">
+                    <h2 class="cta-title">Ready to Represent Banaras?</h2>
+                    <p class="cta-text">Take the first step towards becoming Miss Banaras and showcase the rich cultural heritage of this ancient city while embarking on a journey of personal growth.</p>
+                    <a href="Register.html" class="btn btn-primary">
+                        Register Now
+                        <i class="fas fa-arrow-right btn-icon"></i>
+                    </a>
+                </div>
+            </section>
+            
+            <footer class="footer">
+                <p class="footer-text">© 2025 Miss Banaras Competition. All Rights Reserved.</p>
+            </footer>
+            
+            <div class="notification">
+                <i class="fas fa-bell notification-icon"></i>
+                <p class="notification-message">Don't miss out!</p>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+    // Initialize GSAP
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Menu toggle functionality
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    menuToggle.addEventListener('click', function() {
+        this.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+    
+    // Tab switching functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const tabIndicator = document.querySelector('.tab-indicator');
+    
+    function setTabIndicator(elem) {
+        if (window.innerWidth > 768) {
+            tabIndicator.style.width = elem.offsetWidth + 'px';
+            tabIndicator.style.left = elem.offsetLeft + 'px';
+        }
+    }
+    
+    if (tabBtns.length > 0) {
+        setTabIndicator(tabBtns[0]);
+    }
+    
+    tabBtns.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs
+            tabBtns.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding content
+            tab.classList.add('active');
+            const tabId = tab.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+            
+            // Move indicator
+            setTabIndicator(tab);
+        });
+    });
+    
+    // Accordion functionality
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+    
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const accordion = header.parentElement;
+            accordion.classList.toggle('active');
+        });
+    });
+    
+    // Progress bar animation
+    const progressBars = document.querySelectorAll('.progress-bar');
+    
+    gsap.from(progressBars, {
+        width: 0,
+        duration: 1.5,
+        ease: "power2.out",
+        stagger: 0.2,
+        scrollTrigger: {
+            trigger: '.scoring-grid',
+            start: "top 80%"
+        }
+    });
+    
+    // Timeline animation
+    gsap.from('.timeline-item', {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        stagger: 0.3,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: '.timeline',
+            start: "top 80%"
+        }
+    });
+    
+    // Header style on scroll
+    const header = document.querySelector('header');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
+    // Scroll progress indicator
+    const scrollProgress = document.querySelector('.scroll-progress');
+    
+    window.addEventListener('scroll', () => {
+        const totalHeight = document.body.scrollHeight - window.innerHeight;
+        const progress = (window.pageYOffset / totalHeight) * 100;
+        scrollProgress.style.width = progress + '%';
+    });
+    
+    // Floating elements animation
+    const floatingElements = document.querySelector('.floating-elements');
+    
+    for (let i = 0; i < 15; i++) {
+        const element = document.createElement('div');
+        element.classList.add('float-element');
+        
+        // Random size
+        const size = Math.random() * 80 + 20;
+        element.style.width = size + 'px';
+        element.style.height = size + 'px';
+        
+        // Random position
+        element.style.left = Math.random() * 100 + '%';
+        element.style.top = Math.random() * 100 + '%';
+        
+        // Animation
+        element.style.animation = `float ${Math.random() * 10 + 15}s infinite ease-in-out, pulse ${Math.random() * 5 + 5}s infinite ease-in-out`;
+        element.style.animationDelay = `${Math.random() * 5}s`;
+        
+        floatingElements.appendChild(element);
+    }
+    
+    // Show notification after delay
+    setTimeout(() => {
+        document.querySelector('.notification').classList.add('show');
+        
+        // Hide notification after 5 seconds
+        setTimeout(() => {
+            document.querySelector('.notification').classList.remove('show');
+        }, 5000);
+    }, 3000);
+    
+    // Animation for elements entering viewport
+    gsap.from('.eligibility-card', {
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.3,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: '.eligibility-card',
+            start: "top 80%"
+        }
+    });
+    
+    gsap.from('.scoring-card', {
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.2,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+            trigger: '.scoring-grid',
+            start: "top 80%"
+        }
+    });
+    
+    // Terms checkbox animation
+    gsap.from('.checkbox-container', {
+        x: -50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: '.terms-section',
+            start: "bottom 80%"
+        }
+    });
+    
+    // CTA section animation
+    gsap.from('.cta-content', {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: '.cta-section',
+            start: "top 80%"
+        }
+    });
+    
+    // Window resize event for tab indicator
+    window.addEventListener('resize', () => {
+        const activeTab = document.querySelector('.tab-btn.active');
+        if (activeTab && window.innerWidth > 768) {
+            setTabIndicator(activeTab);
+        }
+    });
+});
+        </script>
+        </body>
+        </html>
