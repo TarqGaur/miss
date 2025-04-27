@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon | Miss Banaras Competition</title>
+    <title>Register | Miss Banaras Competition</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
@@ -19,7 +21,6 @@
             --dark-color: #221A31; /* Deep indigo */
             --light-color: #FFF8E8; /* Warm white */
             --temple-color: #D9B17D; /* Sandstone */
-            --temple-detail: #C69C69; /* Darker sandstone for details */
             --water-color: #4C96D7; /* Ganges blue */
             --text-color: #333333; /* Dark gray for text */
             --btn-gradient: linear-gradient(135deg, #F2B134, #D35269); /* Button gradient */
@@ -33,126 +34,29 @@
         
         body {
             font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
             color: var(--text-color);
             background-color: var(--light-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
         }
         
-        .coming-soon-container {
-            flex: 1;
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            z-index: 100;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .bg-pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D35269' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            z-index: -1;
-        }
-        
-        .floating-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        .float-element {
-            position: absolute;
-            opacity: 0.05;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-        }
-        
-        .border-decoration {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            border: 2px solid rgba(211, 82, 105, 0.1);
-            border-radius: 15px;
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        .border-decoration::before {
-            content: '';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30%;
-            height: 30px;
-            background-color: var(--light-color);
-        }
-        
-        .border-decoration::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30%;
-            height: 30px;
-            background-color: var(--light-color);
-        }
-        
-        .decoration-left {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100px;
-            height: 80%;
-            background: linear-gradient(90deg, rgba(242, 177, 52, 0.1), transparent);
-            z-index: -1;
-            border-radius: 0 50px 50px 0;
-        }
-        
-        .decoration-right {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100px;
-            height: 80%;
-            background: linear-gradient(270deg, rgba(211, 82, 105, 0.1), transparent);
-            z-index: -1;
-            border-radius: 50px 0 0 50px;
-        }
-        
-        .logo-container {
-            margin-bottom: 3rem;
-            text-align: center;
-            animation: float 6s infinite ease-in-out;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+            transition: all 0.5s;
+            background-color: rgba(255, 248, 232, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
         }
         
         .logo {
             font-family: 'Cinzel', serif;
-            font-size: 3rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--secondary-color);
             text-decoration: none;
@@ -160,61 +64,125 @@
             display: inline-block;
         }
         
-        .logo-subtitle {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
-            color: var(--accent-color);
-            margin-top: 0.5rem;
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary-color), transparent);
+            transition: width 0.3s ease;
         }
         
-        .coming-soon-content {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 3rem;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(10px);
+        .logo:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-link {
+            margin: 0 1.2rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-color);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* Main Content */
+        .register-container {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #F8F1E5, #FFF8E8);
             position: relative;
             overflow: hidden;
+            padding-top: 80px;
         }
         
-        .coming-soon-content::before {
-            content: '';
+        .leaves-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
         
-        .coming-soon-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--dark-color);
+        .register-content {
             position: relative;
-            display: inline-block;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
-        .coming-soon-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+        .register-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--dark-color) 30%, var(--secondary-color) 70%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
-        .coming-soon-desc {
+        .register-subheading {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .register-desc {
             font-size: 1.1rem;
             line-height: 1.8;
-            margin-bottom: 2rem;
-            color: var(--text-color);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
         }
         
         .highlight {
@@ -222,185 +190,212 @@
             font-weight: 600;
         }
         
-        .countdown-container {
-            display: flex;
-            justify-content: center;
-            margin: 2rem 0;
-        }
-        
-        .countdown-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0 1rem;
-            position: relative;
-        }
-        
-        .countdown-item:not(:last-child)::after {
-            content: ':';
-            position: absolute;
-            right: -1.2rem;
-            top: 10%;
-            font-size: 2rem;
-            color: var(--accent-color);
-            opacity: 0.5;
-        }
-        
-        .countdown-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-            margin-bottom: 0.5rem;
+        .natural-beauty-container {
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 4rem;
             position: relative;
             overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
         }
         
-        .countdown-number::before {
+        .beauty-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--dark-color);
+            position: relative;
+        }
+        
+        .beauty-title::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
             height: 3px;
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
         
-        .countdown-label {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            color: var(--dark-color);
-            font-weight: 500;
+        .beauty-points {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
         
-        .notification-form {
-            margin-top: 2rem;
+        .beauty-point {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(211, 82, 105, 0.1);
+        }
+        
+        .beauty-point:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .beauty-point i {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .beauty-point-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark-color);
+        }
+        
+        .beauty-point-desc {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-color);
+        }
+        
+        .model-container {
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-bottom: 4rem;
         }
         
-        .form-heading {
-            font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--dark-color);
-        }
-        
-        .email-input-container {
-            display: flex;
+        .golden-ratio {
             width: 100%;
-            max-width: 450px;
-            margin-bottom: 1rem;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+        
+        .golden-spiral {
+            width: 100%;
+            height: auto;
+        }
+        
+        .golden-spiral-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawSpiral 3s ease-in-out forwards;
+        }
+        
+        @keyframes drawSpiral {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .formula-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .formula-box {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            margin: 0 0.5rem;
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .phi-symbol {
+            font-family: serif;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+        
+        .ai-model-visualizer {
+            width: 100%;
+            height: 300px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
             position: relative;
+            margin-bottom: 2rem;
         }
         
-        .email-input {
-            flex: 1;
-            padding: 0.9rem 1.5rem;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            border-radius: 30px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
+        .btn-container {
+            text-align: center;
         }
         
-        .email-input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(242, 177, 52, 0.1);
-        }
-        
-        .notify-btn {
-            position: absolute;
-            right: 5px;
-            top: 5px;
-            bottom: 5px;
-            padding: 0 1.5rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
+        .btn-get-started {
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
             font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            background: var(--btn-gradient);
+            color: white;
             cursor: pointer;
             transition: all 0.3s ease;
-        }
-        
-        .notify-btn:hover {
-            transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(211, 82, 105, 0.3);
-        }
-        
-        .notify-btn:active {
-            transform: translateY(0);
-        }
-        
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-        
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: white;
-            border-radius: 50%;
-            margin: 0 0.5rem;
-            color: var(--dark-color);
             text-decoration: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
         }
         
-        .social-icon:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            color: var(--accent-color);
+        .btn-get-started:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(211, 82, 105, 0.4);
         }
         
-        .back-button {
+        .btn-get-started::before {
+            content: '';
             position: absolute;
-            top: 30px;
-            left: 30px;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: 1;
+        }
+        
+        .btn-get-started:hover::before {
+            left: 100%;
+        }
+        
+        .btn-get-started span {
+            position: relative;
+            z-index: 2;
             display: flex;
             align-items: center;
-            text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            z-index: 10;
         }
         
-        .back-icon {
-            margin-right: 8px;
-            transition: transform 0.3s ease;
+        .btn-icon {
+            margin-left: 10px;
         }
         
-        .back-button:hover {
-            color: var(--accent-color);
+        .banaras-silhouette {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z' fill='%238B6E4E' fill-opacity='0.2'%3E%3C/path%3E%3Cpath d='M50 50 L100 40 L150 60 L200 45 L250 55 L300 35 L350 60 L400 40 L450 55 L500 45 L550 65 L600 30 L650 55 L700 40 L750 60 L800 35 L850 50 L900 30 L950 55 L1000 45 L1050 65 L1100 40 L1150 50 L1200 40 L1200 120 L0 120 L0 70 Z' fill='%238B6E4E' fill-opacity='0.15'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-repeat: no-repeat;
+            pointer-events: none;
         }
         
-        .back-button:hover .back-icon {
-            transform: translateX(-5px);
-        }
-        
-        .footer {
+        footer {
+            background-color: rgba(255, 248, 232, 0.95);
+            padding: 1.5rem 3rem;
             text-align: center;
-            padding: 1.5rem;
-            background-color: rgba(255, 255, 255, 0.8);
             border-top: 1px solid rgba(211, 82, 105, 0.1);
         }
         
@@ -409,344 +404,1077 @@
             font-size: 0.9rem;
         }
         
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: white;
-            color: var(--dark-color);
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            transform: translateX(200%);
-            transition: transform 0.5s ease;
-            z-index: 1000;
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        .notification-icon {
-            color: var(--accent-color);
-            font-size: 1.2rem;
-            margin-right: 10px;
-        }
-        
-        @media screen and (max-width: 768px) {
-            .logo {
+        @media (max-width: 992px) {
+            .register-heading {
                 font-size: 2.5rem;
             }
             
-            .logo-subtitle {
-                font-size: 1.4rem;
-            }
-            
-            .coming-soon-content {
-                padding: 2rem;
-            }
-            
-            .coming-soon-title {
+            .register-subheading {
                 font-size: 1.8rem;
             }
             
-            .coming-soon-desc {
-                font-size: 1rem;
-            }
-            
-            .countdown-number {
-                font-size: 2rem;
-                width: 60px;
-                height: 60px;
-            }
-            
-            .countdown-item {
-                margin: 0 0.5rem;
-            }
-            
-            .countdown-item:not(:last-child)::after {
-                right: -0.8rem;
+            .natural-beauty-container {
+                padding: 2rem;
             }
         }
         
-        @media screen and (max-width: 576px) {
-            .coming-soon-content {
+        @media (max-width: 768px) {
+            .register-heading {
+                font-size: 2rem;
+            }
+            
+            .register-subheading {
+                font-size: 1.5rem;
+            }
+            
+            .register-desc {
+                font-size: 1rem;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 101;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease;
+                z-index: 100;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-link {
+                margin: 1.5rem 0;
+                font-size: 1.2rem;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+            
+            header {
+                padding: 1rem 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .register-content {
+                padding: 3rem 1.5rem;
+            }
+            
+            .natural-beauty-container {
                 padding: 1.5rem;
             }
             
-            .countdown-number {
-                font-size: 1.5rem;
-                width: 50px;
-                height: 50px;
-            }
-            
-            .countdown-label {
-                font-size: 0.8rem;
-            }
-            
-            .form-heading {
-                font-size: 1.1rem;
-            }
-            
-            .email-input {
-                padding: 0.8rem 1rem;
-                font-size: 0.9rem;
-            }
-            
-            .notify-btn {
-                padding: 0 1rem;
-                font-size: 0.8rem;
-            }
-            
-            .back-button {
-                top: 15px;
-                left: 15px;
+            .beauty-point {
+                min-width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="notification">
-        <i class="fas fa-bell notification-icon"></i>
-        <p class="notification-message">You'll be notified when we launch!</p>
-    </div>
-
-    <div class="coming-soon-container">
-        <div class="bg-pattern"></div>
-        <div class="floating-elements"></div>
-        <div class="border-decoration"></div>
-        <div class="decoration-left"></div>
-        <div class="decoration-right"></div>
+    <header>
+        <a href="index.html" class="logo">Miss Banaras</a>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="aboutus.html" class="nav-link">About</a></li>
+            <li><a href="reward.html" class="nav-link">Rewards</a></li>
+            <li><a href="Criteria.html" class="nav-link">Criteria</a></li>
+            <li><a href="Register.html" class="nav-link">Register</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+    </header>
+    
+    <div class="register-container">
+        <canvas class="leaves-canvas" id="leaves-canvas"></canvas>
         
-        <a href="index.html" class="back-button">
-            <i class="fas fa-arrow-left back-icon"></i>
-            Back to Home
-        </a>
-        
-        <div class="logo-container">
-            <h1 class="logo">Miss Banaras</h1>
-            <div class="logo-subtitle">Celebrating Heritage & Grace</div>
+        <div class="register-content">
+            <h1 class="register-heading">Celebrating Natural Beauty</h1>
+            <h2 class="register-subheading">Beyond Appearance, Within Essence</h2>
+            
+            <p class="register-desc">
+                Miss Banaras redefines beauty competitions by focusing on the <span class="highlight">authentic essence</span> that radiates from within. In the sacred city of Banaras, where spirituality meets tradition, we recognize that true beauty transcends physical appearance and embraces the whole person—mind, heart, and spirit.
+            </p>
+            
+            <div class="natural-beauty-container">
+                <h3 class="beauty-title">The Essence of Natural Beauty</h3>
+                
+                <div class="beauty-points">
+                    <div class="beauty-point">
+                        <i class="fas fa-leaf"></i>
+                        <h3 class="beauty-point-title">Natural Beauty</h3>
+                        <p class="beauty-point-desc">We celebrate your authentic self, not artificial standards.</p>
+                    </div>
+                    
+                    <div class="beauty-point">
+                        <i class="fas fa-balance-scale"></i>
+                        <h3 class="beauty-point-title">Harmony</h3>
+                        <p class="beauty-point-desc">True beauty lies in balance and proportion, not perfection.</p>
+                    </div>
+                    
+                    <div class="beauty-point">
+                        <i class="fas fa-heart"></i>
+                        <h3 class="beauty-point-title">Inner Light</h3>
+                        <p class="beauty-point-desc">Your character and passion create true radiance.</p>
+                    </div>
+                </div>
+                
+                <div class="model-container">
+                    <div class="golden-ratio">
+                        <svg viewBox="0 0 400 250" class="golden-spiral">
+                            <rect x="0" y="0" width="400" height="250" fill="none" />
+                            <path class="golden-spiral-path" d="M310,250 C379.036,250 400,195.228 400,130 C400,64.772 350.228,0 285,0 C219.772,0 155,49.772 155,115 C155,180.228 204.772,245 270,245 C335.228,245 364.5,195.5 364.5,130.5 C364.5,65.5 320,21 253,21 C186,21 176,73.772 176,139 C176,204.228 220.772,224 283,224" stroke="#D35269" stroke-width="2" fill="none" />
+                            <circle cx="155" cy="115" r="3" fill="#F2B134" />
+                            <circle cx="240" cy="115" r="3" fill="#F2B134" />
+                            <line x1="155" y1="115" x2="240" y2="115" stroke="#E1673C" stroke-width="1" stroke-dasharray="5,5" />
+                            <text x="190" y="105" fill="#333" font-family="serif" font-size="16" font-style="italic">φ</text>
+                        </svg>
+                    </div>
+                    
+                    <div class="formula-section">
+                        <p>At Miss Banaras, we recognize beauty through the timeless <span class="formula-box">1 : <span class="phi-symbol">φ</span> ≈ 1 : 1.618</span> Golden Ratio found throughout nature</p>
+                    </div>
+                    
+                    <div class="ai-model-visualizer" id="ai-model-visualizer">
+                        <!-- ThreeJS AI Model Visualization will be rendered here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <a href="contact.html" class="btn-get-started">
+                    <span>
+                        Let's Get Started
+                        <i class="fas fa-arrow-right btn-icon"></i>
+                    </span>
+                </a>
+            </div>
         </div>
         
-        <div class="coming-soon-content">
-            <h2 class="coming-soon-title">Coming Soon</h2>
-            <p class="coming-soon-desc">We're working hard to bring you the most prestigious cultural pageant of <span class="highlight">Varanasi</span>. The Miss Banaras Competition will launch in:</p>
-            
-            <div class="countdown-container">
-                <div class="countdown-item">
-                    <div class="countdown-number" id="days">00</div>
-                    <div class="countdown-label">Days</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="hours">00</div>
-                    <div class="countdown-label">Hours</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="minutes">00</div>
-                    <div class="countdown-label">Minutes</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="seconds">00</div>
-                    <div class="countdown-label">Seconds</div>
-                </div>
-            </div>
-            
-            <div class="notification-form">
-                <h3 class="form-heading">Be the first to know when we launch</h3>
-                <div class="email-input-container">
-                    <input type="email" class="email-input" placeholder="Enter your email address">
-                    <button class="notify-btn">Notify Me</button>
-                </div>
-            </div>
-            
-            <div class="social-icons">
-                <a href="#" class="social-icon">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="fab fa-youtube"></i>
-                </a>
-            </div>
-        </div>
+        <div class="banaras-silhouette"></div>
     </div>
     
-    <footer class="footer">
-        <p class="footer-text">© 2025 Miss Banaras Competition. All Rights Reserved.</p>
+    <footer>
+        <p class="footer-text">© 2025 Miss Banaras Competition. All rights reserved.</p>
     </footer>
     
-    <div class="notification">
-        <i class="fas fa-bell notification-icon"></i>
-        <p class="notification-message">You'll be notified when we launch!</p>
-    </div>
-
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+    <script>
+      
         
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCclz6H9RIB9AplcZoPtiDm_V2uMoRiBig",
-            authDomain: "miss-banaras.firebaseapp.com",
-            projectId: "miss-banaras",
-            storageBucket: "miss-banaras.firebasestorage.app",
-            messagingSenderId: "201764342801",
-            appId: "1:201764342801:web:601dc7748b2b8e869a35b0",
-            measurementId: "G-C50S10JQTF",
-            databaseURL: "https://miss-banaras-default-rtdb.firebaseio.com" // यह URL अपने Firebase प्रोजेक्ट के अनुसार बदलें
-        };
+        // Scroll animations
+        ScrollTrigger.batch(".beauty-point", {
+            onEnter: batch => gsap.to(batch, {
+                y: 0,
+                opacity: 1,
+                stagger: 0.15,
+                duration: 0.8,
+                ease: "back.out(1.7)"
+            }),
+            start: "top 80%"
+        });
         
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const database = getDatabase(app);
+  // Three.js Leaves Animation with Enhanced Shapes and Physics
+const initLeavesAnimation = () => {
+    const canvas = document.getElementById('leaves-canvas');
+    const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    
+    const scene = new THREE.Scene();
+    
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+    );
+    camera.position.z = 20;
+    
+    // Create more realistic leaf geometry
+    const createLeafGeometry = () => {
+        // Create a more natural leaf shape using curves
+        const shape = new THREE.Shape();
         
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set the launch date (adjust as needed)
-            const launchDate = new Date("May 5, 2025 00:00:00").getTime();
+        // Start at the stem
+        shape.moveTo(0, -0.7);
+        
+        // Draw leaf shape with bezier curves for organic look
+        shape.bezierCurveTo(0.5, -0.5, 1.0, 0.0, 0.7, 1.0); // Right curve up
+        shape.bezierCurveTo(0.5, 1.2, -0.5, 1.2, -0.7, 1.0); // Top curve
+        shape.bezierCurveTo(-1.0, 0.0, -0.5, -0.5, 0, -0.7); // Left curve down
+        
+        // Add midrib (center vein)
+        const midrib = new THREE.Shape();
+        midrib.moveTo(0, -0.7);
+        midrib.lineTo(0, 1.0);
+        
+        // Create geometry from shape
+        const geometry = new THREE.ShapeGeometry(shape);
+        
+        // Add subtle vertex displacement for texture
+        const position = geometry.attributes.position;
+        const vertex = new THREE.Vector3();
+        
+        for (let i = 0; i < position.count; i++) {
+            vertex.fromBufferAttribute(position, i);
             
-            // Floating elements animation
-            const floatingElements = document.querySelector('.floating-elements');
-            
-            for (let i = 0; i < 15; i++) {
-                const element = document.createElement('div');
-                element.classList.add('float-element');
-                
-                // Random size
-                const size = Math.random() * 80 + 20;
-                element.style.width = size + 'px';
-                element.style.height = size + 'px';
-                
-                // Random position
-                element.style.left = Math.random() * 100 + '%';
-                element.style.top = Math.random() * 100 + '%';
-                
-                // Animation
-                element.style.animation = `float ${Math.random() * 10 + 15}s infinite ease-in-out`;
-                element.style.animationDelay = `${Math.random() * 5}s`;
-                
-                floatingElements.appendChild(element);
+            // Add subtle waves to the leaf surface (except midrib)
+            if (Math.abs(vertex.x) > 0.05) {
+                vertex.z += Math.sin(vertex.y * 5) * 0.05 * Math.abs(vertex.x);
             }
             
-            // Countdown timer
-            function updateCountdown() {
-                const now = new Date().getTime();
-                const distance = launchDate - now;
+            position.setXYZ(i, vertex.x, vertex.y, vertex.z);
+        }
+        
+        geometry.computeVertexNormals();
+        return geometry;
+    };
+    
+    // Create leaves with improved materials and variety
+    const leavesCount = 75; // More leaves for denser effect
+    const leaves = [];
+    
+    // More natural leaf colors with variation
+    const leafColors = [
+        // Autumn palette
+        0xA8631C, 0xD49D42, 0x8B4513, 0xCD853F, 0xDEB887,
+        0xD2691E, 0xB8860B, 0xDAA520, 0xA0522D, 0x8A360F
+    ];
+    
+    // Add leaf veins texture
+    const textureLoader = new THREE.TextureLoader();
+    const leafVeinTexture = {
+        map: { 
+            repeat: new THREE.Vector2(1, 1),
+            wrapS: THREE.RepeatWrapping,
+            wrapT: THREE.RepeatWrapping
+        }
+    };
+    
+    for (let i = 0; i < leavesCount; i++) {
+        const leafGeometry = createLeafGeometry();
+        
+        const colorIndex = Math.floor(Math.random() * leafColors.length);
+        const leafMaterial = new THREE.MeshLambertMaterial({ 
+            color: leafColors[colorIndex],
+            transparent: true,
+            opacity: 0.8,
+            side: THREE.DoubleSide
+        });
+        
+        const leaf = new THREE.Mesh(leafGeometry, leafMaterial);
+        
+        // Random position with wider distribution
+        leaf.position.x = (Math.random() - 0.5) * window.innerWidth / 15;
+        leaf.position.y = Math.random() * window.innerHeight / 8 + 15;
+        leaf.position.z = (Math.random() - 0.5) * 15;
+        
+        // Random rotation
+        leaf.rotation.x = Math.random() * Math.PI;
+        leaf.rotation.y = Math.random() * Math.PI;
+        leaf.rotation.z = Math.random() * Math.PI;
+        
+        // Random size with more variation
+        const scale = Math.random() * 0.6 + 0.2;
+        leaf.scale.set(scale, scale * (0.8 + Math.random() * 0.4), scale); // Non-uniform scaling for variety
+        
+        // Enhanced animation properties
+        leaf.velocity = {
+            x: (Math.random() - 0.5) * 0.07,
+            y: -Math.random() * 0.07 - 0.02,
+            z: (Math.random() - 0.5) * 0.02,
+            rotationX: (Math.random() - 0.5) * 0.015,
+            rotationY: (Math.random() - 0.5) * 0.015,
+            rotationZ: (Math.random() - 0.5) * 0.02
+        };
+        
+        // Add unique properties for individual behavior
+        leaf.spinFactor = Math.random() * 2 + 1;  // How fast this leaf spins
+        leaf.oscillationSpeed = Math.random() * 0.01 + 0.005; // Side-to-side movement
+        leaf.oscillationAmplitude = Math.random() * 0.1 + 0.05; // How far it sways
+        leaf.phaseOffset = Math.random() * Math.PI * 2; // So leaves don't all sway together
+        
+        scene.add(leaf);
+        leaves.push(leaf);
+    }
+    
+    // Add subtle ambient and directional lighting
+    const ambientLight = new THREE.AmbientLight(0xcccccc, 0.4);
+    scene.add(ambientLight);
+    
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    directionalLight.position.set(1, 1, 1);
+    scene.add(directionalLight);
+    
+    // Animation loop with improved physics
+    let lastTime = 0;
+    const animate = (currentTime) => {
+        requestAnimationFrame(animate);
+        
+        // Calculate delta time for smooth animation regardless of frame rate
+        const deltaTime = lastTime ? (currentTime - lastTime) / 1000 : 0.016;
+        lastTime = currentTime;
+        
+        // Update leaves positions with enhanced physics
+        leaves.forEach(leaf => {
+            // Apply gravity with slight acceleration
+            leaf.velocity.y -= 0.005 * deltaTime;
+            
+            // Apply drag (air resistance)
+            leaf.velocity.x *= 0.995;
+            leaf.velocity.y *= 0.995;
+            leaf.velocity.z *= 0.995;
+            
+            // Update position
+            leaf.position.x += leaf.velocity.x;
+            leaf.position.y += leaf.velocity.y;
+            leaf.position.z += leaf.velocity.z;
+            
+            // Natural leaf spinning with dampening
+            leaf.rotation.x += leaf.velocity.rotationX * leaf.spinFactor * deltaTime;
+            leaf.rotation.y += leaf.velocity.rotationY * leaf.spinFactor * deltaTime;
+            leaf.rotation.z += leaf.velocity.rotationZ * leaf.spinFactor * deltaTime;
+            
+            // Realistic side-to-side swaying (pendulum motion)
+            const oscillation = Math.sin(currentTime * leaf.oscillationSpeed + leaf.phaseOffset);
+            leaf.position.x += oscillation * leaf.oscillationAmplitude;
+            
+            // Random wind gusts
+            if (Math.random() < 0.02) {
+                leaf.velocity.x += (Math.random() - 0.5) * 0.1;
+                leaf.velocity.z += (Math.random() - 0.5) * 0.1;
+            }
+            
+            // Reset position if leaf goes out of view with wider distribution
+            if (leaf.position.y < -window.innerHeight / 10) {
+                leaf.position.y = window.innerHeight / 8 + Math.random() * 5;
+                leaf.position.x = (Math.random() - 0.5) * window.innerWidth / 15;
+                leaf.position.z = (Math.random() - 0.5) * 15;
                 
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                // Reset velocities for variation
+                leaf.velocity.y = -Math.random() * 0.07 - 0.02;
+                leaf.velocity.x = (Math.random() - 0.5) * 0.07;
+                leaf.velocity.z = (Math.random() - 0.5) * 0.02;
+            }
+        });
+        
+        renderer.render(scene, camera);
+    };
+    
+    animate(0);
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    
+    // Add interactivity - Mouse movement affects wind direction
+    document.addEventListener('mousemove', (event) => {
+        const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+        const mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+        
+        leaves.forEach(leaf => {
+            // Subtle wind effect based on mouse position
+            leaf.velocity.x += mouseX * 0.001;
+            leaf.velocity.z -= mouseY * 0.001;
+        });
+    });
+    
+    // Add touch interactivity for mobile
+    document.addEventListener('touchmove', (event) => {
+        if (event.touches.length > 0) {
+            const touch = event.touches[0];
+            const mouseX = (touch.clientX / window.innerWidth) * 2 - 1;
+            const mouseY = (touch.clientY / window.innerHeight) * 2 - 1;
+            
+            leaves.forEach(leaf => {
+                leaf.velocity.x += mouseX * 0.002;
+                leaf.velocity.z -= mouseY * 0.002;
+            });
+        }
+    });
+};
+
+// Enhanced AI Model Visualization with Three.js - Interactive and Realistic
+const initAIModelVisualizer = () => {
+    const container = document.getElementById('ai-model-visualizer');
+    
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+    
+    const scene = new THREE.Scene();
+    
+    const camera = new THREE.PerspectiveCamera(
+        60,
+        container.clientWidth / container.clientHeight,
+        0.1,
+        1000
+    );
+    camera.position.z = 5;
+    
+    // Create particles for AI visualization with improved structure
+    const particlesCount = 2000; // More particles for denser effect
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesPositions = new Float32Array(particlesCount * 3);
+    const particlesColors = new Float32Array(particlesCount * 3);
+    const particlesSizes = new Float32Array(particlesCount);
+    
+    // Parameters for the AI face/brain model
+    const faceCenter = new THREE.Vector3(0, 0, 0);
+    const faceWidth = 2.5;
+    const faceHeight = 3.2;
+    const faceDepth = 1.8;
+    
+    // Brain regions with varying densities
+    const regions = [
+        { name: 'frontal', center: new THREE.Vector3(0, 1, 0), radius: 1.2, color: [0.95, 0.5, 0.2] },
+        { name: 'temporal', center: new THREE.Vector3(-1.2, 0, 0), radius: 0.9, color: [0.9, 0.3, 0.4] },
+        { name: 'parietal', center: new THREE.Vector3(1.2, 0, 0), radius: 0.9, color: [0.7, 0.4, 0.6] },
+        { name: 'occipital', center: new THREE.Vector3(0, -1.2, 0), radius: 1.0, color: [0.85, 0.6, 0.3] },
+        { name: 'cerebellum', center: new THREE.Vector3(0, -1.8, -0.3), radius: 0.7, color: [0.8, 0.5, 0.5] }
+    ];
+    
+    // Generate particles for each region
+    let particleIndex = 0;
+    
+    regions.forEach(region => {
+        const particlesInRegion = Math.floor(particlesCount * (region.radius / 5));
+        
+        for (let i = 0; i < particlesInRegion && particleIndex < particlesCount; i++) {
+            const i3 = particleIndex * 3;
+            
+            // Create particles with gaussian distribution within each region
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos((Math.random() * 2) - 1);
+            
+            // Randomize distance from center for natural density
+            const rho = region.radius * Math.pow(Math.random(), 0.5);
+            
+            // Calculate position
+            const x = region.center.x + rho * Math.sin(phi) * Math.cos(theta);
+            const y = region.center.y + rho * Math.sin(phi) * Math.sin(theta);
+            const z = region.center.z + rho * Math.cos(phi);
+            
+            particlesPositions[i3] = x;
+            particlesPositions[i3 + 1] = y;
+            particlesPositions[i3 + 2] = z;
+            
+            // Color with subtle variation
+            const variation = Math.random() * 0.2 - 0.1;
+            particlesColors[i3] = Math.max(0, Math.min(1, region.color[0] + variation));
+            particlesColors[i3 + 1] = Math.max(0, Math.min(1, region.color[1] + variation));
+            particlesColors[i3 + 2] = Math.max(0, Math.min(1, region.color[2] + variation));
+            
+            // Varying sizes for depth perception
+            particlesSizes[particleIndex] = (Math.random() * 0.05 + 0.03) * 
+                (1 - Math.abs(z) / 3); // Smaller particles toward back
+            
+            particleIndex++;
+        }
+    });
+    
+    // Fill remaining particles around the general brain shape
+    for (let i = particleIndex; i < particlesCount; i++) {
+        const i3 = i * 3;
+        
+        // Golden ratio distribution for extra particles
+        const goldenRatio = 1.618033988749895;
+        const goldenAngle = Math.PI * 2 * (1 - 1 / goldenRatio);
+        
+        const t = i * goldenAngle;
+        const radialDist = Math.sqrt(i) / Math.sqrt(particlesCount) * 3;
+        
+        const x = radialDist * Math.cos(t);
+        const y = radialDist * Math.sin(t);
+        const z = (Math.random() - 0.5) * 1.5;
+        
+        particlesPositions[i3] = x;
+        particlesPositions[i3 + 1] = y;
+        particlesPositions[i3 + 2] = z;
+        
+        // Gold to purple gradient based on position
+        const colorFactor = (y + 3) / 6; // Normalize to 0-1 range
+        
+        particlesColors[i3] = 0.95 - colorFactor * 0.5;
+        particlesColors[i3 + 1] = 0.7 - colorFactor * 0.5;
+        particlesColors[i3 + 2] = 0.2 + colorFactor * 0.5;
+        
+        // Varying sizes
+        particlesSizes[i] = Math.random() * 0.04 + 0.01;
+    }
+    
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlesPositions, 3));
+    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(particlesColors, 3));
+    particlesGeometry.setAttribute('size', new THREE.BufferAttribute(particlesSizes, 1));
+    
+    // Create custom vertex shader for better particle rendering
+    const vertexShader = `
+        attribute float size;
+        varying vec3 vColor;
+        
+        void main() {
+            vColor = color;
+            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = size * (300.0 / -mvPosition.z);
+            gl_Position = projectionMatrix * mvPosition;
+        }
+    `;
+    
+    // Create custom fragment shader for glowing particles
+    const fragmentShader = `
+        varying vec3 vColor;
+        
+        void main() {
+            // Create soft, circular particles
+            float r = distance(gl_PointCoord, vec2(0.5, 0.5));
+            if (r > 0.5) discard;
+            
+            // Glowing effect with soft edges
+            float intensity = 1.0 - 2.0 * r;
+            vec3 glow = vColor * intensity;
+            
+            gl_FragColor = vec4(glow, intensity);
+        }
+    `;
+    
+    // Create custom shader material
+    const particlesMaterial = new THREE.ShaderMaterial({
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader,
+        transparent: true,
+        vertexColors: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+    });
+    
+    const particlesSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particlesSystem);
+    
+    // Add connecting lines for neural network effect
+    const linesGeometry = new THREE.BufferGeometry();
+    const linesPositions = [];
+    const linesColors = [];
+    const maxConnections = 600; // More connections
+    const maxDistance = 1.2;
+    
+    // Track particles that will be used as "active neurons"
+    const activeNeurons = [];
+    const activeCount = 30;
+    
+    for (let i = 0; i < activeCount; i++) {
+        activeNeurons.push({
+            index: Math.floor(Math.random() * particlesCount),
+            nextFireTime: Math.random() * 5000,
+            connections: []
+        });
+    }
+    
+    // Create more intentional neural pathways
+    for (let i = 0; i < activeCount; i++) {
+        const neuronIndex = activeNeurons[i].index;
+        const i3 = neuronIndex * 3;
+        const p1 = new THREE.Vector3(
+            particlesPositions[i3],
+            particlesPositions[i3 + 1],
+            particlesPositions[i3 + 2]
+        );
+        
+        // Connect to 3-8 other particles
+        const connectionCount = Math.floor(Math.random() * 6) + 3;
+        
+        for (let c = 0; c < connectionCount && linesPositions.length / 6 < maxConnections; c++) {
+            // Find nearby particle
+            let closest = null;
+            let closestDist = maxDistance;
+            
+            // Find a suitable target by sampling 20 random particles
+            for (let s = 0; s < 20; s++) {
+                const targetIndex = Math.floor(Math.random() * particlesCount);
+                const t3 = targetIndex * 3;
                 
-                document.getElementById("days").textContent = days.toString().padStart(2, '0');
-                document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
-                document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
-                document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+                const p2 = new THREE.Vector3(
+                    particlesPositions[t3],
+                    particlesPositions[t3 + 1],
+                    particlesPositions[t3 + 2]
+                );
                 
-                if (distance < 0) {
-                    clearInterval(countdownTimer);
-                    document.getElementById("days").textContent = "00";
-                    document.getElementById("hours").textContent = "00";
-                    document.getElementById("minutes").textContent = "00";
-                    document.getElementById("seconds").textContent = "00";
+                const distance = p1.distanceTo(p2);
+                
+                if (distance < closestDist && distance > 0.3) {
+                    closest = targetIndex;
+                    closestDist = distance;
                 }
             }
             
-            // Initial call
-            updateCountdown();
-            
-            // Update countdown every second
-            const countdownTimer = setInterval(updateCountdown, 1000);
-            
-            // Notify button click
-            const notifyBtn = document.querySelector('.notify-btn');
-            const emailInput = document.querySelector('.email-input');
-            const notification = document.querySelector('.notification');
-            
-            notifyBtn.addEventListener('click', function() {
-                const email = emailInput.value.trim();
+            if (closest !== null) {
+                const t3 = closest * 3;
                 
-                if (email && validateEmail(email)) {
-                    // Firebase में ईमेल सेव करें
-                    const newSubscriberRef = ref(database, 'subscribers');
-                    const newSubscriber = push(newSubscriberRef);
+                // Create neural connection
+                linesPositions.push(
+                    particlesPositions[i3], particlesPositions[i3 + 1], particlesPositions[i3 + 2],
+                    particlesPositions[t3], particlesPositions[t3 + 1], particlesPositions[t3 + 2]
+                );
+                
+                // Store connection for animation
+                activeNeurons[i].connections.push({
+                    target: closest,
+                    state: 0, // Activation state (0-1)
+                    speed: Math.random() * 0.01 + 0.005,
+                    active: false
+                });
+                
+                // Colors for the lines (will be animated)
+                for (let j = 0; j < 6; j++) {
+                    linesColors.push(0.5, 0.1, 0.6, 0.5, 0.1, 0.6);
+                }
+            }
+        }
+    }
+    
+    // Add some random connections for visual interest
+    for (let i = 0; i < particlesCount && linesPositions.length / 6 < maxConnections; i += 10) {
+        const i3 = i * 3;
+        const p1 = new THREE.Vector3(
+            particlesPositions[i3],
+            particlesPositions[i3 + 1],
+            particlesPositions[i3 + 2]
+        );
+        
+        // Connect some nearby particles
+        for (let j = i + 1; j < particlesCount && linesPositions.length / 6 < maxConnections; j += 20) {
+            const j3 = j * 3;
+            const p2 = new THREE.Vector3(
+                particlesPositions[j3],
+                particlesPositions[j3 + 1],
+                particlesPositions[j3 + 2]
+            );
+            
+            const distance = p1.distanceTo(p2);
+            
+            if (distance < maxDistance && Math.random() > 0.7) {
+                linesPositions.push(p1.x, p1.y, p1.z);
+                linesPositions.push(p2.x, p2.y, p2.z);
+                
+                // Default color
+                linesColors.push(0.5, 0.1, 0.6, 0.5, 0.1, 0.6);
+            }
+        }
+    }
+    
+    linesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linesPositions, 3));
+    linesGeometry.setAttribute('color', new THREE.Float32BufferAttribute(linesColors, 3));
+    
+    const linesMaterial = new THREE.LineBasicMaterial({
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.4,
+        depthWrite: false
+    });
+    
+    const lines = new THREE.LineSegments(linesGeometry, linesMaterial);
+    scene.add(lines);
+    
+    // Track mouse position for interactivity
+    const mouse = new THREE.Vector2();
+    const raycaster = new THREE.Raycaster();
+    let isDragging = false;
+    let rotationSpeed = { x: 0.002, y: 0.001 };
+    
+    // Add subtle ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    scene.add(ambientLight);
+    
+    // Animation
+    const animate = (timestamp) => {
+        requestAnimationFrame(animate);
+        
+        // Automatic rotation if not interacting
+        if (!isDragging) {
+            particlesSystem.rotation.y += rotationSpeed.y;
+            particlesSystem.rotation.x += rotationSpeed.x;
+            lines.rotation.y += rotationSpeed.y;
+            lines.rotation.x += rotationSpeed.x;
+        }
+        
+        // Neural network animation
+        const linesColorsAttr = linesGeometry.attributes.color;
+        let connectionIndex = 0;
+        
+        activeNeurons.forEach((neuron, i) => {
+            // Check if it's time to fire
+            if (timestamp > neuron.nextFireTime) {
+                // Reset timer for next firing
+                neuron.nextFireTime = timestamp + Math.random() * 3000 + 1000;
+                
+                // Activate random connections
+                neuron.connections.forEach(conn => {
+                    if (Math.random() > 0.5) {
+                        conn.active = true;
+                        conn.state = 0;
+                    }
+                });
+            }
+            
+            // Animate active connections
+            neuron.connections.forEach(conn => {
+                if (conn.active) {
+                    // Progress activation wave
+                    conn.state += conn.speed;
                     
-                    set(newSubscriber, {
-                        email: email,
-                        timestamp: new Date().toISOString()
-                    })
-                    .then(() => {
-                        console.log("Email saved successfully!");
-                        // Show notification
-                        notification.classList.add('show');
+                    if (conn.state >= 1) {
+                        conn.active = false;
+                        conn.state = 0;
+                    } else {
+                        // Animate line color for this connection
+                        const c6 = connectionIndex * 6;
                         
-                        // Clear input
-                        emailInput.value = '';
+                        // Pulse wave travels along the connection
+                        const brightness = Math.sin(conn.state * Math.PI);
                         
-                        // Hide notification after 5 seconds
-                        setTimeout(() => {
-                            notification.classList.remove('show');
-                        }, 5000);
-                    })
-                    .catch((error) => {
-                        console.error("Error saving email: ", error);
-                        alert("Sorry, there was an error. Please try again later.");
-                    });
-                    
+                        // Start color (more gold/yellow)
+                        linesColorsAttr.array[c6] = 0.9;                  // R
+                        linesColorsAttr.array[c6 + 1] = 0.6 * brightness; // G
+                        linesColorsAttr.array[c6 + 2] = 0.2;              // B
+                        
+                        // End color (more purple/pink)
+                        linesColorsAttr.array[c6 + 3] = 0.7;              // R
+                        linesColorsAttr.array[c6 + 4] = 0.2;              // G
+                        linesColorsAttr.array[c6 + 5] = 0.8 * brightness; // B
+                    }
                 } else {
-                    // Highlight input for invalid email
-                    emailInput.style.borderColor = '#ff4d4d';
-                    setTimeout(() => {
-                        emailInput.style.borderColor = 'rgba(0, 0, 0, 0.1)';
-                    }, 3000);
+                    // Reset inactive connections to default color
+                    const c6 = connectionIndex * 6;
+                    for (let j = 0; j < 6; j++) {
+                        linesColorsAttr.array[c6 + j] = j % 3 === 0 ? 0.5 : (j % 3 === 1 ? 0.1 : 0.6);
+                    }
+                }
+                
+                connectionIndex++;
+            });
+        });
+        
+        linesColorsAttr.needsUpdate = true;
+        
+        // Pulsing effect
+        const pulseFactor = Math.sin(timestamp * 0.0007) * 0.04 + 1;
+        particlesSystem.scale.set(pulseFactor, pulseFactor, pulseFactor);
+        lines.scale.set(pulseFactor, pulseFactor, pulseFactor);
+        
+        renderer.render(scene, camera);
+    };
+    
+    animate(0);
+    
+    // Interactive controls
+    let previousMousePosition = {
+        x: 0,
+        y: 0
+    };
+    
+    container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        previousMousePosition = {
+            x: e.clientX,
+            y: e.clientY
+        };
+    });
+    
+    container.addEventListener('mouseup', () => {
+        isDragging = false;
+        // Add momentum effect
+        rotationSpeed = {
+            x: rotationSpeed.x * 0.8,
+            y: rotationSpeed.y * 0.8
+        };
+    });
+    
+    container.addEventListener('mouseleave', () => {
+        isDragging = false;
+    });
+    
+    container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        mouse.x = ((e.clientX - rect.left) / container.clientWidth) * 2 - 1;
+        mouse.y = -((e.clientY - rect.top) / container.clientHeight) * 2 + 1;
+        
+        // Trigger neural activity on hover
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObject(particlesSystem);
+        
+        if (intersects.length > 0) {
+            // Find closest active neuron
+            let closest = null;
+            let minDist = Infinity;
+            
+            const position = intersects[0].point;
+            
+            activeNeurons.forEach((neuron, i) => {
+                const i3 = neuron.index * 3;
+                const dx = position.x - particlesPositions[i3];
+                const dy = position.y - particlesPositions[i3 + 1];
+                const dz = position.z - particlesPositions[i3 + 2];
+                const dist = dx*dx + dy*dy + dz*dz;
+                
+                if (dist < minDist) {
+                    minDist = dist;
+                    closest = i;
                 }
             });
             
-            // Email validation
-            function validateEmail(email) {
-                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return re.test(String(email).toLowerCase());
+            if (closest !== null && minDist < 2) {
+                // Trigger this neuron
+                activeNeurons[closest].nextFireTime = 0;
             }
+        }
+        
+        if (isDragging) {
+            const deltaMove = {
+                x: e.clientX - previousMousePosition.x,
+                y: e.clientY - previousMousePosition.y
+            };
             
-            // GSAP animations
-            if (typeof gsap !== 'undefined') {
-                // Animate countdown numbers
-                gsap.from('.countdown-number', {
-                    y: 30,
-                    opacity: 0,
-                    duration: 0.8,
-                    stagger: 0.2,
-                    ease: "back.out(1.7)"
-                });
-                
-                // Animate form
-                gsap.from('.notification-form', {
-                    y: 30,
-                    opacity: 0,
-                    duration: 0.8,
-                    delay: 0.5,
-                    ease: "power3.out"
-                });
-                
-                // Animate social icons
-                gsap.from('.social-icon', {
-                    scale: 0,
-                    duration: 0.5,
-                    delay: 0.8,
-                    stagger: 0.1,
-                    ease: "back.out(1.7)"
-                });
+            // Update rotation based on mouse movement
+            rotationSpeed = {
+                x: deltaMove.y * 0.0005,
+                y: deltaMove.x * 0.0005
+            };
+            
+            particlesSystem.rotation.x += deltaMove.y * 0.005;
+            particlesSystem.rotation.y += deltaMove.x * 0.005;
+            lines.rotation.x += deltaMove.y * 0.005;
+            lines.rotation.y += deltaMove.x * 0.005;
+            
+            previousMousePosition = {
+                x: e.clientX,
+                y: e.clientY
+            };
+        }
+    });
+    
+    // Add touch support
+    container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            isDragging = true;
+            previousMousePosition = {
+                x: e.touches[0].clientX,
+                y: e.touches[0].clientY
+            };
+        }
+    });
+    
+    container.addEventListener('touchend', () => {
+        isDragging = false;
+        // Add momentum
+        rotationSpeed = {
+            x: rotationSpeed.x * 0.8,
+            y: rotationSpeed.y * 0.8
+        };
+    });
+    
+    container.addEventListener('touchmove', (e) => {
+        if (isDragging && e.touches.length === 1) {
+            const deltaMove = {
+                x: e.touches[0].clientX - previousMousePosition.x,
+                y: e.touches[0].clientY - previousMousePosition.y
+            };
+            
+            particlesSystem.rotation.x += deltaMove.y * 0.005;
+            particlesSystem.rotation.y += deltaMove.x * 0.005;
+            lines.rotation.x += deltaMove.y * 0.005;
+            lines.rotation.y += deltaMove.x * 0.005;
+            
+            previousMousePosition = {
+                x: e.touches[0].clientX,
+                y: e.touches[0].clientY
+            };
+        }
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+    
+    // Add zoom functionality with mouse wheel
+    container.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        // Adjust camera position based on scroll direction
+        camera.position.z += e.deltaY * 0.01;
+        // Limit zoom range
+        camera.position.z = Math.max(2, Math.min(10, camera.position.z));
+    });
+    
+    // Double tap to reset view on mobile
+    let lastTap = 0;
+    container.addEventListener('touchend', (e) => {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+        if (tapLength < 300 && tapLength > 0) {
+            // Double tap detected - reset view
+            camera.position.z = 5;
+            particlesSystem.rotation.x = 0;
+            particlesSystem.rotation.y = 0;
+            lines.rotation.x = 0;
+            lines.rotation.y = 0;
+            rotationSpeed = { x: 0.002, y: 0.001 };
+        }
+        lastTap = currentTime;
+    });
+    
+    // Expose control methods for external access
+    return {
+        resetView: () => {
+            camera.position.z = 5;
+            particlesSystem.rotation.x = 0;
+            particlesSystem.rotation.y = 0;
+            lines.rotation.x = 0;
+            lines.rotation.y = 0;
+        },
+        speedUp: () => {
+            rotationSpeed = { 
+                x: rotationSpeed.x * 1.5, 
+                y: rotationSpeed.y * 1.5 
+            };
+        },
+        slowDown: () => {
+            rotationSpeed = { 
+                x: rotationSpeed.x * 0.5, 
+                y: rotationSpeed.y * 0.5 
+            };
+        },
+        triggerActivity: () => {
+            // Trigger random neural activity
+            activeNeurons.forEach(neuron => {
+                if (Math.random() > 0.7) {
+                    neuron.nextFireTime = 0;
+                }
+            });
+        }
+    };
+};
+
+// Initialize both visualizations when document is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if necessary elements exist
+    if (document.getElementById('leaves-canvas')) {
+        initLeavesAnimation();
+    }
+    
+    if (document.getElementById('ai-model-visualizer')) {
+        const aiVisualizer = initAIModelVisualizer();
+        
+        // Optional: Add UI controls for the visualizer
+        if (document.getElementById('reset-view-btn')) {
+            document.getElementById('reset-view-btn').addEventListener('click', aiVisualizer.resetView);
+        }
+        
+        if (document.getElementById('speed-up-btn')) {
+            document.getElementById('speed-up-btn').addEventListener('click', aiVisualizer.speedUp);
+        }
+        
+        if (document.getElementById('slow-down-btn')) {
+            document.getElementById('slow-down-btn').addEventListener('click', aiVisualizer.slowDown);
+        }
+        
+        if (document.getElementById('trigger-activity-btn')) {
+            document.getElementById('trigger-activity-btn').addEventListener('click', aiVisualizer.triggerActivity);
+        }
+    }
+    
+    // Add responsive behavior
+    const handleResize = () => {
+        // Adjust any elements as needed based on screen size
+        const visualizers = document.querySelectorAll('.visualizer-container');
+        visualizers.forEach(container => {
+            // Set height based on width for responsive aspect ratio
+            if (window.innerWidth < 768) {
+                container.style.height = `${container.clientWidth * 0.75}px`;
+            } else {
+                container.style.height = `${container.clientWidth * 0.6}px`;
             }
         });
-    </script>
+    };
+    
+    // Initial call and add event listener
+    handleResize();
+    window.addEventListener('resize', handleResize);
+});
+
+// Optional: Add keyboard controls for desktop
+document.addEventListener('keydown', (event) => {
+    // Only respond if a visualizer exists
+    const aiVisualizer = document.getElementById('ai-model-visualizer');
+    if (!aiVisualizer) return;
+    
+    switch(event.key) {
+        case 'r':
+            // Reset view
+            if (window.aiVisualizer && window.aiVisualizer.resetView) {
+                window.aiVisualizer.resetView();
+            }
+            break;
+        case '+':
+            // Speed up
+            if (window.aiVisualizer && window.aiVisualizer.speedUp) {
+                window.aiVisualizer.speedUp();
+            }
+            break;
+        case '-':
+            // Slow down
+            if (window.aiVisualizer && window.aiVisualizer.slowDown) {
+                window.aiVisualizer.slowDown();
+            }
+            break;
+        case 'a':
+            // Trigger activity
+            if (window.aiVisualizer && window.aiVisualizer.triggerActivity) {
+                window.aiVisualizer.triggerActivity();
+            }
+            break;
+    }
+});
+
+// Export functions for potential use in other scripts
+if (typeof module !== 'undefined') {
+    module.exports = {
+        initLeavesAnimation,
+        initAIModelVisualizer
+    };
+}
+</script>
 </body>
 </html>
