@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Miss Banaras Competition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary-color: #F2B134; /* Warm gold */
+            --secondary-color: #D35269; /* Soft pink/rose */
+            --ghat-color: #8B6E4E; /* Rich sandstone */
+            --ghat-highlight: #A68B68; /* Lighter sandstone */
+            --accent-color: #E1673C; /* Rich vermilion */
+            --dark-color: #221A31; /* Deep indigo */
+            --light-color: #FFF8E8; /* Warm white */
+            --temple-color: #D9B17D; /* Sandstone */
+            --water-color: #4C96D7; /* Ganges blue */
+            --text-color: #333333; /* Dark gray for text */
+            --btn-gradient: linear-gradient(135deg, #F2B134, #D35269); /* Button gradient */
+            --error-color: #D32F2F; /* Error red */
+            --success-color: #388E3C; /* Success green */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    color: var(--text-color);
+    background-color: var(--light-color);
+    background: linear-gradient(135deg, #F8F1E5, #FFF8E8);
+    min-height: 100vh;
+    margin: 0; /* Ensure no margin is causing scrolling */
+    display: flex;
+    flex-direction: column;
+}
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s;
+            background-color: rgba(255, 248, 232, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary-color), transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .logo:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-link {
+            margin: 0 1.2rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-color);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* Main Content */
+        .login-container {
+    width: 100%;
+    min-height: calc(100vh - 120px); /* Subtract header height */
+    position: relative;
+    overflow: hidden;
+    padding-top: 100px; /* Reduced from 120px */
+    padding-bottom: 40px; /* Add padding at bottom */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+        
+        .leaves-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .form-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 0;
+    transition: all 0.5s ease;
+    max-height: calc(100vh - 200px); /* Limit height */
+    display: flex;
+    flex-direction: column;
+}
+        .form-tabs {
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 1.5rem 0;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .tab.active {
+            background: var(--btn-gradient);
+            color: white;
+        }
+        
+        .forms-wrapper {
+            display: flex;
+            width: 200%;
+            transition: transform 0.5s ease;
+        }
+        
+        .login-form, .register-form {
+            width: 50%;
+            padding: 2.5rem;
+        }
+        
+        .forms-wrapper.show-register {
+            transform: translateX(-50%);
+        }
+        
+        .form-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark-color);
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(139, 110, 78, 0.3);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(225, 103, 60, 0.3);
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--dark-color);
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            background: none;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .toggle-password:hover {
+            opacity: 1;
+        }
+        
+        .remember-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .remember-checkbox {
+            margin-right: 0.5rem;
+        }
+        
+        .forgot-password {
+            margin-left: auto;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .forgot-password:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--btn-gradient);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(225, 103, 60, 0.3);
+        }
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: 1;
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .submit-btn span {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .separator {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        .separator-line {
+            flex: 1;
+            height: 1px;
+            background-color: var(--text-color);
+            opacity: 0.3;
+        }
+        
+        .separator-text {
+            padding: 0 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            border: 1px solid rgba(139, 110, 78, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            position: relative;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-btn.google:hover {
+            color: #DB4437;
+        }
+        
+        .switch-form {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .switch-link {
+            color: var(--accent-color);
+            cursor: pointer;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .switch-link:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        .gender-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .gender-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .success-message {
+            color: var(--success-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            text-align: center;
+            display: none;
+        }
+        .banaras-silhouette {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px; /* Reduced from 120px */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z' fill='%238B6E4E' fill-opacity='0.2'%3E%3C/path%3E%3Cpath d='M50 50 L100 40 L150 60 L200 45 L250 55 L300 35 L350 60 L400 40 L450 55 L500 45 L550 65 L600 30 L650 55 L700 40 L750 60 L800 35 L850 50 L900 30 L950 55 L1000 45 L1050 65 L1100 40 L1150 50 L1200 40 L1200 120 L0 120 L0 70 Z' fill='%238B6E4E' fill-opacity='0.15'%3E%3C/path%3E%3C/svg%3E");
+    background-size: cover;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+        
+        footer {
+    background-color: rgba(255, 248, 232, 0.95);
+    padding: 1rem 3rem; /* Reduced padding */
+    text-align: center;
+    border-top: 1px solid rgba(211, 82, 105, 0.1);
+    margin-top: auto; /* Push to bottom */
+}
+        
+        .footer-text {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                max-width: 90%;
+                margin: 0 auto;
+            }
+            
+            .login-form, .register-form {
+                padding: 2rem 1.5rem;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 101;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease;
+                z-index: 100;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-link {
+                margin: 1.5rem 0;
+                font-size: 1.2rem;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+            
+            header {
+                padding: 1rem 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-form, .register-form {
+                padding: 1.5rem 1rem;
+            }
+            
+            .form-heading {
+                font-size: 1.5rem;
+            }
+            
+            .tab {
+                padding: 1rem 0;
+            }
+        }
+
+        /* Loading animation */
+        .loader {
+            display: none;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .btn-text {
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">Miss Banaras</a>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="aboutus.html" class="nav-link">About</a></li>
+            <li><a href="reward.html" class="nav-link">Rewards</a></li>
+            <li><a href="Criteria.html" class="nav-link">Criteria</a></li>
+            <li><a href="Register.html" class="nav-link">Register</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+    </header>
+    
+    <div class="login-container">
+        <canvas class="leaves-canvas" id="leaves-canvas"></canvas>
+        
+        <div class="form-container">
+            <div class="form-tabs">
+                <div class="tab login-tab active">Login</div>
+                <div class="tab register-tab">Register</div>
+            </div>
+            
+            <div class="forms-wrapper">
+                <!-- Login Form -->
+                <div class="login-form">
+                    <h2 class="form-heading">Welcome</h2>
+                    
+                    <div class="input-group">
+                        <label for="login-email" class="input-label">Email</label>
+                        <input type="email" id="login-email" class="input-field" placeholder="youremail@example.com" required>
+                        <div class="error-message" id="login-email-error">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="login-password" class="input-label">Password</label>
+                        <div class="password-container">
+                            <input type="password" id="login-password" class="input-field" placeholder="Enter your password" required>
+                            <button type="button" class="toggle-password">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="login-password-error">Password is required</div>
+                    </div>
+                    
+                    <div class="remember-container">
+                        <label>
+                            <input type="checkbox" class="remember-checkbox" id="remember-me">
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="button" class="submit-btn" id="login-btn">
+                        <span class="btn-text">Login</span>
+                        <div class="loader"></div>
+                    </button>
+                    
+                    <div class="separator">
+                        <div class="separator-line"></div>
+                        <div class="separator-text">or continue with</div>
+                        <div class="separator-line"></div>
+                    </div>
+                    
+                    <div class="social-login">
+                        <button class="social-btn google" id="google-login-btn">
+                            <i class="fab fa-google"></i>
+                            <div class="loader"></div>
+                        </button>
+                    </div>
+                    
+                    <div class="switch-form">
+                        Don't have an account? <span class="switch-link" id="to-register">Register now</span>
+                    </div>
+
+                    <div class="success-message" id="login-success">
+                        Login successful! Redirecting...
+                    </div>
+                    <div class="error-message" id="login-error" style="text-align: center; margin-top: 10px;">
+                        <!-- Error message will be displayed here -->
+                    </div>
+                </div>
+                
+                <!-- Register Form -->
+                <div class="register-form">
+                    <h2 class="form-heading">Create Account</h2>
+                    
+                    <div class="input-group">
+                        <label for="register-name" class="input-label">Full Name</label>
+                        <input type="text" id="register-name" class="input-field" placeholder="Enter your full name" required>
+                        <div class="error-message" id="register-name-error">Name is required</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="register-email" class="input-label">Email</label>
+                        <input type="email" id="register-email" class="input-field" placeholder="youremail@example.com" required>
+                        <div class="error-message" id="register-email-error">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="register-phone" class="input-label">Phone Number</label>
+                        <input type="tel" id="register-phone" class="input-field" placeholder="Enter your phone number" required>
+                        <div class="error-message" id="register-phone-error">Please enter a valid phone number</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Gender</label>
+                        <div class="gender-options">
+                            <label class="gender-option">
+                                <input type="radio" name="gender" value="female" checked>
+                                Female
+                            </label>
+                            <label class="gender-option">
+                                <input type="radio" name="gender" value="male">
+                                Male
+                            </label>
+                            <label class="gender-option">
+                                <input type="radio" name="gender" value="other">
+                                Other
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="register-password" class="input-label">Password</label>
+                        <div class="password-container">
+                            <input type="password" id="register-password" class="input-field" placeholder="Create a password" required>
+                            <button type="button" class="toggle-password">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="register-password-error">Password must be at least 8 characters</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="register-confirm-password" class="input-label">Confirm Password</label>
+                        <div class="password-container">
+                            <input type="password" id="register-confirm-password" class="input-field" placeholder="Confirm your password" required>
+                            <button type="button" class="toggle-password">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="register-confirm-password-error">Passwords do not match</div>
+                    </div>
+                    
+                    <button type="button" class="submit-btn" id="register-btn">
+                        <span class="btn-text">Register</span>
+                        <div class="loader"></div>
+                    </button>
+                    
+                    <div class="separator">
+                        <div class="separator-line"></div>
+                        <div class="separator-text">or register with</div>
+                        <div class="separator-line"></div>
+                    </div>
+                    
+                    <div class="social-login">
+                        <button class="social-btn google" id="google-register-btn">
+                            <i class="fab fa-google"></i>
+                            <div class="loader"></div>
+                        </button>
+                    </div>
+                    
+                    <div class="switch-form">
+                        Already have an account? <span class="switch-link" id="to-login">Login now</span>
+                    </div>
+
+                    <div class="success-message" id="register-success">
+                        Registration successful! Redirecting to login...
+                    </div>
+                    <div class="error-message" id="register-error" style="text-align: center; margin-top: 10px;">
+                        <!-- Error message will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="banaras-silhouette"></div>
+    </div>
+    
+    <footer>
+        <p class="footer-text">© 2025 Miss Banaras Competition. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            onAuthStateChanged,
+            GoogleAuthProvider,
+            signInWithPopup 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDrHqo9pVoyMU38VReK0iENZUGPn7fZZSY",
+            authDomain: "miss-banaras-df6ae.firebaseapp.com",
+            projectId: "miss-banaras-df6ae",
+            storageBucket: "miss-banaras-df6ae.firebasestorage.app",
+            messagingSenderId: "297867452417",
+            appId: "1:297867452417:web:fcfa314026c0a6b008e000",
+            measurementId: "G-Z3DER8515Q"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+        const db = getFirestore();
+        const googleProvider = new GoogleAuthProvider();
+
+        // Check if user is already logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, redirect to registered.html
+                window.location.href = "dashboard.html";
+            }
+        });
+
+        // DOM Elements
+        const loginTab = document.querySelector('.login-tab');
+        const registerTab = document.querySelector('.register-tab');
+        const formsWrapper = document.querySelector('.forms-wrapper');
+        const toRegister = document.getElementById('to-register');
+        const toLogin = document.getElementById('to-login');
+        
+        // Form elements
+        const loginForm = {
+            email: document.getElementById('login-email'),
+            password: document.getElementById('login-password'),
+            emailError: document.getElementById('login-email-error'),
+            passwordError: document.getElementById('login-password-error'),
+            submitBtn: document.getElementById('login-btn'),
+            loader: document.getElementById('login-btn').querySelector('.loader'),
+            btnText: document.getElementById('login-btn').querySelector('.btn-text'),
+            successMsg: document.getElementById('login-success'),
+            errorMsg: document.getElementById('login-error')
+        };
+        
+        const registerForm = {
+            name: document.getElementById('register-name'),
+            email: document.getElementById('register-email'),
+            phone: document.getElementById('register-phone'),
+            password: document.getElementById('register-password'),
+            confirmPassword: document.getElementById('register-confirm-password'),
+            nameError: document.getElementById('register-name-error'),
+            emailError: document.getElementById('register-email-error'),
+            phoneError: document.getElementById('register-phone-error'),
+            passwordError: document.getElementById('register-password-error'),
+            confirmPasswordError: document.getElementById('register-confirm-password-error'),
+            submitBtn: document.getElementById('register-btn'),
+            loader: document.getElementById('register-btn').querySelector('.loader'),
+            btnText: document.getElementById('register-btn').querySelector('.btn-text'),
+            successMsg: document.getElementById('register-success'),
+            errorMsg: document.getElementById('register-error')
+        };
+
+        // Google login buttons
+        const googleLoginBtn = document.getElementById('google-login-btn');
+        const googleRegisterBtn = document.getElementById('google-register-btn');
+        
+        // Tab switching
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            formsWrapper.classList.remove('show-register');
+            resetErrors();
+        });
+        
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            formsWrapper.classList.add('show-register');
+            resetErrors();
+        });
+        
+        toRegister.addEventListener('click', () => {
+            registerTab.click();
+        });
+        
+        toLogin.addEventListener('click', () => {
+            loginTab.click();
+        });
+        
+        // Toggle password visibility
+        const togglePasswordBtns = document.querySelectorAll('.toggle-password');
+        togglePasswordBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const passwordField = this.previousElementSibling;
+                const icon = this.querySelector('i');
+                
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordField.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+        
+        // Reset form errors
+        function resetErrors() {
+            const errorElements = document.querySelectorAll('.error-message');
+            const successElements = document.querySelectorAll('.success-message');
+            
+            errorElements.forEach(element => {
+                element.style.display = 'none';
+            });
+            
+            successElements.forEach(element => {
+                element.style.display = 'none';
+            });
+        }
+        
+        // Validate login form
+        function validateLoginForm() {
+            let isValid = true;
+            
+            // Email validation
+            if (!loginForm.email.value || !isValidEmail(loginForm.email.value)) {
+                loginForm.emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                loginForm.emailError.style.display = 'none';
+            }
+            
+            // Password validation
+            if (!loginForm.password.value) {
+                loginForm.passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                loginForm.passwordError.style.display = 'none';
+            }
+            
+            return isValid;
+        }
+        
+        // Validate register form
+        function validateRegisterForm() {
+            let isValid = true;
+            
+            // Name validation
+            if (!registerForm.name.value.trim()) {
+                registerForm.nameError.style.display = 'block';
+                isValid = false;
+            } else {
+                registerForm.nameError.style.display = 'none';
+            }
+            
+            // Email validation
+            if (!registerForm.email.value || !isValidEmail(registerForm.email.value)) {
+                registerForm.emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                registerForm.emailError.style.display = 'none';
+            }
+            
+            // Phone validation
+            if (!registerForm.phone.value || !isValidPhone(registerForm.phone.value)) {
+                registerForm.phoneError.style.display = 'block';
+                isValid = false;
+            } else {
+                registerForm.phoneError.style.display = 'none';
+            }
+            
+            // Password validation
+            if (!registerForm.password.value || registerForm.password.value.length < 8) {
+                registerForm.passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                registerForm.passwordError.style.display = 'none';
+            }
+            
+            // Confirm password validation
+            if (registerForm.password.value !== registerForm.confirmPassword.value) {
+                registerForm.confirmPasswordError.style.display = 'block';
+                isValid = false;
+            } else {
+                registerForm.confirmPasswordError.style.display = 'none';
+            }
+            
+            return isValid;
+        }
+        
+        // Helper functions for validation
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        function isValidPhone(phone) {
+            const phoneRegex = /^\+?\d{10,15}$/;
+            return phoneRegex.test(phone);
+        }
+        
+        // Login submission
+        loginForm.submitBtn.addEventListener('click', async () => {
+            resetErrors();
+            
+            if (validateLoginForm()) {
+                // Show loader, hide button text
+                loginForm.loader.style.display = 'block';
+                loginForm.btnText.style.opacity = '0';
+                
+                try {
+                    await signInWithEmailAndPassword(auth, loginForm.email.value, loginForm.password.value);
+                    loginForm.successMsg.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                } catch (error) {
+                    console.error('Login error:', error);
+                    loginForm.errorMsg.textContent = getAuthErrorMessage(error.code);
+                    loginForm.errorMsg.style.display = 'block';
+                    loginForm.loader.style.display = 'none';
+                    loginForm.btnText.style.opacity = '1';
+                }
+            }
+        });
+        
+        // Register submission
+        registerForm.submitBtn.addEventListener('click', async () => {
+            resetErrors();
+            
+            if (validateRegisterForm()) {
+                // Show loader, hide button text
+                registerForm.loader.style.display = 'block';
+                registerForm.btnText.style.opacity = '0';
+                
+                try {
+                    // Create user
+                    const userCredential = await createUserWithEmailAndPassword(
+                        auth, 
+                        registerForm.email.value, 
+                        registerForm.password.value
+                    );
+                    
+                    // Store additional user data
+                    const user = userCredential.user;
+                    const selectedGender = document.querySelector('input[name="gender"]:checked').value;
+                    
+                    await setDoc(doc(db, 'users', user.uid), {
+                        uid: user.uid,
+                        name: registerForm.name.value,
+                        email: registerForm.email.value,
+                        phone: registerForm.phone.value,
+                        gender: selectedGender,
+                        registrationDate: new Date()
+                    });
+                    
+                    registerForm.successMsg.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    registerForm.errorMsg.textContent = getAuthErrorMessage(error.code);
+                    registerForm.errorMsg.style.display = 'block';
+                    registerForm.loader.style.display = 'none';
+                    registerForm.btnText.style.opacity = '1';
+                }
+            }
+        });
+        
+        // Google authentication
+        googleLoginBtn.addEventListener('click', handleGoogleAuth);
+        googleRegisterBtn.addEventListener('click', handleGoogleAuth);
+        
+        async function handleGoogleAuth() {
+            resetErrors();
+            
+            // Show loader in the clicked button
+            const btn = this;
+            const loader = btn.querySelector('.loader');
+            loader.style.display = 'block';
+            
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                const user = result.user;
+                
+                // Store user info in Firestore (will be merged if user already exists)
+                await setDoc(doc(db, 'users', user.uid), {
+                    uid: user.uid,
+                    name: user.displayName || '',
+                    email: user.email,
+                    photoURL: user.photoURL || null,
+                    registrationDate: new Date()
+                }, { merge: true });
+                
+                // Redirect to registered page
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.error('Google authentication error:', error);
+                
+                // Show error in the appropriate form
+                const errorMsg = getAuthErrorMessage(error.code);
+                if (btn === googleLoginBtn) {
+                    loginForm.errorMsg.textContent = errorMsg;
+                    loginForm.errorMsg.style.display = 'block';
+                } else {
+                    registerForm.errorMsg.textContent = errorMsg;
+                    registerForm.errorMsg.style.display = 'block';
+                }
+                
+                loader.style.display = 'none';
+            }
+        }
+        
+        // Error message mapping for user-friendly messages
+        function getAuthErrorMessage(errorCode) {
+            const errorMessages = {
+                'auth/email-already-in-use': 'This email is already in use.',
+                'auth/invalid-email': 'Please enter a valid email address.',
+                'auth/user-disabled': 'This account has been disabled.',
+                'auth/user-not-found': 'No account found with this email.',
+                'auth/wrong-password': 'Incorrect password.',
+                'auth/weak-password': 'Password should be at least 6 characters.',
+                'auth/network-request-failed': 'Network error. Please check your connection.',
+                'auth/too-many-requests': 'Too many attempts. Please try again later.',
+                'auth/operation-not-allowed': 'Operation not allowed.',
+                'auth/popup-closed-by-user': 'Google sign-in was cancelled.',
+                'auth/cancelled-popup-request': 'Sign-in process was cancelled.',
+                'auth/popup-blocked': 'Sign-in popup was blocked by the browser.'
+            };
+            
+            return errorMessages[errorCode] || 'An error occurred. Please try again.';
+        }
+        
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        
+       // Enhanced floating leaves animation with Three.js
+function initLeavesAnimation() {
+    const canvas = document.getElementById('leaves-canvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
+    
+    camera.position.z = 15;
+    
+    // Add ambient light for better visual effect
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+    
+    // Add directional light to create depth
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirLight.position.set(5, 10, 7);
+    scene.add(dirLight);
+    
+    // Create background particles
+    createBackgroundParticles();
+    
+    // Create realistic leaves
+    createRealisticLeaves();
+    
+    // Handle window resize
+    window.addEventListener('resize', onWindowResize);
+    
+    // Start animation
+    animate();
+    
+    // Define functions inside the main function to keep variables in scope
+    function createBackgroundParticles() {
+        const particleCount = 500;
+        const particles = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const sizes = new Float32Array(particleCount);
+        const colors = new Float32Array(particleCount * 3);
+        
+        const color1 = new THREE.Color(0xF2B134); // gold
+        const color2 = new THREE.Color(0xD35269); // rose
+        const color3 = new THREE.Color(0xE1673C); // vermilion
+        const color4 = new THREE.Color(0xD9B17D); // sandstone
+        const colorOptions = [color1, color2, color3, color4];
+        
+        for (let i = 0; i < particleCount; i++) {
+            // Position
+            positions[i * 3] = (Math.random() - 0.5) * 50;     // x
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 50; // y
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 30; // z
+            
+            // Size
+            sizes[i] = Math.random() * 0.5 + 0.1;
+            
+            // Color
+            const color = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+            colors[i * 3] = color.r;
+            colors[i * 3 + 1] = color.g;
+            colors[i * 3 + 2] = color.b;
+        }
+        
+        particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particles.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        
+        const particleMaterial = new THREE.PointsMaterial({
+            size: 0.2,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.6,
+            sizeAttenuation: true,
+            blending: THREE.AdditiveBlending
+        });
+        
+        const particleSystem = new THREE.Points(particles, particleMaterial);
+        particleSystem.userData = { 
+            rotationSpeed: 0.0002,
+            originalPositions: positions.slice()
+        };
+        scene.add(particleSystem);
+    }
+    
+    function createRealisticLeaves() {
+        const leaves = [];
+        const leafShapes = [
+            createAspenLeafShape(),
+            createMapleLeafShape(),
+            createOvalLeafShape(),
+            createHeartLeafShape()
+        ];
+        
+        const leafColors = [
+            0xF2B134, // gold
+            0xD35269, // rose
+            0xE1673C, // vermilion
+            0xD9B17D, // sandstone
+            0xDDA448, // golden amber
+            0xC96D55  // terracotta
+        ];
+        
+        // Create 40 leaves
+        for (let i = 0; i < 40; i++) {
+            const leafGeometry = new THREE.ShapeGeometry(
+                leafShapes[Math.floor(Math.random() * leafShapes.length)]
+            );
+            
+            // Add depth to leaves
+            const extrudeSettings = {
+                steps: 1,
+                depth: 0.02,
+                bevelEnabled: true,
+                bevelThickness: 0.01,
+                bevelSize: 0.02,
+                bevelSegments: 1
+            };
+            
+            const extrudedGeometry = new THREE.ExtrudeGeometry(
+                leafShapes[Math.floor(Math.random() * leafShapes.length)],
+                extrudeSettings
+            );
+            
+            // Use MeshPhongMaterial for better lighting
+            const material = new THREE.MeshPhongMaterial({
+                color: leafColors[Math.floor(Math.random() * leafColors.length)],
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.8 + Math.random() * 0.2,
+                shininess: 30,
+                flatShading: true
+            });
+            
+            const leaf = new THREE.Mesh(extrudedGeometry, material);
+            
+            // Position the leaf in 3D space
+            leaf.position.x = Math.random() * 40 - 20;
+            leaf.position.y = Math.random() * 30 - 5; // Start higher
+            leaf.position.z = Math.random() * 10 - 5;
+            
+            // Random initial rotation
+            leaf.rotation.x = Math.random() * Math.PI * 2;
+            leaf.rotation.y = Math.random() * Math.PI * 2;
+            leaf.rotation.z = Math.random() * Math.PI * 2;
+            
+            // Scale the leaf to a reasonable size
+            const scale = 0.1 + Math.random() * 0.15;
+            leaf.scale.set(scale, scale, scale);
+            
+            // Add custom properties for animation
+            leaf.userData = {
+                rotationSpeedX: (Math.random() - 0.5) * 0.01,
+                rotationSpeedY: (Math.random() - 0.5) * 0.01,
+                rotationSpeedZ: (Math.random() - 0.5) * 0.005,
+                fallingSpeed: 0.01 + Math.random() * 0.02,
+                swayFactor: 0.01 + Math.random() * 0.02,
+                swayOffsetX: Math.random() * Math.PI * 2,
+                swayOffsetZ: Math.random() * Math.PI * 2,
+                oscillationSpeed: 0.5 + Math.random() * 0.5
+            };
+            
+            scene.add(leaf);
+            leaves.push(leaf);
+        }
+        
+        // Store leaves in scene's userData for animation
+        scene.userData = { leaves };
+    }
+    
+    function createAspenLeafShape() {
+        const shape = new THREE.Shape();
+        
+        // Start at the stem
+        shape.moveTo(0, -0.5);
+        
+        // Draw to the tip
+        shape.bezierCurveTo(0.2, 0, -0.2, 0.5, 0, 1);
+        
+        // Draw the right side
+        shape.bezierCurveTo(0.4, 0.8, 0.6, 0.5, 0.5, 0);
+        shape.bezierCurveTo(0.5, -0.3, 0.3, -0.5, 0, -0.5);
+        
+        // Draw the left side
+        shape.bezierCurveTo(-0.3, -0.5, -0.5, -0.3, -0.5, 0);
+        shape.bezierCurveTo(-0.6, 0.5, -0.4, 0.8, 0, 1);
+        
+        return shape;
+    }
+    
+    function createMapleLeafShape() {
+        const shape = new THREE.Shape();
+        
+        // Start at bottom center (stem)
+        shape.moveTo(0, -0.5);
+        
+        // Right bottom lobe
+        shape.bezierCurveTo(0.2, -0.4, 0.3, -0.4, 0.4, -0.3);
+        shape.bezierCurveTo(0.5, -0.2, 0.4, -0.1, 0.3, 0);
+        
+        // Right middle lobe
+        shape.bezierCurveTo(0.4, 0, 0.6, 0.2, 0.5, 0.4);
+        shape.bezierCurveTo(0.4, 0.5, 0.3, 0.4, 0.2, 0.4);
+        
+        // Top lobe
+        shape.bezierCurveTo(0.2, 0.5, 0.1, 0.7, 0, 0.9);
+        shape.bezierCurveTo(-0.1, 0.7, -0.2, 0.5, -0.2, 0.4);
+        
+        // Left middle lobe
+        shape.bezierCurveTo(-0.3, 0.4, -0.4, 0.5, -0.5, 0.4);
+        shape.bezierCurveTo(-0.6, 0.2, -0.4, 0, -0.3, 0);
+        
+        // Left bottom lobe
+        shape.bezierCurveTo(-0.4, -0.1, -0.5, -0.2, -0.4, -0.3);
+        shape.bezierCurveTo(-0.3, -0.4, -0.2, -0.4, 0, -0.5);
+        
+        return shape;
+    }
+    
+    function createOvalLeafShape() {
+        const shape = new THREE.Shape();
+        
+        // Start at bottom (stem)
+        shape.moveTo(0, -0.5);
+        
+        // Draw right side
+        shape.bezierCurveTo(0.2, -0.4, 0.4, -0.2, 0.4, 0);
+        shape.bezierCurveTo(0.4, 0.3, 0.2, 0.7, 0, 0.8);
+        
+        // Draw left side
+        shape.bezierCurveTo(-0.2, 0.7, -0.4, 0.3, -0.4, 0);
+        shape.bezierCurveTo(-0.4, -0.2, -0.2, -0.4, 0, -0.5);
+        
+        return shape;
+    }
+    
+    function createHeartLeafShape() {
+        const shape = new THREE.Shape();
+        
+        // Start at bottom (stem)
+        shape.moveTo(0, -0.5);
+        
+        // Draw to the tip
+        shape.bezierCurveTo(0.2, -0.3, 0.3, 0, 0, 0.5);
+        
+        // Draw right half of heart
+        shape.bezierCurveTo(0.3, 0.2, 0.5, 0, 0.3, -0.2);
+        shape.bezierCurveTo(0.2, -0.4, 0, -0.5, 0, -0.5);
+        
+        // Draw left half of heart
+        shape.bezierCurveTo(0, -0.5, -0.2, -0.4, -0.3, -0.2);
+        shape.bezierCurveTo(-0.5, 0, -0.3, 0.2, 0, 0.5);
+        
+        return shape;
+    }
+    
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        const time = Date.now() * 0.001;
+        
+        // Animate leaves
+        if (scene.userData && scene.userData.leaves) {
+            scene.userData.leaves.forEach(leaf => {
+                // Realistic falling with rotation
+                leaf.rotation.x += leaf.userData.rotationSpeedX;
+                leaf.rotation.y += leaf.userData.rotationSpeedY;
+                leaf.rotation.z += leaf.userData.rotationSpeedZ;
+                
+                // Vertical falling with acceleration
+                leaf.position.y -= leaf.userData.fallingSpeed;
+                
+                // Horizontal swaying (more natural)
+                leaf.position.x += Math.sin(time * leaf.userData.oscillationSpeed + leaf.userData.swayOffsetX) * leaf.userData.swayFactor * 0.05;
+                leaf.position.z += Math.cos(time * leaf.userData.oscillationSpeed + leaf.userData.swayOffsetZ) * leaf.userData.swayFactor * 0.05;
+                
+                // Reset if out of view
+                if (leaf.position.y < -15) {
+                    leaf.position.y = 20;
+                    leaf.position.x = Math.random() * 40 - 20;
+                    leaf.position.z = Math.random() * 10 - 5;
+                    
+                    // Randomize animation parameters slightly for variety
+                    leaf.userData.fallingSpeed = 0.01 + Math.random() * 0.02;
+                    leaf.userData.oscillationSpeed = 0.5 + Math.random() * 0.5;
+                }
+            });
+        }
+        
+        // Animate background particles
+        scene.children.forEach(child => {
+            if (child instanceof THREE.Points) {
+                // Slow rotation of entire particle system
+                child.rotation.y += child.userData.rotationSpeed;
+                child.rotation.x += child.userData.rotationSpeed * 0.5;
+                
+                // Gentle pulsing effect for particles
+                const positions = child.geometry.attributes.position.array;
+                const originalPositions = child.userData.originalPositions;
+                
+                for (let i = 0; i < positions.length; i += 3) {
+                    const pulseFactor = Math.sin(time + i * 0.0001) * 0.05;
+                    positions[i] = originalPositions[i] * (1 + pulseFactor);
+                    positions[i + 1] = originalPositions[i + 1] * (1 + pulseFactor);
+                    positions[i + 2] = originalPositions[i + 2] * (1 + pulseFactor);
+                }
+                
+                child.geometry.attributes.position.needsUpdate = true;
+            }
+        });
+        
+        renderer.render(scene, camera);
+    }
+    
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+}
+
+// Initialize animations when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initLeavesAnimation();
+
+    // Add event listeners for Enter key in forms
+    loginForm.password.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            loginForm.submitBtn.click();
+        }
+    });
+    
+    registerForm.confirmPassword.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            registerForm.submitBtn.click();
+        }
+    });
+});
+    </script>
+</body>
+</html>

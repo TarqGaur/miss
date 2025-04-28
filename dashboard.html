@@ -1,0 +1,1900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form | Miss Banaras Competition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary-color: #F2B134; /* Warm gold */
+            --secondary-color: #D35269; /* Soft pink/rose */
+            --ghat-color: #8B6E4E; /* Rich sandstone */
+            --ghat-highlight: #A68B68; /* Lighter sandstone */
+            --accent-color: #E1673C; /* Rich vermilion */
+            --dark-color: #221A31; /* Deep indigo */
+            --light-color: #FFF8E8; /* Warm white */
+            --temple-color: #D9B17D; /* Sandstone */
+            --water-color: #4C96D7; /* Ganges blue */
+            --text-color: #333333; /* Dark gray for text */
+            --btn-gradient: linear-gradient(135deg, #F2B134, #D35269); /* Button gradient */
+            --error-color: #D32F2F; /* Error red */
+            --success-color: #388E3C; /* Success green */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            background: linear-gradient(135deg, #F8F1E5, #FFF8E8);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.5s;
+            background-color: rgba(255, 248, 232, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary-color), transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .logo:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-link {
+            margin: 0 1.2rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-color);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* Main Content */
+        .registration-container {
+            width: 100%;
+            min-height: calc(100vh - 120px);
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+            padding-bottom: 40px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .leaves-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .form-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 2.5rem;
+            margin-bottom: 40px;
+        }
+        
+        .form-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        .form-subheading {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            border-bottom: 1px solid rgba(139, 110, 78, 0.3);
+            padding-bottom: 0.5rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(139, 110, 78, 0.3);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(225, 103, 60, 0.3);
+        }
+        
+        textarea.input-field {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .hint-text {
+            font-size: 0.85rem;
+            color: var(--ghat-color);
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+        
+        /* Two columns layout for some sections */
+        .columns-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        /* Photo upload section */
+        .photo-upload-container {
+            border: 2px dashed rgba(139, 110, 78, 0.4);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .photo-upload-container:hover {
+            border-color: var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .upload-icon {
+            font-size: 2.5rem;
+            color: var(--ghat-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .photo-upload-text {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .photo-requirements {
+            font-size: 0.85rem;
+            color: var(--ghat-color);
+        }
+        
+        #photo-input {
+            display: none;
+        }
+        
+        .photo-preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .photo-preview {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* Square aspect ratio */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .photo-preview img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-photo {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: var(--error-color);
+            font-size: 0.8rem;
+            z-index: 2;
+            transition: all 0.2s ease;
+        }
+        
+        .remove-photo:hover {
+            background-color: var(--error-color);
+            color: white;
+        }
+        
+        /* Submit button */
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--btn-gradient);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(225, 103, 60, 0.3);
+        }
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: 1;
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .submit-btn span {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Loader */
+        .loader {
+            display: none;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        @keyframes spin {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+        
+        .btn-text {
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Thank you section */
+        .thank-you-container {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .thank-you-icon {
+            font-size: 4rem;
+            color: var(--success-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .thank-you-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .thank-you-message {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+        
+        .timer-container {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: rgba(242, 177, 52, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(242, 177, 52, 0.3);
+        }
+        
+        .timer-label {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .timer-display {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .timer-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .timer-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            background-color: white;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            min-width: 70px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .timer-label-small {
+            font-size: 0.8rem;
+            color: var(--ghat-color);
+            margin-top: 0.3rem;
+        }
+        
+        .banaras-silhouette {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z' fill='%238B6E4E' fill-opacity='0.2'%3E%3C/path%3E%3Cpath d='M50 50 L100 40 L150 60 L200 45 L250 55 L300 35 L350 60 L400 40 L450 55 L500 45 L550 65 L600 30 L650 55 L700 40 L750 60 L800 35 L850 50 L900 30 L950 55 L1000 45 L1050 65 L1100 40 L1150 50 L1200 40 L1200 120 L0 120 L0 70 Z' fill='%238B6E4E' fill-opacity='0.15'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-repeat: no-repeat;
+            pointer-events: none;
+        }
+        
+        footer {
+            background-color: rgba(255, 248, 232, 0.95);
+            padding: 1rem 3rem;
+            text-align: center;
+            border-top: 1px solid rgba(211, 82, 105, 0.1);
+            margin-top: auto;
+        }
+        
+        .footer-text {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        /* Error messages */
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                max-width: 90%;
+                margin: 0 auto;
+                padding: 2rem 1.5rem;
+            }
+            
+            .columns-2 {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 101;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease;
+                z-index: 100;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-link {
+                margin: 1.5rem 0;
+                font-size: 1.2rem;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+            
+            header {
+                padding: 1rem 2rem;
+            }
+            
+            .timer-display {
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .form-heading {
+                font-size: 1.5rem;
+            }
+            
+            .form-subheading {
+                font-size: 1.3rem;
+            }
+            
+            .photo-preview-container {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">Miss Banaras</a>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="aboutus.html" class="nav-link">About</a></li>
+            <li><a href="reward.html" class="nav-link">Rewards</a></li>
+            <li><a href="Criteria.html" class="nav-link">Criteria</a></li>
+            <li><a href="Register.html" class="nav-link">Register</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+    </header>
+    
+    <div class="registration-container">
+        <canvas class="leaves-canvas" id="leaves-canvas"></canvas>
+        
+        <!-- Registration Form -->
+        <div class="form-container" id="registration-form">
+            <h1 class="form-heading">Miss Banaras Registration Form</h1>
+            
+            <!-- Personal Information Section -->
+            <h2 class="form-subheading">Personal Information</h2>
+            
+            <div class="columns-2">
+                <div class="input-group">
+                    <label for="full-name" class="input-label">Full Name*</label>
+                    <input type="text" id="full-name" class="input-field" placeholder="Enter your full name" required>
+                    <div class="error-message" id="full-name-error">Name is required</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="age" class="input-label">Age*</label>
+                    <input type="number" id="age" class="input-field" placeholder="Enter your age" min="16" max="30" required>
+                    <div class="error-message" id="age-error">Age must be between 16 and 30</div>
+                </div>
+            </div>
+            
+            <div class="columns-2">
+                <div class="input-group">
+                    <label for="school-college" class="input-label">School/College Name</label>
+                    <input type="text" id="school-college" class="input-field" placeholder="Enter your school or college name">
+                </div>
+                
+                <div class="input-group">
+                    <label for="company" class="input-label">Company Name</label>
+                    <input type="text" id="company" class="input-field" placeholder="If applicable">
+                    <div class="hint-text">Leave blank if you're a student or not employed</div>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="influencers" class="input-label">Two Influencers You Like the Most*</label>
+                <input type="text" id="influencers" class="input-field" placeholder="Enter names of two influencers you admire" required>
+                <div class="hint-text">Separate names with a comma</div>
+                <div class="error-message" id="influencers-error">Please mention two influencers</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="bio" class="input-label">Short Bio*</label>
+                <textarea id="bio" class="input-field" placeholder="Tell us a little about yourself, your interests, and aspirations..." required></textarea>
+                <div class="hint-text">100-300 words recommended</div>
+                <div class="error-message" id="bio-error">Bio is required (100-300 words recommended)</div>
+            </div>
+            
+            <!-- Deep Questions Section -->
+            <h2 class="form-subheading">Deep Questions</h2>
+            
+            <div class="input-group">
+                <label for="question1" class="input-label">When you face a tough decision, what inner voice or core value do you rely on for guidance?*</label>
+                <textarea id="question1" class="input-field" placeholder="Share your thoughts..." required></textarea>
+                <div class="error-message" id="question1-error">Please answer this question</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="question2" class="input-label">What dream or goal is closest to your heart, and why does it matter so much to you?*</label>
+                <textarea id="question2" class="input-field" placeholder="Share your dreams and aspirations..." required></textarea>
+                <div class="error-message" id="question2-error">Please answer this question</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="question3" class="input-label">Reflect on how being a girl has shaped your experiences in life. Can you share an example of a time when your identity as a girl influenced a decision you made, a dream you pursued, or how you felt about yourself?*</label>
+                <textarea id="question3" class="input-field" placeholder="Share your reflection..." required></textarea>
+                <div class="error-message" id="question3-error">Please answer this question</div>
+            </div>
+            
+            <!-- Photo Upload Section -->
+            <h2 class="form-subheading">Photo Upload</h2>
+            
+            <label for="photo-input" class="photo-upload-container" id="photo-upload-area">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="photo-upload-text">Drag & drop photos or click to browse</div>
+                <div class="photo-requirements">Upload minimum 5 photos and maximum 15 photos (JPEG, PNG, Max 5MB each)</div>
+                <input type="file" id="photo-input" accept="image/jpeg, image/png" multiple>
+            </label>
+            
+            <div class="photo-preview-container" id="photo-preview">
+                <!-- Photo previews will be inserted here dynamically -->
+            </div>
+            <div class="error-message" id="photo-error">Please upload at least 5 photos (maximum 15)</div>
+            
+            <!-- Submit Button -->
+            <button type="button" class="submit-btn" id="submit-btn">
+                <span class="btn-text">Submit Your Entry</span>
+                <div class="loader"></div>
+            </button>
+        </div>
+        
+        <!-- Thank You Section (Initially Hidden) -->
+        <div class="form-container thank-you-container" id="thank-you-section">
+            <div class="thank-you-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1 class="thank-you-heading">Thank You for Submitting!</h1>
+            <p class="thank-you-message">Your entry for the Miss Banaras Competition has been received. We will review your submission and announce the Round 1 results soon.</p>
+            
+            <div class="timer-container">
+                <div class="timer-label">Time Remaining Until Round 1 Results:</div>
+                <div class="timer-display">
+                    <div class="timer-unit">
+                        <div class="timer-value" id="days">00</div>
+                        <div class="timer-label-small">Days</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="hours">00</div>
+                        <div class="timer-label-small">Hours</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="minutes">00</div>
+                        <div class="timer-label-small">Minutes</div>
+                    </div>
+                    <div class="timer-unit">
+                        <div class="timer-value" id="seconds">00</div>
+                        <div class="timer-label-small">Seconds</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="banaras-silhouette"></div>
+    </div>
+    
+    <footer>
+        <p class="footer-text">© 2025 Miss Banaras Competition. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            getDoc, 
+            setDoc, 
+            serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { 
+            getStorage, 
+            ref, 
+            uploadBytes, 
+            getDownloadURL 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDrHqo9pVoyMU38VReK0iENZUGPn7fZZSY",
+            authDomain: "miss-banaras-df6ae.firebaseapp.com",
+            projectId: "miss-banaras-df6ae",
+            storageBucket: "miss-banaras-df6ae.firebasestorage.app",
+            messagingSenderId: "297867452417",
+            appId: "1:297867452417:web:fcfa314026c0a6b008e000",
+            measurementId: "G-Z3DER8515Q"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+        const db = getFirestore();
+        const storage = getStorage();
+
+        // DOM Elements
+        const registrationForm = document.getElementById('registration-form');
+        const thankYouSection = document.getElementById('thank-you-section');
+        const photoInput = document.getElementById('photo-input');
+        const photoPreview = document.getElementById('photo-preview');
+        const photoUploadArea = document.getElementById('photo-upload-area');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const loader = submitBtn.querySelector('.loader');
+
+    // Form fields
+const formFields = {
+    fullName: document.getElementById('full-name'),
+    age: document.getElementById('age'),
+    schoolCollege: document.getElementById('school-college'),
+    company: document.getElementById('company'),
+    influencers: document.getElementById('influencers'),
+    bio: document.getElementById('bio'),
+    question1: document.getElementById('question1'),
+    question2: document.getElementById('question2'),
+    question3: document.getElementById('question3')
+};
+
+// Error message elements
+const errorMessages = {
+    fullName: document.getElementById('full-name-error'),
+    age: document.getElementById('age-error'),
+    influencers: document.getElementById('influencers-error'),
+    bio: document.getElementById('bio-error'),
+    question1: document.getElementById('question1-error'),
+    question2: document.getElementById('question2-error'),
+    question3: document.getElementById('question3-error'),
+    photo: document.getElementById('photo-error')
+};
+
+// Global variables
+let uploadedPhotos = [];
+const maxPhotos = 15;
+const minPhotos = 5;
+let isFormSubmitting = false;
+
+function initLeavesAnimation() {
+    const canvas = document.getElementById('leaves-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 5;
+    
+    // Create much more accurate leaf shapes
+    function createLeafShape() {
+        const shape = new THREE.Shape();
+        const leafType = Math.floor(Math.random() * 4);
+        const size = 0.5 + Math.random() * 0.3;
+        
+        if (leafType === 0) {
+            // Maple leaf with more precise shape
+            const pointiness = 0.7 + Math.random() * 0.3;
+            const width = size * 0.8;
+            
+            // Central stem
+            shape.moveTo(0, size);
+            
+            // Right side lobes
+            shape.bezierCurveTo(
+                width * 0.3, size * 0.8,
+                width * 0.6, size * 0.7,
+                width, size * 0.6
+            );
+            
+            shape.bezierCurveTo(
+                width * 0.9, size * 0.5,
+                width * 0.95, size * 0.3,
+                width * 0.9, size * 0.1
+            );
+            
+            // Right tip
+            shape.bezierCurveTo(
+                width * 0.95, 0,
+                width * 0.8, -size * 0.2,
+                width * 0.5, -size * 0.2
+            );
+            
+            // Middle right lobe
+            shape.bezierCurveTo(
+                width * 0.5, -size * 0.3,
+                width * 0.3, -size * 0.4,
+                width * 0.2, -size * 0.5 * pointiness
+            );
+            
+            // Bottom point
+            shape.bezierCurveTo(
+                width * 0.1, -size * 0.7 * pointiness,
+                0, -size * 0.9 * pointiness,
+                0, -size * pointiness
+            );
+            
+            // Mirror for left side
+            shape.bezierCurveTo(
+                -width * 0.1, -size * 0.7 * pointiness,
+                -width * 0.2, -size * 0.5 * pointiness,
+                -width * 0.3, -size * 0.4
+            );
+            
+            shape.bezierCurveTo(
+                -width * 0.5, -size * 0.3,
+                -width * 0.5, -size * 0.2,
+                -width * 0.5, -size * 0.2
+            );
+            
+            shape.bezierCurveTo(
+                -width * 0.8, -size * 0.2,
+                -width * 0.95, 0,
+                -width * 0.9, size * 0.1
+            );
+            
+            shape.bezierCurveTo(
+                -width * 0.95, size * 0.3,
+                -width * 0.9, size * 0.5,
+                -width, size * 0.6
+            );
+            
+            shape.bezierCurveTo(
+                -width * 0.6, size * 0.7,
+                -width * 0.3, size * 0.8,
+                0, size
+            );
+            
+        } else if (leafType === 1) {
+            // Oak leaf with more defined lobes
+            const lobeDepth = 0.25 + Math.random() * 0.15;
+            const lobeCount = 5 + Math.floor(Math.random() * 3); // 5-7 lobes
+            
+            // Start at stem
+            shape.moveTo(0, size * 0.8);
+            
+            // Right side lobes
+            for (let i = 0; i < lobeCount; i++) {
+                const t = i / (lobeCount - 1);
+                const y = size * 0.8 - t * size * 1.6;
+                const nextY = size * 0.8 - (i + 1) / (lobeCount - 1) * size * 1.6;
+                
+                if (i < lobeCount - 1) {
+                    // Create lobe
+                    shape.bezierCurveTo(
+                        size * 0.3, y - size * 0.05,
+                        size * 0.5, y - size * 0.1,
+                        size * lobeDepth, y - size * 0.2
+                    );
+                    
+                    // Create indent between lobes
+                    shape.bezierCurveTo(
+                        size * 0.4, y - size * 0.25,
+                        size * 0.3, y - size * 0.3,
+                        size * 0.2, nextY
+                    );
+                } else {
+                    // Last lobe to tip
+                    shape.bezierCurveTo(
+                        size * 0.2, y - size * 0.2,
+                        size * 0.1, y - size * 0.3,
+                        0, -size * 0.8
+                    );
+                }
+            }
+            
+            // Left side lobes (mirrored)
+            for (let i = lobeCount - 1; i >= 0; i--) {
+                const t = i / (lobeCount - 1);
+                const y = size * 0.8 - t * size * 1.6;
+                const nextY = i > 0 ? size * 0.8 - (i - 1) / (lobeCount - 1) * size * 1.6 : size * 0.8;
+                
+                if (i > 0) {
+                    // Create indent between lobes
+                    shape.bezierCurveTo(
+                        -size * 0.2, y,
+                        -size * 0.3, y - size * 0.3,
+                        -size * 0.4, y - size * 0.25
+                    );
+                    
+                    // Create lobe
+                    shape.bezierCurveTo(
+                        -size * 0.5, y - size * 0.1,
+                        -size * 0.3, y - size * 0.05,
+                        0, nextY
+                    );
+                } else {
+                    // Connect back to stem
+                    shape.lineTo(0, size * 0.8);
+                }
+            }
+            
+        } else if (leafType === 2) {
+            // Elliptical leaf with serrated edges
+            const aspectRatio = 0.4 + Math.random() * 0.2;
+            const pointiness = 0.8 + Math.random() * 0.4;
+            
+            // Base ellipse control points
+            const points = [];
+            const segments = 40;
+            
+            for (let i = 0; i < segments; i++) {
+                const theta = (i / segments) * Math.PI * 2;
+                const x = Math.cos(theta) * size * aspectRatio;
+                const y = Math.sin(theta) * size;
+                points.push({ x, y });
+            }
+            
+            // Add serration to edge
+            shape.moveTo(0, size);
+            
+            for (let i = 0; i < segments; i++) {
+                const point = points[i];
+                const nextPoint = points[(i + 1) % segments];
+                
+                // For the bottom part, make a pointed tip
+                if (i === Math.floor(segments * 0.5)) {
+                    shape.lineTo(0, -size * pointiness);
+                } else if (Math.abs(i - segments * 0.5) < 5) {
+                    // Smoother near the bottom point
+                    shape.lineTo(point.x, point.y);
+                } else {
+                    // Add slight serration to the edges
+                    const serrationAmount = 0.05 * size * Math.random();
+                    const midX = (point.x + nextPoint.x) / 2;
+                    const midY = (point.y + nextPoint.y) / 2;
+                    const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) + Math.PI/2;
+                    
+                    // Calculate serration point
+                    const serrX = midX + Math.cos(angle) * serrationAmount;
+                    const serrY = midY + Math.sin(angle) * serrationAmount;
+                    
+                    shape.lineTo(point.x, point.y);
+                    shape.lineTo(serrX, serrY);
+                }
+            }
+            
+        } else {
+            // Teardrop/Heart-shaped leaf with pointed tip
+            const width = size * (0.6 + Math.random() * 0.2);
+            const pointiness = 0.9 + Math.random() * 0.3;
+            
+            shape.moveTo(0, size);
+            
+            // Right side curve
+            shape.bezierCurveTo(
+                width * 0.8, size * 0.8,
+                width, size * 0.5,
+                width, 0
+            );
+            
+            // Bottom point curve
+            shape.bezierCurveTo(
+                width * 0.8, -size * 0.5,
+                width * 0.4, -size * 0.7,
+                0, -size * pointiness
+            );
+            
+            // Left side curve (mirror of right)
+            shape.bezierCurveTo(
+                -width * 0.4, -size * 0.7,
+                -width * 0.8, -size * 0.5,
+                -width, 0
+            );
+            
+            shape.bezierCurveTo(
+                -width, size * 0.5,
+                -width * 0.8, size * 0.8,
+                0, size
+            );
+        }
+        
+        return shape;
+    }
+
+    // Create stem for leaf
+    function addStemToLeaf(leafMesh) {
+        const stemLength = 0.2 + Math.random() * 0.15;
+        const stemWidth = 0.02 + Math.random() * 0.01;
+        const bend = Math.random() * 0.05;
+        
+        // Create curved stem
+        const stemCurve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(bend, -stemLength/2, 0),
+            new THREE.Vector3(0, -stemLength, 0)
+        ]);
+        
+        const stemGeometry = new THREE.TubeGeometry(
+            stemCurve, 
+            8,         // tubular segments
+            stemWidth, // radius
+            6,         // radial segments
+            false      // closed
+        );
+        
+        stemGeometry.translate(0, -0.1, 0.01);
+        
+        const stemMaterial = new THREE.MeshBasicMaterial({
+            color: new THREE.Color(
+                Math.random() * 0.1 + 0.25, 
+                Math.random() * 0.1 + 0.15, 
+                Math.random() * 0.05 + 0.05
+            ),
+            transparent: true,
+            opacity: leafMesh.material.opacity * 1.2
+        });
+        
+        const stem = new THREE.Mesh(stemGeometry, stemMaterial);
+        leafMesh.add(stem);
+        
+        return leafMesh;
+    }
+    
+    // Create veins for the leaf
+    function addVeinsToLeaf(leafMesh, leafType) {
+        // Only add veins to larger leaves
+        if (leafMesh.scale.x < 1.0) return leafMesh;
+        
+        const veinsGeometry = new THREE.BufferGeometry();
+        const veinsPoints = [];
+        
+        if (leafType === 0) {  // Maple
+            // Central vein
+            veinsPoints.push(new THREE.Vector3(0, 0.5, 0.01));
+            veinsPoints.push(new THREE.Vector3(0, -0.4, 0.01));
+            
+            // Side veins
+            for (let i = 0; i < 3; i++) {
+                const y = 0.3 - i * 0.25;
+                
+                // Right veins
+                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
+                veinsPoints.push(new THREE.Vector3(0.3, y - 0.1, 0.01));
+                
+                // Left veins
+                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
+                veinsPoints.push(new THREE.Vector3(-0.3, y - 0.1, 0.01));
+            }
+            
+        } else if (leafType === 1) {  // Oak
+            // Central vein
+            veinsPoints.push(new THREE.Vector3(0, 0.4, 0.01));
+            veinsPoints.push(new THREE.Vector3(0, -0.4, 0.01));
+            
+            // Side veins
+            for (let i = 0; i < 5; i++) {
+                const y = 0.3 - i * 0.15;
+                
+                // Right veins
+                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
+                veinsPoints.push(new THREE.Vector3(0.25, y - 0.05, 0.01));
+                
+                // Left veins
+                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
+                veinsPoints.push(new THREE.Vector3(-0.25, y - 0.05, 0.01));
+            }
+            
+        } else {  // Other leaf types
+            // Central vein
+            veinsPoints.push(new THREE.Vector3(0, 0.4, 0.01));
+            veinsPoints.push(new THREE.Vector3(0, -0.4, 0.01));
+            
+            // Side veins
+            for (let i = 0; i < 4; i++) {
+                const y = 0.3 - i * 0.2;
+                const angle = Math.PI/6 + (i * Math.PI/20);
+                
+                // Right veins
+                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
+                veinsPoints.push(new THREE.Vector3(Math.sin(angle) * 0.3, y - Math.cos(angle) * 0.3, 0.01));
+                
+                // Left veins
+                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
+                veinsPoints.push(new THREE.Vector3(-Math.sin(angle) * 0.3, y - Math.cos(angle) * 0.3, 0.01));
+            }
+        }
+        
+        veinsGeometry.setFromPoints(veinsPoints);
+        
+        const veinsMaterial = new THREE.LineBasicMaterial({ 
+            color: new THREE.Color(
+                leafMesh.material.color.r * 0.7,
+                leafMesh.material.color.g * 0.7,
+                leafMesh.material.color.b * 0.7
+            ),
+            transparent: true,
+            opacity: leafMesh.material.opacity * 0.6,
+            linewidth: 1
+        });
+        
+        const veins = new THREE.LineSegments(veinsGeometry, veinsMaterial);
+        leafMesh.add(veins);
+        
+        return leafMesh;
+    }
+    
+    // Enhanced leaf colors with better autumn palette
+    const leafColors = [
+        new THREE.Color('#F2B134'),  // gold
+        new THREE.Color('#F8C471'),  // lighter gold
+        new THREE.Color('#D35269'),  // rose
+        new THREE.Color('#CB4335'),  // darker red
+        new THREE.Color('#E1673C'),  // vermilion
+        new THREE.Color('#FF7F50'),  // coral
+        new THREE.Color('#8B6E4E'),  // sandstone
+        new THREE.Color('#6E2C00'),  // dark brown
+        new THREE.Color('#D68910'),  // golden brown
+        new THREE.Color('#7D6608'),  // dark olive
+        new THREE.Color('#F1C40F'),  // yellow
+        new THREE.Color('#A93226')   // brick red
+    ];
+    
+    // Track created leaves
+    const leaves = [];
+    const totalLeaves = 90; // Increased leaf count for better effect
+    
+    // Create leaves with varied shapes
+    for (let i = 0; i < totalLeaves; i++) {
+        const leafType = Math.floor(Math.random() * 4);
+        const leafShape = createLeafShape(leafType);
+        const leafGeometry = new THREE.ShapeGeometry(leafShape, 16); // Higher detail for better shape
+        
+        // Add more natural texture
+        const vertices = leafGeometry.attributes.position;
+        for (let v = 0; v < vertices.count; v++) {
+            const x = vertices.getX(v);
+            const y = vertices.getY(v);
+            
+            // Create natural curling effect at edges
+            const distFromCenter = Math.sqrt(x*x + y*y);
+            const maxDist = 0.5;
+            const curl = Math.max(0, distFromCenter - 0.2) / maxDist * 0.05;
+            
+            // Apply displacement
+            vertices.setZ(v, curl + (Math.sin(x * 20) * Math.cos(y * 20) * 0.005));
+        }
+        
+        // Pick base color and add variation
+        const baseColor = leafColors[Math.floor(Math.random() * leafColors.length)];
+        const finalColor = baseColor.clone().lerp(
+            new THREE.Color(
+                baseColor.r + (Math.random() * 0.1 - 0.05),
+                baseColor.g + (Math.random() * 0.1 - 0.05),
+                baseColor.b + (Math.random() * 0.1 - 0.05)
+            ),
+            0.3
+        );
+        
+        const material = new THREE.MeshBasicMaterial({
+            color: finalColor,
+            transparent: true,
+            opacity: Math.random() * 0.3 + 0.4, // Increased opacity for better visibility
+            side: THREE.DoubleSide
+        });
+        
+        const leaf = new THREE.Mesh(leafGeometry, material);
+        
+        // Add stem to most leaves
+        if (Math.random() < 0.85) {
+            addStemToLeaf(leaf);
+        }
+        
+        // Add veins to some leaves
+        if (Math.random() < 0.6) {
+            addVeinsToLeaf(leaf, leafType);
+        }
+        
+        // Position leaves at staggered heights
+        const layer = Math.floor(i / (totalLeaves / 5)); // Create 5 layers
+        const layerHeight = 30; // Total height of animation area
+        
+        leaf.position.x = Math.random() * 30 - 15;
+        leaf.position.y = 15 - layer * (layerHeight/5) + Math.random() * 3;
+        leaf.position.z = Math.random() * 8 - 4;
+        
+        // Random initial rotation
+        leaf.rotation.x = Math.random() * Math.PI;
+        leaf.rotation.y = Math.random() * Math.PI;
+        leaf.rotation.z = Math.random() * Math.PI;
+        
+        // Random scale for variety
+        const scale = 0.8 + Math.random() * 0.9;
+        leaf.scale.set(scale, scale, scale);
+        
+        // Custom properties for better physics
+        leaf.velocity = {
+            x: Math.random() * 0.01 - 0.005,
+            y: -(0.01 + Math.random() * 0.02), // Consistent downward speed
+            z: Math.random() * 0.004 - 0.002,
+            rotationX: Math.random() * 0.004 - 0.002,
+            rotationY: Math.random() * 0.004 - 0.002,
+            rotationZ: Math.random() * 0.008 - 0.004
+        };
+        
+        // Different falling styles
+        leaf.fallStyle = Math.floor(Math.random() * 4);
+        
+        // Add wobble effect
+        leaf.wobble = {
+            x: Math.random() * 0.02 + 0.01,
+            y: Math.random() * 0.02 + 0.01,
+            z: Math.random() * 0.02 + 0.01,
+            phaseX: Math.random() * Math.PI * 2,
+            phaseY: Math.random() * Math.PI * 2,
+            phaseZ: Math.random() * Math.PI * 2,
+            speedX: 0.01 + Math.random() * 0.01,
+            speedY: 0.01 + Math.random() * 0.01,
+            speedZ: 0.01 + Math.random() * 0.01
+        };
+        
+        // Give each leaf a unique ID for tracking
+        leaf.leafId = i;
+        
+        scene.add(leaf);
+        leaves.push(leaf);
+    }
+    
+    // Add soft ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+    
+    // Animation variables
+    let time = 0;
+    let windStrength = 0.2;
+    let windChangeTime = 0;
+    let currentWind = { x: 0.5, y: 0.1 };
+    let targetWind = { x: 0.5, y: 0.1 };
+    
+    // Define visible boundaries for leaf recycling
+    const bounds = {
+        xMin: -20,
+        xMax: 20,
+        yMin: -15,
+        yMax: 15,
+        zMin: -10,
+        zMax: 10
+    };
+    
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        time += 0.01;
+        
+        // Gradually change wind direction
+        windChangeTime -= 0.01;
+        if (windChangeTime <= 0) {
+            targetWind = {
+                x: Math.random() * 2 - 1,
+                y: Math.random() * 0.5 - 0.25
+            };
+            windStrength = 0.1 + Math.random() * 0.3;
+            windChangeTime = 3 + Math.random() * 5;
+        }
+        
+        // Smooth transition to new wind
+        currentWind.x += (targetWind.x - currentWind.x) * 0.01;
+        currentWind.y += (targetWind.y - currentWind.y) * 0.01;
+        
+        // Track how many leaves were recycled this frame
+        let recycledLeaves = 0;
+        
+        // Update each leaf
+        leaves.forEach(leaf => {
+            // Different falling patterns based on fall style
+            switch(leaf.fallStyle) {
+                case 0: // Simple falling with slight drift
+                    leaf.position.x += leaf.velocity.x + (currentWind.x * windStrength * 0.5);
+                    leaf.position.y += leaf.velocity.y;
+                    leaf.position.z += leaf.velocity.z;
+                    break;
+                
+                case 1: // Spiral falling
+                    leaf.position.x += leaf.velocity.x + (currentWind.x * windStrength * 0.5);
+                    leaf.position.y += leaf.velocity.y;
+                    leaf.position.z += leaf.velocity.z;
+                    
+                    // Add spiral motion
+                    const spiralAmount = 0.008 * (1 - Math.random() * 0.2);
+                    leaf.position.x += Math.sin(time * spiralAmount * 2 + leaf.leafId) * 0.06;
+                    leaf.position.z += Math.cos(time * spiralAmount * 2 + leaf.leafId) * 0.06;
+                    break;
+                
+                case 2: // Side-to-side swaying
+                    leaf.position.x += leaf.velocity.x + (currentWind.x * windStrength * 0.7);
+                    leaf.position.y += leaf.velocity.y * 1.2; // Fall a bit faster
+                    leaf.position.z += leaf.velocity.z;
+                    
+                    // Exaggerated side sway
+                    leaf.position.x += Math.sin(time * 1.5 + leaf.leafId * 0.5) * 0.04;
+                    break;
+                
+                case 3: // Flutter falling (rapid rotation)
+                    leaf.position.x += leaf.velocity.x + (currentWind.x * windStrength * 0.8);
+                    leaf.position.y += leaf.velocity.y * 0.8; // Fall a bit slower
+                    leaf.position.z += leaf.velocity.z;
+                    
+                    // Extra rotation for flutter effect
+                    leaf.velocity.rotationZ = Math.sin(time * 3 + leaf.leafId) * 0.03;
+                    break;
+            }
+            
+            // Apply rotational forces
+            leaf.rotation.x += leaf.velocity.rotationX;
+            leaf.rotation.y += leaf.velocity.rotationY;
+            leaf.rotation.z += leaf.velocity.rotationZ;
+            
+            // Apply wobble effect for realistic movement
+            leaf.rotation.x += Math.sin(time * leaf.wobble.speedX + leaf.wobble.phaseX) * leaf.wobble.x * 0.02;
+            leaf.rotation.y += Math.sin(time * leaf.wobble.speedY + leaf.wobble.phaseY) * leaf.wobble.y * 0.02;
+            leaf.rotation.z += Math.sin(time * leaf.wobble.speedZ + leaf.wobble.phaseZ) * leaf.wobble.z * 0.02;
+            
+            // Wind gusts
+            if (Math.random() < 0.01) {
+                leaf.position.x += (Math.random() - 0.5) * 0.2;
+            }
+            
+            // Check if leaf is out of bounds
+            if (leaf.position.y < bounds.yMin || 
+                leaf.position.x > bounds.xMax || 
+                leaf.position.x < bounds.xMin || 
+                leaf.position.z > bounds.zMax || 
+                leaf.position.z < bounds.zMin) {
+                
+                // Ensure we don't recycle too many leaves at once (can cause flash of emptiness)
+                if (recycledLeaves < 5) {
+                    recycleLeaf(leaf);
+                    recycledLeaves++;
+                }
+            }
+        });
+        
+        renderer.render(scene, camera);
+    }
+    
+    // Function to properly recycle a leaf
+    function recycleLeaf(leaf) {
+        // Store original opacity for fade-in
+        const originalOpacity = leaf.material.opacity;
+        
+        // Reset position to top with random horizontal position
+        leaf.position.y = bounds.yMax + Math.random() * 5;
+        leaf.position.x = Math.random() * (bounds.xMax - bounds.xMin) + bounds.xMin;
+        leaf.position.z = Math.random() * (bounds.zMax - bounds.zMin) + bounds.zMin;
+        
+        // Reset rotations for variety
+        leaf.rotation.x = Math.random() * Math.PI;
+        leaf.rotation.y = Math.random() * Math.PI;
+        leaf.rotation.z = Math.random() * Math.PI;
+        
+        // Randomize velocity again
+        leaf.velocity.y = -(0.01 + Math.random() * 0.02);
+        leaf.velocity.x = Math.random() * 0.01 - 0.005;
+        leaf.velocity.z = Math.random() * 0.004 - 0.002;
+        
+        // Choose new fall style
+        leaf.fallStyle = Math.floor(Math.random() * 4);
+        
+        // Make invisible initially
+        leaf.material.opacity = 0;
+        
+        // Fade in effect
+        fadeInLeaf(leaf, originalOpacity);
+        
+        // Also update any attached meshes (stem, veins)
+        if (leaf.children.length > 0) {
+            leaf.children.forEach(child => {
+                if (child.material) {
+                    child.material.opacity = 0;
+                }
+            });
+        }
+    }
+    
+    // Function to fade in a leaf
+    function fadeInLeaf(leaf, targetOpacity) {
+        // Simple fade using opacity increments
+        let opacity = 0;
+        const fadeInterval = setInterval(() => {
+            opacity += 0.05;
+            if (opacity >= targetOpacity) {
+                opacity = targetOpacity;
+                clearInterval(fadeInterval);
+            }
+            
+            leaf.material.opacity = opacity;
+            
+            // Update child meshes too
+            if (leaf.children.length > 0) {
+                leaf.children.forEach(child => {
+                    if (child.material) {
+                        child.material.opacity = opacity * (child.originalOpacity || 1.0);
+                    }
+                });
+            }
+        }, 50);
+    }
+    
+    // Handle window resize
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        
+        // Update bounds based on new window size
+        const aspectRatio = window.innerWidth / window.innerHeight;
+        bounds.xMin = -15 * aspectRatio;
+        bounds.xMax = 15 * aspectRatio;
+    }
+    
+    window.addEventListener('resize', onWindowResize);
+    onWindowResize(); // Initialize bounds
+    
+    // Start animation
+    animate();
+    
+    // Return controller for external access
+    return {
+        setWindStrength: (strength) => {
+            windStrength = Math.max(0, Math.min(1, strength));
+        },
+        addLeaves: (count) => {
+            // Add more leaves dynamically
+            const currentCount = leaves.length;
+            for (let i = 0; i < count; i++) {
+                const leafType = Math.floor(Math.random() * 4);
+                const leafShape = createLeafShape(leafType);
+                const leafGeometry = new THREE.ShapeGeometry(leafShape, 16);
+                
+                // Create and add leaf using existing code...
+                // (Similar to the leaf creation code above)
+                
+                const leaf = new THREE.Mesh(leafGeometry, material);
+                leaf.leafId = currentCount + i;
+                
+                // Position at top of screen
+                leaf.position.y = bounds.yMax + Math.random() * 5;
+                leaf.position.x = Math.random() * (bounds.xMax - bounds.xMin) + bounds.xMin;
+                leaf.position.z = Math.random() * (bounds.zMax - bounds.zMin) + bounds.zMin;
+                
+                scene.add(leaf);
+                leaves.push(leaf);
+            }
+        },
+        getLeafCount: () => {
+            return leaves.length;
+        }
+    };
+}
+// Drag and drop functionality for photo upload
+function initPhotoUpload() {
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        photoUploadArea.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    // Highlight drop area when item is dragged over it
+    ['dragenter', 'dragover'].forEach(eventName => {
+        photoUploadArea.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        photoUploadArea.addEventListener(eventName, unhighlight, false);
+    });
+    
+    function highlight() {
+        photoUploadArea.classList.add('active');
+    }
+    
+    function unhighlight() {
+        photoUploadArea.classList.remove('active');
+    }
+    
+    // Handle dropped files
+    photoUploadArea.addEventListener('drop', handleDrop, false);
+    
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+    }
+    
+    // Handle selected files from input
+    photoInput.addEventListener('change', function() {
+        handleFiles(this.files);
+    });
+    
+    function handleFiles(files) {
+        if (uploadedPhotos.length >= maxPhotos) {
+            alert(`Maximum ${maxPhotos} photos allowed.`);
+            return;
+        }
+        
+        const newFiles = Array.from(files).slice(0, maxPhotos - uploadedPhotos.length);
+        
+        newFiles.forEach(file => {
+            // Check file type and size
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                alert('Only JPEG and PNG images are allowed.');
+                return;
+            }
+            
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB.');
+                return;
+            }
+            
+            // Create preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.createElement('div');
+                preview.className = 'photo-preview';
+                
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                
+                const removeBtn = document.createElement('div');
+                removeBtn.className = 'remove-photo';
+                removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                removeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Remove from DOM and array
+                    const index = uploadedPhotos.findIndex(photo => photo.preview === preview);
+                    if (index !== -1) {
+                        uploadedPhotos.splice(index, 1);
+                    }
+                    photoPreview.removeChild(preview);
+                    updatePhotoUploadStatus();
+                });
+                
+                preview.appendChild(img);
+                preview.appendChild(removeBtn);
+                photoPreview.appendChild(preview);
+                
+                // Store file and preview reference
+                uploadedPhotos.push({
+                    file: file,
+                    preview: preview
+                });
+                
+                updatePhotoUploadStatus();
+            };
+            
+            reader.readAsDataURL(file);
+        });
+    }
+    
+    function updatePhotoUploadStatus() {
+        // Update UI based on number of photos
+        if (uploadedPhotos.length >= minPhotos) {
+            errorMessages.photo.style.display = 'none';
+        }
+        
+        // Update upload area text
+        if (uploadedPhotos.length >= maxPhotos) {
+            photoUploadArea.querySelector('.photo-upload-text').textContent = `Maximum ${maxPhotos} photos reached`;
+            photoUploadArea.style.pointerEvents = 'none';
+        } else {
+            photoUploadArea.querySelector('.photo-upload-text').textContent = `Drag & drop photos or click to browse (${uploadedPhotos.length}/${maxPhotos})`;
+            photoUploadArea.style.pointerEvents = 'auto';
+        }
+    }
+}
+
+// Form validation
+function validateForm() {
+    let isValid = true;
+    
+    // Validate full name
+    if (!formFields.fullName.value.trim()) {
+        errorMessages.fullName.style.display = 'block';
+        isValid = false;
+    } else {
+        errorMessages.fullName.style.display = 'none';
+    }
+    
+    // Validate age
+    const age = parseInt(formFields.age.value);
+    if (isNaN(age) || age < 16 || age > 30) {
+        errorMessages.age.style.display = 'block';
+        isValid = false;
+    } else {
+        errorMessages.age.style.display = 'none';
+    }
+    
+    // Validate influencers (check if there are at least two names separated by comma)
+    const influencers = formFields.influencers.value.trim();
+    if (!influencers || influencers.indexOf(',') === -1) {
+        errorMessages.influencers.style.display = 'block';
+        isValid = false;
+    } else {
+        errorMessages.influencers.style.display = 'none';
+    }
+    
+    // Validate bio
+    if (!formFields.bio.value.trim()) {
+        errorMessages.bio.style.display = 'block';
+        isValid = false;
+    } else {
+        errorMessages.bio.style.display = 'none';
+    }
+    
+    // Validate questions
+    if (!formFields.question1.value.trim()) {
+        errorMessages.question1.style.display = 'block';
+        isValid = false;
+    } else {
+        errorMessages.question1.style.display = 'none';
+    }
+    
+    if (!formFields.question2.value.trim()) {
+        errorMessages.question2.style.display = 'block';
+        isValid = false;
+    } else {
+        errorMessages.question2.style.display = 'none';
+    }
+    
+    if (!formFields.question3.value.trim()) {
+        errorMessages.question3.style.display = 'block';
+        isValid = false;
+    } else {
+        errorMessages.question3.style.display = 'none';
+    }
+    
+    // Validate photos
+    if (uploadedPhotos.length < minPhotos) {
+        errorMessages.photo.style.display = 'block';
+        isValid = false;
+    } else {
+        errorMessages.photo.style.display = 'none';
+    }
+    
+    return isValid;
+}
+
+// Handle form submission
+async function handleSubmit() {
+    if (isFormSubmitting) return;
+    
+    if (!validateForm()) {
+        // Scroll to the first error
+        const firstError = document.querySelector('.error-message[style="display: block"]');
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+    }
+    
+    try {
+        isFormSubmitting = true;
+        btnText.style.opacity = '0';
+        loader.style.display = 'block';
+        
+        // Create unique user ID
+        const userId = `user_${Date.now()}`;
+        
+        // Upload photos
+        const photoURLs = await uploadPhotos(userId);
+        
+        // Save user data
+        await saveUserData(userId, photoURLs);
+        
+        // Show thank you section
+        registrationForm.style.display = 'none';
+        thankYouSection.style.display = 'block';
+        
+        // Start countdown timer
+        startCountdown();
+        
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('There was an error submitting your form. Please try again.');
+        
+        isFormSubmitting = false;
+        btnText.style.opacity = '1';
+        loader.style.display = 'none';
+    }
+}
+
+// Upload photos to Firebase Storage
+async function uploadPhotos(userId) {
+    const photoURLs = [];
+    
+    for (let i = 0; i < uploadedPhotos.length; i++) {
+        const file = uploadedPhotos[i].file;
+        const fileExt = file.name.split('.').pop();
+        const filePath = `users/${userId}/photos/photo_${i + 1}.${fileExt}`;
+        const storageRef = ref(storage, filePath);
+        
+        await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(storageRef);
+        photoURLs.push(downloadURL);
+    }
+    
+    return photoURLs;
+}
+
+// Save user data to Firestore
+async function saveUserData(userId, photoURLs) {
+    const userData = {
+        fullName: formFields.fullName.value.trim(),
+        age: parseInt(formFields.age.value),
+        schoolCollege: formFields.schoolCollege.value.trim(),
+        company: formFields.company.value.trim(),
+        influencers: formFields.influencers.value.trim(),
+        bio: formFields.bio.value.trim(),
+        question1: formFields.question1.value.trim(),
+        question2: formFields.question2.value.trim(),
+        question3: formFields.question3.value.trim(),
+        photoURLs: photoURLs,
+        submissionDate: serverTimestamp(),
+        status: 'pending' // pending, selected, rejected
+    };
+    
+    await setDoc(doc(db, "contestants", userId), userData);
+}
+
+// Countdown timer
+function startCountdown() {
+    // Set end date to 14 days from now
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() + 14);
+    
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    
+    function updateTimer() {
+        const now = new Date();
+        const diff = endDate - now;
+        
+        if (diff <= 0) {
+            daysEl.textContent = '00';
+            hoursEl.textContent = '00';
+            minutesEl.textContent = '00';
+            secondsEl.textContent = '00';
+            return;
+        }
+        
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        daysEl.textContent = days.toString().padStart(2, '0');
+        hoursEl.textContent = hours.toString().padStart(2, '0');
+        minutesEl.textContent = minutes.toString().padStart(2, '0');
+        secondsEl.textContent = seconds.toString().padStart(2, '0');
+        
+        setTimeout(updateTimer, 1000);
+    }
+    
+    updateTimer();
+}
+
+// Mobile menu toggle
+function initMobileMenu() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+    
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+        });
+    });
+}
+
+// Initialize animations with GSAP
+function initAnimations() {
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Fade in form elements on scroll
+    gsap.utils.toArray('.form-subheading, .input-group, .photo-upload-container, .submit-btn').forEach((element, i) => {
+        gsap.from(element, {
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: element,
+                start: "top 85%",
+                toggleActions: "play none none none"
+            }
+        });
+    });
+}
+
+// Initialize everything
+function init() {
+    initLeavesAnimation();
+    initPhotoUpload();
+    initMobileMenu();
+    initAnimations();
+    
+    // Add event listeners
+    submitBtn.addEventListener('click', handleSubmit);
+    
+    // Optional: Basic form field validation on input change
+    Object.keys(formFields).forEach(field => {
+        if (formFields[field] && errorMessages[field]) {
+            formFields[field].addEventListener('input', () => {
+                if (formFields[field].value.trim()) {
+                    errorMessages[field].style.display = 'none';
+                }
+            });
+        }
+    });
+}
+
+// Start everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', init);
+
+// Initialize auth state observer
+onAuthStateChanged(auth, (user) => {
+    // If authentication is required, handle it here
+    // For now, we're allowing anonymous submissions
+});
+</script>
+</body>
