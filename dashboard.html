@@ -10,709 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <style>
-        :root {
-            --primary-color: #F2B134;
-            --secondary-color: #D35269;
-            --accent-color: #E1673C;
-            --dark-color: #221A31;
-            --light-color: #FFF8E8;
-            --ghat-color: #8B6E4E;
-            --error-color: #D32F2F;
-            --success-color: #388E3C;
-            --canvas-bg: rgba(255, 248, 232, 0.3);
-        }
-
-        [data-theme="dark"] {
-            --primary-color: #FFD700;
-            --secondary-color: #FF6F61;
-            --accent-color: #FF8C00;
-            --dark-color: #FFFFFF;
-            --light-color: #1A1A1A;
-            --ghat-color: #A0522D;
-            --canvas-bg: rgba(26, 26, 26, 0.5);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #F8F1E5, #FFF8E8);
-            min-height: 100vh;
-            color: var(--dark-color);
-            display: flex;
-            flex-direction: column;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            background: var(--canvas-bg);
-        }
-
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.2rem 3rem;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: rgba(255, 248, 232, 0.95);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--secondary-color);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-icon {
-            margin-right: 10px;
-            color: var(--accent-color);
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background-color: var(--dark-color);
-            margin: 3px 0;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-link {
-            margin: 0 1.2rem;
-            text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 500;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--accent-color);
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            height: 2px;
-            width: 0;
-            background-color: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .theme-toggle {
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: var(--dark-color);
-        }
-
-        .main-container {
-            width: 100%;
-            padding-top: 120px;
-            padding-bottom: 40px;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .form-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            width: 90%;
-            max-width: 900px;
-            padding: 40px;
-            margin: 20px 0;
-            position: relative;
-            overflow: hidden;
-            transition: background 0.3s;
-        }
-
-        [data-theme="dark"] .form-container {
-            background: #2A2A2A;
-        }
-
-        .form-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 10px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
-        }
-
-        .form-heading {
-            font-family: 'Cinzel', serif;
-            color: var(--secondary-color);
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 2.2rem;
-            font-weight: 700;
-            position: relative;
-        }
-
-        .form-heading::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            margin: 10px auto 0;
-        }
-
-        .form-subheading {
-            font-family: 'Cinzel', serif;
-            color: var(--dark-color);
-            margin: 30px 0 20px;
-            font-size: 1.5rem;
-            font-weight: 600;
-            position: relative;
-            padding-left: 15px;
-        }
-
-        .form-subheading::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 5px;
-            height: 80%;
-            background: var(--accent-color);
-            border-radius: 5px;
-        }
-
-        .stepper {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .stepper::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: #ddd;
-            transform: translateY(-50%);
-            z-index: 0;
-        }
-
-        .stepper .step {
-            flex: 1;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .stepper .step-circle {
-            width: 30px;
-            height: 30px;
-            background: #ddd;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 10px;
-            font-weight: 600;
-            color: white;
-            transition: all 0.3s;
-        }
-
-        .stepper .step.active .step-circle {
-            background: var(--accent-color);
-        }
-
-        .stepper .step.completed .step-circle {
-            background: var(--success-color);
-        }
-
-        .stepper .step-title {
-            font-size: 0.9rem;
-            color: var(--dark-color);
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .input-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--dark-color);
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-        }
-
-        .input-field:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(242, 177, 52, 0.2);
-        }
-
-        textarea.input-field {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .hint-text {
-            font-size: 0.85rem;
-            color: #777;
-            margin-top: 5px;
-        }
-
-        .error-message {
-            color: var(--error-color);
-            font-size: 0.85rem;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .columns-2 {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .columns-2 .input-group {
-            flex: 1 1 calc(50% - 10px);
-            min-width: 200px;
-        }
-
-        .btn {
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 25px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(225, 103, 60, 0.3);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .btn-text {
-            position: relative;
-            z-index: 2;
-        }
-
-        .btn i {
-            margin-right: 8px;
-        }
-
-        .btn-row {
-            display: flex;
-            gap: 15px;
-        }
-
-        .google-btn {
-            background: white;
-            color: #333;
-            border: 1px solid #ddd;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .google-btn i {
-            color: #4285F4;
-            font-size: 1.2rem;
-        }
-
-        .google-btn:hover {
-            background: #f8f8f8;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .logout-btn {
-            background: linear-gradient(to right, #f44336, #e57373);
-            margin-top: 20px;
-        }
-
-        .next-btn {
-            background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
-            margin-top: 20px;
-        }
-
-        .photo-upload-container {
-            border: 2px dashed #ddd;
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .photo-upload-container:hover {
-            border-color: var(--primary-color);
-            background-color: rgba(242, 177, 52, 0.03);
-        }
-
-        .upload-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-
-        .photo-upload-text {
-            font-weight: 500;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
-        .photo-requirements {
-            font-size: 0.85rem;
-            color: #777;
-        }
-
-        .file-input {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .progress-bar {
-            height: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            margin: 15px 0;
-            overflow: hidden;
-            display: none;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-            width: 0%;
-            transition: width 0.3s;
-        }
-
-        .status-message {
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .photo-swatch {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .gallery-img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid #ddd;
-        }
-
-        .gallery-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .gallery-img-container {
-            position: relative;
-        }
-
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 25px;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .tab.active {
-            border-bottom: 3px solid var(--accent-color);
-            color: var(--accent-color);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        .success-message {
-            background-color: rgba(56, 142, 60, 0.1);
-            border-left: 4px solid var(--success-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-            color: var(--success-color);
-            display: none;
-        }
-
-        .selected-file {
-            margin-top: 10px;
-            color: var(--accent-color);
-            font-weight: 500;
-            display: none;
-        }
-
-        .loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--accent-color);
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            display: none;
-            margin-left: 10px;
-        }
-
-        .user-info {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: background 0.3s;
-        }
-
-        [data-theme="dark"] .user-info {
-            background: rgba(50, 50, 50, 0.95);
-        }
-
-        .user-info h3 {
-            font-family: 'Cinzel', serif;
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
-        .user-info p {
-            font-size: 1rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            color: var(--dark-color);
-        }
-
-        .user-info p strong {
-            width: 150px;
-            color: var(--accent-color);
-        }
-
-        .user-info h4 {
-            font-family: 'Cinzel', serif;
-            color: var(--dark-color);
-            font-size: 1.4rem;
-            margin: 20px 0 10px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .modal-img {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--error-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem 2rem;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background-color: white;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                transition: right 0.5s ease;
-                z-index: 100;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-            }
-
-            [data-theme="dark"] .nav-links {
-                background-color: #2A2A2A;
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .nav-link {
-                margin: 1.5rem 0;
-                font-size: 1.2rem;
-            }
-
-            .form-container {
-                padding: 30px 20px;
-            }
-
-            .btn-row {
-                flex-direction: column;
-            }
-
-            .columns-2 .input-group {
-                flex: 1 1 100%;
-            }
-
-            .user-info p strong {
-                width: 100px;
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animated {
-            animation: fadeIn 0.5s ease forwards;
-        }
+        :root{--primary-color:#F2B134;--secondary-color:#D35269;--accent-color:#E1673C;--dark-color:#221A31;--light-color:#FFF8E8;--ghat-color:#8B6E4E;--error-color:#D32F2F;--success-color:#388E3C;--canvas-bg:rgba(255,248,232,0.3)}[data-theme="dark"]{--primary-color:#FFD700;--secondary-color:#FF6F61;--accent-color:#FF8C00;--dark-color:#FFFFFF;--light-color:#1A1A1A;--ghat-color:#A0522D;--canvas-bg:rgba(26,26,26,0.5)}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#F8F1E5,#FFF8E8);min-height:100vh;color:var(--dark-color);display:flex;flex-direction:column;transition:background 0.3s,color 0.3s}canvas{position:fixed;top:0;left:0;z-index:-1;background:var(--canvas-bg)}header{position:fixed;top:0;left:0;width:100%;padding:1.2rem 3rem;z-index:100;display:flex;justify-content:space-between;align-items:center;background-color:rgba(255,248,232,0.95);box-shadow:0 5px 20px rgba(0,0,0,0.05);backdrop-filter:blur(10px)}.logo{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:700;color:var(--secondary-color);text-decoration:none;display:flex;align-items:center}.logo-icon{margin-right:10px;color:var(--accent-color)}.menu-toggle{display:none;flex-direction:column;cursor:pointer}.menu-toggle span{width:25px;height:3px;background-color:var(--dark-color);margin:3px 0;transition:all 0.3s ease}.nav-links{display:flex;list-style:none}.nav-link{margin:0 1.2rem;text-decoration:none;color:var(--dark-color);font-weight:500;transition:all 0.3s;position:relative}.nav-link:hover{color:var(--accent-color)}.nav-link::after{content:'';position:absolute;left:0;bottom:-5px;height:2px;width:0;background-color:var(--accent-color);transition:width 0.3s ease}.nav-link:hover::after{width:100%}.theme-toggle{cursor:pointer;font-size:1.2rem;color:var(--dark-color)}.main-container{width:100%;padding-top:120px;padding-bottom:40px;display:flex;justify-content:center;min-height:100vh}.form-container{background:white;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.08);width:90%;max-width:900px;padding:40px;margin:20px 0;position:relative;overflow:hidden;transition:background 0.3s}[data-theme="dark"] .form-container{background:#2A2A2A}.form-container::before{content:'';position:absolute;top:0;left:0;width:100%;height:10px;background:linear-gradient(to right,var(--primary-color),var(--secondary-color))}.form-heading{font-family:'Cinzel',serif;color:var(--secondary-color);margin-bottom:30px;text-align:center;font-size:2.2rem;font-weight:700;position:relative}.form-heading::after{content:'';display:block;width:60px;height:3px;background:linear-gradient(to right,var(--primary-color),var(--secondary-color));margin:10px auto 0}.form-subheading{font-family:'Cinzel',serif;color:var(--dark-color);margin:30px 0 20px;font-size:1.5rem;font-weight:600;position:relative;padding-left:15px}.form-subheading::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:80%;background:var(--accent-color);border-radius:5px}.stepper{display:flex;justify-content:space-between;margin-bottom:30px;position:relative}.stepper::before{content:'';position:absolute;top:50%;left:0;width:100%;height:4px;background:#ddd;transform:translateY(-50%);z-index:0}.stepper .step{flex:1;text-align:center;position:relative;z-index:1}.stepper .step-circle{width:30px;height:30px;background:#ddd;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-weight:600;color:white;transition:all 0.3s}.stepper .step.active .step-circle{background:var(--accent-color)}.stepper .step.completed .step-circle{background:var(--success-color)}.stepper .step-title{font-size:0.9rem;color:var(--dark-color)}.input-group{margin-bottom:20px;position:relative}.input-label{display:block;margin-bottom:8px;font-weight:500;color:var(--dark-color)}.input-field{width:100%;padding:12px 15px;border:1px solid #ddd;border-radius:8px;font-family:'Poppins',sans-serif;font-size:0.95rem;transition:all 0.3s}.input-field:focus{outline:none;border-color:var(--primary-color);box-shadow:0 0 0 2px rgba(242,177,52,0.2)}textarea.input-field{min-height:120px;resize:vertical}.hint-text{font-size:0.85rem;color:#777;margin-top:5px}.error-message{color:var(--error-color);font-size:0.85rem;margin-top:5px;display:none}.columns-2{display:flex;gap:20px;flex-wrap:wrap}.columns-2 .input-group{flex:1 1 calc(50% - 10px);min-width:200px}.btn{background:linear-gradient(to right,var(--primary-color),var(--accent-color));color:white;border:none;border-radius:8px;padding:12px 25px;font-family:'Poppins',sans-serif;font-weight:500;font-size:1rem;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center}.btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(225,103,60,0.3)}.btn:active{transform:translateY(0)}.btn:disabled{background:#ccc;cursor:not-allowed;box-shadow:none}.btn-text{position:relative;z-index:2}.btn i{margin-right:8px}.btn-row{display:flex;gap:15px}.google-btn{background:white;color:#333;border:1px solid #ddd;display:flex;justify-content:center;align-items:center;margin-top:20px}.google-btn i{color:#4285F4;font-size:1.2rem}.google-btn:hover{background:#f8f8f8;box-shadow:0 5px 15px rgba(0,0,0,0.1)}.logout-btn{background:linear-gradient(to right,#f44336,#e57373);margin-top:20px}.next-btn{background:linear-gradient(to right,var(--secondary-color),var(--accent-color));margin-top:20px;padding:14px 30px;font-size:1.1rem}.photo-upload-container{border:2px dashed #ddd;border-radius:12px;padding:30px;text-align:center;cursor:pointer;transition:all 0.3s;margin-bottom:20px;position:relative}.photo-upload-container:hover{border-color:var(--primary-color);background-color:rgba(242,177,52,0.03)}.upload-icon{font-size:2.5rem;color:var(--primary-color);margin-bottom:15px}.photo-upload-text{font-weight:500;font-size:1.1rem;margin-bottom:5px}.photo-requirements{font-size:0.85rem;color:#777}.file-input{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer}.progress-bar{height:10px;background-color:#f0f0f0;border-radius:5px;margin:15px 0;overflow:hidden;display:none}.progress-fill{height:100%;background:linear-gradient(to right,var(--primary-color),var(--accent-color));width:0%;transition:width 0.3s}.status-message{font-size:0.9rem;margin-bottom:15px;font-weight:500}.photo-swatch{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:15px;margin-top:20px}.gallery-img{width:100px;height:100px;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;border:1px solid #ddd}.gallery-img:hover{transform:scale(1.1);box-shadow:0 6px 15px rgba(0,0,0,0.3);border-color:var(--accent-color)}.gallery-img-container{position:relative;animation:fadeIn 0.5s ease}.tabs{display:flex;border-bottom:1px solid #ddd;margin-bottom:25px}.tab{padding:10px 20px;cursor:pointer;border-bottom:3px solid transparent;font-weight:500;transition:all 0.3s}.tab.active{border-bottom:3px solid var(--accent-color);color:var(--accent-color)}.tab-content{display:none}.tab-content.active{display:block;animation:fadeIn 0.5s ease forwards}.success-message{background-color:rgba(56,142,60,0.1);border-left:4px solid var(--success-color);padding:15px;margin:15px 0;border-radius:4px;color:var(--success-color);display:none;font-size:1rem}.success-message i{margin-right:8px}.selected-file{margin-top:10px;color:var(--accent-color);font-weight:500;display:none}.loader{border:3px solid #f3f3f3;border-top:3px solid var(--accent-color);border-radius:50%;width:20px;height:20px;animation:spin 1s linear infinite;display:none;margin-left:10px}.user-info{background:rgba(255,255,255,0.95);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,0.1);transition:background 0.3s;border:1px solid rgba(242,177,52,0.2)}[data-theme="dark"] .user-info{background:rgba(50,50,50,0.95)}.user-info h3{font-family:'Cinzel',serif;color:var(--secondary-color);font-size:1.8rem;margin-bottom:15px}.user-info p{font-size:1rem;margin-bottom:10px;display:flex;align-items:center;color:var(--dark-color)}.user-info p strong{width:150px;color:var(--accent-color)}.user-info h4{font-family:'Cinzel',serif;color:var(--dark-color);font-size:1.4rem;margin:20px 0 10px}.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center}.modal-content{position:relative;max-width:90%;max-height:90%;border-radius:8px;overflow:hidden}.modal-img{max-width:100%;max-height:80vh;object-fit:contain}.modal-close{position:absolute;top:10px;right:10px;background:var(--error-color);color:white;border:none;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}.submitted-data{background:rgba(255,255,255,0.95);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,0.1)}[data-theme="dark"] .submitted-data{background:rgba(50,50,50,0.95)}.submitted-data p{font-size:1rem;margin-bottom:10px;display:flex;align-items:center;color:var(--dark-color)}.submitted-data p strong{width:150px;color:var(--accent-color)}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@media (max-width:768px){header{padding:1rem 2rem}.menu-toggle{display:flex}.nav-links{position:fixed;top:0;right:-100%;width:70%;height:100vh;background-color:white;flex-direction:column;justify-content:center;align-items:center;transition:right 0.5s ease;z-index:100;box-shadow:-5px 0 15px rgba(0,0,0,0.1)}[data-theme="dark"] .nav-links{background-color:#2A2A2A}.nav-links.active{right:0}.nav-link{margin:1.5rem 0;font-size:1.2rem}.form-container{padding:30px 20px}.btn-row{flex-direction:column}.columns-2 .input-group{flex:1 1 100%}.user-info p strong,.submitted-data p strong{width:100px}.photo-swatch{grid-template-columns:repeat(auto-fill,minmax(80px,1fr))}.gallery-img{width:80px;height:80px}}@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.animated{animation:fadeIn 0.5s ease forwards}
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
-        <a href="#" class="logo">
+        <a href="https://tarqgaur.github.io/" class="logo">
             <i class="fas fa-crown logo-icon"></i>
             Miss Banaras
         </a>
@@ -722,10 +25,10 @@
             <span></span>
         </div>
         <ul class="nav-links" id="nav-links">
-            <li><a href="#" class="nav-link">Home</a></li>
-            <li><a href="#" class="nav-link">About</a></li>
-            <li><a href="#" class="nav-link">Gallery</a></li>
-            <li><a href="#" class="nav-link">Contact</a></li>
+            <li><a href="https://tarqgaur.github.io/" class="nav-link">Home</a></li>
+            <li><a href="https://tarqgaur.github.io/#about" class="nav-link">About</a></li>
+            <li><a href="https://tarqgaur.github.io/#gallery" class="nav-link">Gallery</a></li>
+            <li><a href="https://tarqgaur.github.io/#contact" class="nav-link">Contact</a></li>
             <li><i class="fas fa-moon theme-toggle" id="theme-toggle"></i></li>
         </ul>
     </header>
@@ -736,7 +39,6 @@
         <div class="form-container" id="form-container">
             <h1 class="form-heading">Miss Banaras Registration</h1>
 
-            <!-- Stepper -->
             <div class="stepper" id="stepper">
                 <div class="step active" data-step="auth">
                     <div class="step-circle">1</div>
@@ -752,16 +54,14 @@
                 </div>
             </div>
 
-            <!-- Tabs Navigation -->
             <div class="tabs" id="tabs">
                 <div class="tab active" data-tab="auth">Authentication</div>
                 <div class="tab" data-tab="registration">Registration Form</div>
                 <div class="tab" data-tab="upload">Photo Upload</div>
             </div>
 
-            <!-- Authentication Tab -->
             <div class="tab-content active" id="auth-tab">
-                <div class="auth-section" id="auth-section">
+                <div class="auth-section" id="auth-section" style="animation:fadeIn 0.5s ease">
                     <div class="input-group">
                         <label for="email" class="input-label">Email Address*</label>
                         <input type="email" id="email" class="input-field" placeholder="Enter your email address" required>
@@ -791,25 +91,25 @@
                         <div class="loader" id="google-loader"></div>
                     </button>
 
-                    <div class="success-message" id="auth-success">
-                        <i class="fas fa-check-circle"></i> Authentication successful! Click Next to fill out the registration form.
+                    <div class="success-message" id="auth-success" style="display:none">
+                        <i class="fas fa-check-circle"></i> <span id="auth-greeting"></span>
                     </div>
 
-                    <button id="nextBtn" class="btn next-btn" style="display: none;" disabled>
-                        <span class="btn-text"><i class="fas fa-arrow-right"></i> Next</span>
+                    <button id="nextBtn" class="btn next-btn" style="display:none;">
+                        <span class="btn-text"><i class="fas fa-arrow-right"></i> Next: Registration</span>
                     </button>
                 </div>
 
-                <div id="userData" class="user-info" style="display: none;"></div>
+                <div id="userData" class="user-info" style="display:none;"></div>
 
-                <button id="logout" style="display: none;" class="btn logout-btn">
+                <button id="logout" style="display:none;" class="btn logout-btn">
                     <i class="fas fa-sign-out-alt"></i> Sign Out
                 </button>
             </div>
 
-            <!-- Registration Form Tab -->
             <div class="tab-content" id="registration-tab">
-                <form id="registration-form">
+                <div id="submittedData" class="submitted-data" style="display:none;"></div>
+                <form id="registration-form" style="display:block;">
                     <h2 class="form-subheading">Personal Information</h2>
 
                     <div class="columns-2">
@@ -821,7 +121,7 @@
 
                         <div class="input-group">
                             <label for="age" class="input-label">Age*</label>
-                            <input type="number" id="age" class="input-field" placeholder Galen your age" min="16" max="30" required>
+                            <input type="number" id="age" class="input-field" placeholder="Enter your age" min="16" max="30" required>
                             <div class="error-message" id="age-error">Age must be between 16 and 30</div>
                         </div>
                     </div>
@@ -860,7 +160,7 @@
                         <div class="error-message" id="talents-error">Please list at least one talent</div>
                     </div>
 
-                    <div class="btn-row" style="margin-top: 30px;">
+                    <div class="btn-row" style="margin-top:30px;">
                         <button type="button" class="btn" onclick="saveDraft()">
                             <span class="btn-text"><i class="fas fa-save"></i> Save Draft</span>
                         </button>
@@ -869,11 +169,16 @@
                         </button>
                     </div>
                 </form>
+                <button id="editRegistration" class="btn" style="display:none;margin-top:20px;">
+                    <span class="btn-text"><i class="fas fa-edit"></i> Edit Registration</span>
+                </button>
+                <button id="nextToUpload" class="btn next-btn" style="display:none;margin-top:20px;">
+                    <span class="btn-text"><i class="fas fa-arrow-right"></i> Next to Upload</span>
+                </button>
             </div>
 
-            <!-- Upload Tab -->
             <div class="tab-content" id="upload-tab">
-                <div id="uploadSection" style="display: none;">
+                <div id="uploadSection" style="display:none;">
                     <h2 class="form-subheading">Submit Your Photos (Max 15)</h2>
                     <p class="hint-text">Upload up to 15 clear, high-quality photos. These will be used for the first round of selection.</p>
 
@@ -888,10 +193,10 @@
 
                     <div class="selected-file" id="selectedFile"></div>
 
-                    <progress id="uploadProgress" value="0" max="100" style="display: none; width: 100%;"></progress>
+                    <progress id="uploadProgress" value="0" max="100" style="display:none;width:100%;"></progress>
                     <p id="status" class="status-message"></p>
 
-                    <div id="preview" style="display: none;" class="photo-swatch"></div>
+                    <div id="preview" style="display:none;" class="photo-swatch"></div>
 
                     <button id="uploadBtn" class="btn" onclick="uploadImages()">
                         <span class="btn-text"><i class="fas fa-upload"></i> Upload Photos</span>
@@ -909,7 +214,6 @@
         </div>
     </div>
 
-    <!-- Modal for Full-Size Image -->
     <div class="modal" id="imageModal">
         <div class="modal-content">
             <img class="modal-img" id="modalImg" src="" alt="Full-size image">
@@ -920,7 +224,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getDatabase, ref, update, onValue, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getDatabase, ref, update, onValue, push, set, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCAImdjvo3yjfsxwwGKZp5iDx5VwmhfaDs",
@@ -939,7 +243,6 @@
         const BACKEND_URL = "https://miss-banaras-backend.onrender.com";
         const MAX_UPLOADS = 15;
 
-        // DOM elements
         const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("password");
         const signUpBtn = document.getElementById("signUp");
@@ -958,12 +261,16 @@
         const stepper = document.getElementById("stepper");
         const imageModal = document.getElementById("imageModal");
         const modalImg = document.getElementById("modalImg");
+        const registrationForm = document.getElementById("registration-form");
+        const submittedDataDiv = document.getElementById("submittedData");
+        const editRegistrationBtn = document.getElementById("editRegistration");
+        const nextToUploadBtn = document.getElementById("nextToUpload");
+        const authGreeting = document.getElementById("auth-greeting");
 
         let currentUser = null;
         let uploadedCount = 0;
         let isRegistrationComplete = false;
 
-        // Three.js Realistic Leaves Animation
         function initThreeJS() {
             const canvas = document.getElementById("leaves-canvas");
             const scene = new THREE.Scene();
@@ -971,13 +278,15 @@
             const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
 
-            // Load leaf texture
             const textureLoader = new THREE.TextureLoader();
             const leafTexture = textureLoader.load(
-                'https://i.imgur.com/6x3mX4e.png', // Simple leaf texture (green with transparency)
+                'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/leaf.png',
                 () => console.log("Leaf texture loaded"),
                 undefined,
-                (err) => console.error("Error loading leaf texture:", err)
+                (err) => {
+                    console.error("Texture load failed:", err);
+                    leafMaterial.color.set(0x228B22);
+                }
             );
             leafTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
@@ -989,15 +298,13 @@
                 alphaTest: 0.5
             });
 
-            // Create leaf geometry (simple quad with slight curve)
-            const leafGeometry = new THREE.PlaneGeometry(0.3, 0.6, 4, 4);
-            for (let i = 0; i < leafGeometry.vertices.length; i++) {
-                const vertex = leafGeometry.vertices[i];
-                vertex.z += Math.sin(vertex.y * Math.PI) * 0.05; // Slight curve for realism
-            }
-            leafGeometry.computeVertexNormals();
+            const leafShape = new THREE.Shape();
+            leafShape.moveTo(0, 0);
+            leafShape.quadraticCurveTo(0.2, 0.4, 0, 0.8);
+            leafShape.quadraticCurveTo(-0.2, 0.4, 0, 0);
+            const leafGeometry = new THREE.ShapeGeometry(leafShape);
 
-            for (let i = 0; i < 50; i++) { // Reduced count for performance
+            for (let i = 0; i < 30; i++) {
                 const leaf = new THREE.Mesh(leafGeometry, leafMaterial);
                 leaf.position.set(
                     Math.random() * 20 - 10,
@@ -1029,20 +336,18 @@
             let time = 0;
             function animate() {
                 requestAnimationFrame(animate);
-                time += 0.016; // Approx 60fps
+                time += 0.016;
                 leaves.forEach(leaf => {
-                    // Wind effect with gentle sway and occasional gusts
                     const wind = new THREE.Vector3(
-                        Math.sin(time + leaf.position.x) * 0.02 + Math.cos(time * 2) * 0.01,
-                        -0.03 + Math.sin(time * 0.5) * 0.01,
-                        Math.cos(time + leaf.position.z) * 0.02
+                        Math.sin(time + leaf.position.x) * 0.03,
+                        -0.02 + Math.sin(time * 0.5) * 0.01,
+                        Math.cos(time + leaf.position.z) * 0.03
                     );
                     leaf.position.add(leaf.velocity.clone().add(wind));
                     leaf.rotation.x += leaf.angularVelocity.x;
                     leaf.rotation.y += leaf.angularVelocity.y;
                     leaf.rotation.z += leaf.angularVelocity.z;
 
-                    // Reset when leaves fall too low
                     if (leaf.position.y < -10) {
                         leaf.position.y = 10;
                         leaf.position.x = Math.random() * 20 - 10;
@@ -1061,7 +366,6 @@
             });
         }
 
-        // Theme Toggle
         document.getElementById("theme-toggle").addEventListener("click", () => {
             const body = document.body;
             const currentTheme = body.getAttribute("data-theme") || "light";
@@ -1071,7 +375,6 @@
             document.getElementById("theme-toggle").classList.toggle("fa-sun");
         });
 
-        // Load theme
         window.addEventListener("load", () => {
             const savedTheme = localStorage.getItem("theme") || "light";
             document.body.setAttribute("data-theme", savedTheme);
@@ -1082,7 +385,6 @@
             initThreeJS();
         });
 
-        // Tab functionality
         const tabs = document.querySelectorAll(".tab");
         tabs.forEach(tab => {
             tab.addEventListener("click", () => {
@@ -1123,14 +425,16 @@
         }
 
         function saveUserData(user) {
+            console.log("Saving user data for UID:", user.uid);
             update(ref(db, "users/" + user.uid), {
                 email: user.email,
                 uid: user.uid,
                 name: user.displayName || "Anonymous"
-            });
+            }).catch(err => console.error("Error saving user data:", err));
         }
 
         function fetchUserData(uid) {
+            console.log("Fetching user data for UID:", uid);
             onValue(ref(db, "users/" + uid), (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
@@ -1157,12 +461,49 @@
                     `;
                     userDataDiv.style.display = "block";
                     document.getElementById("auth-success").style.display = "block";
+                    authGreeting.innerText = `Welcome, ${data.name}! You are now authenticated.`;
                     gallery.innerHTML = uploadsHtml;
+                    displaySubmittedData(data.registration);
                 }
-            });
+            }, err => console.error("Error fetching user data:", err));
+        }
+
+        function displaySubmittedData(registration) {
+            if (registration) {
+                submittedDataDiv.innerHTML = `
+                    <h3>Submitted Registration</h3>
+                    <p><strong>Full Name:</strong> ${registration.fullName}</p>
+                    <p><strong>Age:</strong> ${registration.age}</p>
+                    <p><strong>Phone:</strong> ${registration.phone}</p>
+                    <p><strong>City:</strong> ${registration.city}</p>
+                    <p><strong>Bio:</strong> ${registration.bio}</p>
+                    <p><strong>Experience:</strong> ${registration.experience || 'None'}</p>
+                    <p><strong>Talents:</strong> ${registration.talents}</p>
+                `;
+                submittedDataDiv.style.display = "block";
+                registrationForm.style.display = "none";
+                editRegistrationBtn.style.display = "block";
+                nextToUploadBtn.style.display = "block";
+            } else {
+                submittedDataDiv.style.display = "none";
+                registrationForm.style.display = "block";
+                editRegistrationBtn.style.display = "none";
+                nextToUploadBtn.style.display = "none";
+                loadDraft();
+            }
+        }
+
+        async function checkDuplicatePhoto(uid, fileName) {
+            const snapshot = await get(ref(db, `users/${uid}/uploads`));
+            if (snapshot.exists()) {
+                const uploads = snapshot.val();
+                return Object.values(uploads).some(upload => upload.public_id.includes(fileName));
+            }
+            return false;
         }
 
         function saveUploadData(uid, imageData) {
+            console.log("Saving upload data for UID:", uid);
             const uploadRef = push(ref(db, `users/${uid}/uploads`));
             set(uploadRef, {
                 public_id: imageData.public_id,
@@ -1170,7 +511,7 @@
                 timestamp: imageData.created_at,
                 user_uid: currentUser.uid,
                 user_name: currentUser.displayName || "Anonymous"
-            });
+            }).catch(err => console.error("Error saving upload data:", err));
         }
 
         window.openModal = (src) => {
@@ -1184,7 +525,7 @@
         };
 
         signUpBtn.addEventListener("click", () => {
-            const email = emailInput.value;
+            const气温 = emailInput.value;
             const password = passwordInput.value;
             if (!email || !password) {
                 alert("Please enter email and password.");
@@ -1282,6 +623,11 @@
                     loginBtn.style.display = "block";
                     googleBtn.style.display = "block";
                     document.getElementById("uploadSection").style.display = "none";
+                    document.getElementById("auth-section").style.display = "block";
+                    submittedDataDiv.style.display = "none";
+                    registrationForm.style.display = "block";
+                    editRegistrationBtn.style.display = "none";
+                    nextToUploadBtn.style.display = "none";
                     document.querySelector('[data-tab="auth"]').click();
                 })
                 .catch((err) => alert("Logout failed: " + err.message));
@@ -1306,6 +652,7 @@
                     const img = document.createElement("img");
                     img.src = e.target.result;
                     img.className = "gallery-img";
+                    img.dataset.fileName = file.name;
                     preview.appendChild(img);
                 };
                 reader.readAsDataURL(file);
@@ -1384,6 +731,11 @@
                     alert(`"${file.name}" is too large (max 5MB).`);
                     return;
                 }
+                const isDuplicate = await checkDuplicatePhoto(currentUser.uid, file.name);
+                if (isDuplicate) {
+                    alert(`"${file.name}" has already been uploaded.`);
+                    return;
+                }
             }
 
             statusText.innerText = "Preparing upload...";
@@ -1411,7 +763,9 @@
                     throw new Error("Invalid signature response from server");
                 }
 
+                let uploadedFiles = [];
                 let uploaded = 0;
+
                 for (const file of files) {
                     const formData = new FormData();
                     formData.append("file", file);
@@ -1440,6 +794,7 @@
                                     if (data.secure_url) {
                                         saveUploadData(currentUser.uid, data);
                                         uploaded++;
+                                        uploadedFiles.push({ fileName: file.name, secure_url: data.secure_url });
                                         resolve();
                                     } else {
                                         reject(new Error("Upload response missing URL"));
@@ -1457,6 +812,40 @@
                     });
                 }
 
+                const remainingFiles = Array.from(fileInput.files).filter(f => !uploadedFiles.some(uf => uf.fileName === f.name));
+                const dataTransfer = new DataTransfer();
+                remainingFiles.forEach(f => dataTransfer.items.add(f));
+                fileInput.files = dataTransfer.files;
+
+                preview.innerHTML = "";
+                remainingFiles.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement("img");
+                        img.src = e.target.result;
+                        img.className = "gallery-img";
+                        img.dataset.fileName = file.name;
+                        preview.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+                if (remainingFiles.length === 0) {
+                    preview.style.display = "none";
+                    selectedFileDisplay.style.display = "none";
+                    selectedFileDisplay.textContent = "";
+                }
+
+                uploadedFiles.forEach(({ secure_url }) => {
+                    const imgContainer = document.createElement("div");
+                    imgContainer.className = "gallery-img-container";
+                    const img = document.createElement("img");
+                    img.src = secure_url;
+                    img.className = "gallery-img";
+                    img.onclick = () => openModal(secure_url);
+                    imgContainer.appendChild(img);
+                    gallery.appendChild(imgContainer);
+                });
+
                 statusText.innerText = "✅ All photos uploaded successfully!";
                 document.getElementById("upload-success").style.display = "block";
 
@@ -1469,7 +858,6 @@
             }
         };
 
-        // Save draft to localStorage
         window.saveDraft = () => {
             const formData = {
                 fullName: document.getElementById("full-name").value,
@@ -1484,23 +872,26 @@
             alert("Draft saved successfully!");
         };
 
-        // Load draft from localStorage
         function loadDraft() {
             const draft = localStorage.getItem("registrationDraft");
             if (draft) {
-                const formData = JSON.parse(draft);
-                document.getElementById("full-name").value = formData.fullName || "";
-                document.getElementById("age").value = formData.age || "";
-                document.getElementById("phone").value = formData.phone || "";
-                document.getElementById("city").value = formData.city || "";
-                document.getElementById("bio").value = formData.bio || "";
-                document.getElementById("experience").value = formData.experience || "";
-                document.getElementById("talents").value = formData.talents || "";
-                updateBioCounter();
+                try {
+                    const formData = JSON.parse(draft);
+                    document.getElementById("full-name").value = formData.fullName || "";
+                    document.getElementById("age").value = formData.age || "";
+                    document.getElementById("phone").value = formData.phone || "";
+                    document.getElementById("city").value = formData.city || "";
+                    document.getElementById("bio").value = formData.bio || "";
+                    document.getElementById("experience").value = formData.experience || "";
+                    document.getElementById("talents").value = formData.talents || "";
+                    updateBioCounter();
+                    console.log("Draft loaded:", formData);
+                } catch (err) {
+                    console.error("Error loading draft:", err);
+                }
             }
         }
 
-        // Bio word counter
         document.getElementById("bio").addEventListener("input", updateBioCounter);
         function updateBioCounter() {
             const bio = document.getElementById("bio").value;
@@ -1558,31 +949,40 @@
             };
 
             try {
+                console.log("Submitting registration for UID:", currentUser.uid, "Data:", formData);
                 await update(ref(db, `users/${currentUser.uid}`), {
                     registration: formData
                 });
-
-                await fetch(`${BACKEND_URL}/register`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(formData)
-                });
+                console.log("Registration saved to Firebase");
 
                 alert("Registration submitted successfully! You can now upload your photos.");
                 isRegistrationComplete = true;
                 localStorage.removeItem("registrationDraft");
                 this.reset();
+                displaySubmittedData(formData);
                 document.querySelector('[data-tab="upload"]').click();
-
             } catch (err) {
                 console.error("Registration submission error:", err);
-                alert("There was an error submitting your registration. Please try again later.");
+                alert("Error submitting registration: " + err.message);
             }
+        });
+
+        editRegistrationBtn.addEventListener("click", () => {
+            registrationForm.style.display = "block";
+            submittedDataDiv.style.display = "none";
+            editRegistrationBtn.style.display = "none";
+            nextToUploadBtn.style.display = "none";
+            loadDraft();
+        });
+
+        nextToUploadBtn.addEventListener("click", () => {
+            document.querySelector('[data-tab="upload"]').click();
         });
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user;
+                console.log("User authenticated:", user.uid);
                 fetchUserData(user.uid);
                 document.getElementById("auth-section").style.display = "none";
                 userDataDiv.style.display = "block";
@@ -1599,7 +999,7 @@
                         nextBtn.style.display = "block";
                         nextBtn.disabled = false;
                     }
-                }, { onlyOnce: true });
+                }, { onlyOnce: true }, err => console.error("Error checking registration:", err));
             } else {
                 currentUser = null;
                 isRegistrationComplete = false;
@@ -1614,21 +1014,12 @@
                 statusText.innerText = "";
                 preview.style.display = "none";
                 gallery.innerHTML = "";
+                submittedDataDiv.style.display = "none";
+                registrationForm.style.display = "block";
+                editRegistrationBtn.style.display = "none";
+                nextToUploadBtn.style.display = "none";
             }
         });
-
-        async function testBackendConnection() {
-            try {
-                const response = await fetch(`${BACKEND_URL}/health`);
-                if (!response.ok) {
-                    console.error("Backend connection failed with status:", response.status);
-                    statusText.innerText = `⚠️ Backend connection failed with status: ${response.status}`;
-                }
-            } catch (err) {
-                console.error("Backend connection error:", err);
-                statusText.innerText = "⚠️ Warning: Cannot connect to backend server. Upload functionality may not work.";
-            }
-        }
 
         document.getElementById("menu-toggle").addEventListener("click", function() {
             document.getElementById("nav-links").classList.toggle("active");
@@ -1661,8 +1052,6 @@
         document.getElementById("phone").addEventListener("blur", function() {
             validateField(this, /^\+?\d{10,}$/, "phone-error");
         });
-
-        window.addEventListener('load', testBackendConnection);
     </script>
 </body>
 </html>
