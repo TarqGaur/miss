@@ -10,7 +10,729 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <style>
-        :root{--primary-color:#F2B134;--secondary-color:#D35269;--accent-color:#E1673C;--dark-color:#221A31;--light-color:#FFF8E8;--ghat-color:#8B6E4E;--error-color:#D32F2F;--success-color:#388E3C;--canvas-bg:rgba(255,248,232,0.3)}[data-theme="dark"]{--primary-color:#FFD700;--secondary-color:#FF6F61;--accent-color:#FF8C00;--dark-color:#FFFFFF;--light-color:#1A1A1A;--ghat-color:#A0522D;--canvas-bg:rgba(26,26,26,0.5)}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#F8F1E5,#FFF8E8);min-height:100vh;color:var(--dark-color);display:flex;flex-direction:column;transition:background 0.3s,color 0.3s}canvas{position:fixed;top:0;left:0;z-index:-1;background:var(--canvas-bg)}header{position:fixed;top:0;left:0;width:100%;padding:1.2rem 3rem;z-index:100;display:flex;justify-content:space-between;align-items:center;background-color:rgba(255,248,232,0.95);box-shadow:0 5px 20px rgba(0,0,0,0.05);backdrop-filter:blur(10px)}.logo{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:700;color:var(--secondary-color);text-decoration:none;display:flex;align-items:center}.logo-icon{margin-right:10px;color:var(--accent-color)}.menu-toggle{display:none;flex-direction:column;cursor:pointer}.menu-toggle span{width:25px;height:3px;background-color:var(--dark-color);margin:3px 0;transition:all 0.3s ease}.nav-links{display:flex;list-style:none}.nav-link{margin:0 1.2rem;text-decoration:none;color:var(--dark-color);font-weight:500;transition:all 0.3s;position:relative}.nav-link:hover{color:var(--accent-color)}.nav-link::after{content:'';position:absolute;left:0;bottom:-5px;height:2px;width:0;background-color:var(--accent-color);transition:width 0.3s ease}.nav-link:hover::after{width:100%}.theme-toggle{cursor:pointer;font-size:1.2rem;color:var(--dark-color)}.main-container{width:100%;padding-top:120px;padding-bottom:40px;display:flex;justify-content:center;min-height:100vh}.form-container{background:white;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.08);width:90%;max-width:900px;padding:40px;margin:20px 0;position:relative;overflow:hidden;transition:background 0.3s}[data-theme="dark"] .form-container{background:#2A2A2A}.form-container::before{content:'';position:absolute;top:0;left:0;width:100%;height:10px;background:linear-gradient(to right,var(--primary-color),var(--secondary-color))}.form-heading{font-family:'Cinzel',serif;color:var(--secondary-color);margin-bottom:30px;text-align:center;font-size:2.2rem;font-weight:700;position:relative}.form-heading::after{content:'';display:block;width:60px;height:3px;background:linear-gradient(to right,var(--primary-color),var(--secondary-color));margin:10px auto 0}.form-subheading{font-family:'Cinzel',serif;color:var(--dark-color);margin:30px 0 20px;font-size:1.5rem;font-weight:600;position:relative;padding-left:15px}.form-subheading::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:5px;height:80%;background:var(--accent-color);border-radius:5px}.stepper{display:flex;justify-content:space-between;margin-bottom:30px;position:relative}.stepper::before{content:'';position:absolute;top:50%;left:0;width:100%;height:4px;background:#ddd;transform:translateY(-50%);z-index:0}.stepper .step{flex:1;text-align:center;position:relative;z-index:1}.stepper .step-circle{width:30px;height:30px;background:#ddd;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-weight:600;color:white;transition:all 0.3s}.stepper .step.active .step-circle{background:var(--accent-color)}.stepper .step.completed .step-circle{background:var(--success-color)}.stepper .step-title{font-size:0.9rem;color:var(--dark-color)}.input-group{margin-bottom:20px;position:relative}.input-label{display:block;margin-bottom:8px;font-weight:500;color:var(--dark-color)}.input-field{width:100%;padding:12px 15px;border:1px solid #ddd;border-radius:8px;font-family:'Poppins',sans-serif;font-size:0.95rem;transition:all 0.3s}.input-field:focus{outline:none;border-color:var(--primary-color);box-shadow:0 0 0 2px rgba(242,177,52,0.2)}textarea.input-field{min-height:120px;resize:vertical}.hint-text{font-size:0.85rem;color:#777;margin-top:5px}.error-message{color:var(--error-color);font-size:0.85rem;margin-top:5px;display:none}.columns-2{display:flex;gap:20px;flex-wrap:wrap}.columns-2 .input-group{flex:1 1 calc(50% - 10px);min-width:200px}.btn{background:linear-gradient(to right,var(--primary-color),var(--accent-color));color:white;border:none;border-radius:8px;padding:12px 25px;font-family:'Poppins',sans-serif;font-weight:500;font-size:1rem;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center}.btn:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(225,103,60,0.3)}.btn:active{transform:translateY(0)}.btn:disabled{background:#ccc;cursor:not-allowed;box-shadow:none}.btn-text{position:relative;z-index:2}.btn i{margin-right:8px}.btn-row{display:flex;gap:15px}.google-btn{background:white;color:#333;border:1px solid #ddd;display:flex;justify-content:center;align-items:center;margin-top:20px}.google-btn i{color:#4285F4;font-size:1.2rem}.google-btn:hover{background:#f8f8f8;box-shadow:0 5px 15px rgba(0,0,0,0.1)}.logout-btn{background:linear-gradient(to right,#f44336,#e57373);margin-top:20px}.next-btn{background:linear-gradient(to right,var(--secondary-color),var(--accent-color));margin-top:20px;padding:14px 30px;font-size:1.1rem}.photo-upload-container{border:2px dashed #ddd;border-radius:12px;padding:30px;text-align:center;cursor:pointer;transition:all 0.3s;margin-bottom:20px;position:relative}.photo-upload-container:hover{border-color:var(--primary-color);background-color:rgba(242,177,52,0.03)}.upload-icon{font-size:2.5rem;color:var(--primary-color);margin-bottom:15px}.photo-upload-text{font-weight:500;font-size:1.1rem;margin-bottom:5px}.photo-requirements{font-size:0.85rem;color:#777}.file-input{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer}.progress-bar{height:10px;background-color:#f0f0f0;border-radius:5px;margin:15px 0;overflow:hidden;display:none}.progress-fill{height:100%;background:linear-gradient(to right,var(--primary-color),var(--accent-color));width:0%;transition:width 0.3s}.status-message{font-size:0.9rem;margin-bottom:15px;font-weight:500}.photo-swatch{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:15px;margin-top:20px}.gallery-img{width:100px;height:100px;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;border:1px solid #ddd}.gallery-img:hover{transform:scale(1.1);box-shadow:0 6px 15px rgba(0,0,0,0.3);border-color:var(--accent-color)}.gallery-img-container{position:relative;animation:fadeIn 0.5s ease}.tabs{display:flex;border-bottom:1px solid #ddd;margin-bottom:25px}.tab{padding:10px 20px;cursor:pointer;border-bottom:3px solid transparent;font-weight:500;transition:all 0.3s}.tab.active{border-bottom:3px solid var(--accent-color);color:var(--accent-color)}.tab-content{display:none}.tab-content.active{display:block;animation:fadeIn 0.5s ease forwards}.success-message{background-color:rgba(56,142,60,0.1);border-left:4px solid var(--success-color);padding:15px;margin:15px 0;border-radius:4px;color:var(--success-color);display:none;font-size:1rem}.success-message i{margin-right:8px}.selected-file{margin-top:10px;color:var(--accent-color);font-weight:500;display:none}.loader{border:3px solid #f3f3f3;border-top:3px solid var(--accent-color);border-radius:50%;width:20px;height:20px;animation:spin 1s linear infinite;display:none;margin-left:10px}.user-info{background:rgba(255,255,255,0.95);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,0.1);transition:background 0.3s;border:1px solid rgba(242,177,52,0.2)}[data-theme="dark"] .user-info{background:rgba(50,50,50,0.95)}.user-info h3{font-family:'Cinzel',serif;color:var(--secondary-color);font-size:1.8rem;margin-bottom:15px}.user-info p{font-size:1rem;margin-bottom:10px;display:flex;align-items:center;color:var(--dark-color)}.user-info p strong{width:150px;color:var(--accent-color)}.user-info h4{font-family:'Cinzel',serif;color:var(--dark-color);font-size:1.4rem;margin:20px 0 10px}.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center}.modal-content{position:relative;max-width:90%;max-height:90%;border-radius:8px;overflow:hidden}.modal-img{max-width:100%;max-height:80vh;object-fit:contain}.modal-close{position:absolute;top:10px;right:10px;background:var(--error-color);color:white;border:none;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}.submitted-data{background:rgba(255,255,255,0.95);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,0.1)}[data-theme="dark"] .submitted-data{background:rgba(50,50,50,0.95)}.submitted-data p{font-size:1rem;margin-bottom:10px;display:flex;align-items:center;color:var(--dark-color)}.submitted-data p strong{width:150px;color:var(--accent-color)}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@media (max-width:768px){header{padding:1rem 2rem}.menu-toggle{display:flex}.nav-links{position:fixed;top:0;right:-100%;width:70%;height:100vh;background-color:white;flex-direction:column;justify-content:center;align-items:center;transition:right 0.5s ease;z-index:100;box-shadow:-5px 0 15px rgba(0,0,0,0.1)}[data-theme="dark"] .nav-links{background-color:#2A2A2A}.nav-links.active{right:0}.nav-link{margin:1.5rem 0;font-size:1.2rem}.form-container{padding:30px 20px}.btn-row{flex-direction:column}.columns-2 .input-group{flex:1 1 100%}.user-info p strong,.submitted-data p strong{width:100px}.photo-swatch{grid-template-columns:repeat(auto-fill,minmax(80px,1fr))}.gallery-img{width:80px;height:80px}}@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.animated{animation:fadeIn 0.5s ease forwards}
+        :root {
+            --primary-color: #F2B134;
+            --secondary-color: #D35269;
+            --accent-color: #E1673C;
+            --dark-color: #221A31;
+            --light-color: #FFF8E8;
+            --ghat-color: #8B6E4E;
+            --error-color: #D32F2F;
+            --success-color: #388E3C;
+            --canvas-bg: rgba(255, 248, 232, 0.3);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #FFD700;
+            --secondary-color: #FF6F61;
+            --accent-color: #FF8C00;
+            --dark-color: #FFFFFF;
+            --light-color: #1A1A1A;
+            --ghat-color: #A0522D;
+            --canvas-bg: rgba(26, 26, 26, 0.5);
+            --glass-bg: rgba(50, 50, 50, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #F8F1E5, #FFF8E8);
+            min-height: 100vh;
+            color: var(--dark-color);
+            display: flex;
+            flex-direction: column;
+            transition: background 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: var(--canvas-bg);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 3rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark-color);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-link {
+            margin: 0 1.5rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            height: 2px;
+            width: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .main-container {
+            width: 100%;
+            padding-top: 120px;
+            padding-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 1000px;
+            padding: 50px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .form-container {
+            background: var(--glass-bg);
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .form-heading {
+            font-family: 'Cinzel', serif;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            position: relative;
+            animation: slideIn 0.5s ease;
+        }
+
+        .form-heading::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            margin: 15px auto 0;
+        }
+
+        .form-subheading {
+            font-family: 'Cinzel', serif;
+            color: var(--dark-color);
+            margin: 30px 0 20px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .form-subheading::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 80%;
+            background: var(--accent-color);
+            border-radius: 5px;
+        }
+
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .stepper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #ddd;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .stepper .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stepper .step-circle {
+            width: 40px;
+            height: 40px;
+            background: #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .stepper .step.active .step-circle {
+            background: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .stepper .step.completed .step-circle {
+            background: var(--success-color);
+        }
+
+        .stepper .step-title {
+            font-size: 1rem;
+            color: var(--dark-color);
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: var(--glass-bg);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(242, 177, 52, 0.2);
+        }
+
+        textarea.input-field {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .hint-text {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .columns-2 {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .columns-2 .input-group {
+            flex: 1 1 calc(50% - 12.5px);
+            min-width: 250px;
+        }
+
+        .btn {
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(225, 103, 60, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn i {
+            margin-right: 10px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .google-btn {
+            background: var(--glass-bg);
+            color: var(--dark-color);
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .google-btn i {
+            color: #4285F4;
+            font-size: 1.3rem;
+        }
+
+        .google-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow);
+        }
+
+        .logout-btn {
+            background: linear-gradient(to right, #f44336, #e57373);
+            margin-top: 20px;
+        }
+
+        .next-btn {
+            background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
+            margin-top: 20px;
+            padding: 16px 35px;
+            font-size: 1.2rem;
+        }
+
+        .photo-upload-container {
+            border: 2px dashed var(--primary-color);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 25px;
+            position: relative;
+            background: var(--glass-bg);
+        }
+
+        .photo-upload-container:hover {
+            border-color: var(--accent-color);
+            background: rgba(242, 177, 52, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .photo-upload-text {
+            font-weight: 500;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .photo-requirements {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
+            animation: move 2s linear infinite;
+        }
+
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 20px; }
+        }
+
+        .status-message {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .photo-swatch {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .gallery-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #ddd;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.15);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .success-message {
+            background: rgba(56, 142, 60, 0.1);
+            border-left: 4px solid var(--success-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            color: var(--success-color);
+            display: none;
+            font-size: 1.1rem;
+        }
+
+        .success-message i {
+            margin-right: 10px;
+        }
+
+        .selected-file {
+            margin-top: 15px;
+            color: var(--accent-color);
+            font-weight: 500;
+            display: none;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin-left: 15px;
+        }
+
+        .user-info, .submitted-data {
+            background: var(--glass-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        [data-theme="dark"] .user-info, [data-theme="dark"] .submitted-data {
+            background: var(--glass-bg);
+        }
+
+        .user-info h3, .submitted-data h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--secondary-color);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .user-info p, .submitted-data p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            color: var(--dark-color);
+        }
+
+        .user-info p strong, .submitted-data p strong {
+            width: 160px;
+            color: var(--accent-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .modal-img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--error-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 2rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: var(--glass-bg);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease;
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-link {
+                margin: 2rem 0;
+                font-size: 1.3rem;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+
+            .btn-row {
+                flex-direction: column;
+            }
+
+            .columns-2 .input-group {
+                flex: 1 1 100%;
+            }
+
+            .photo-swatch {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+
+            .gallery-img {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -33,7 +755,7 @@
         </ul>
     </header>
 
-    <canvas id="leaves-canvas"></canvas>
+    <canvas id="lotus-canvas"></canvas>
 
     <div class="main-container">
         <div class="form-container" id="form-container">
@@ -141,8 +863,16 @@
                     </div>
 
                     <div class="input-group">
+                        <label for="location" class="input-label">Location (Optional)</label>
+                        <input type="text" id="location" class="input-field" placeholder="Allow location access" readonly>
+                        <button type="button" class="btn" onclick="getUserLocation()">
+                            <i class="fas fa-map-marker-alt"></i> Get Location
+                        </button>
+                    </div>
+
+                    <div class="input-group">
                         <label for="bio" class="input-label">Brief Bio*</label>
-                        <textarea id="bio" class="input-field" placeholder="Tell us about yourself, your interests, and aspirations (Max 200 words)" required></textarea>
+                        <textarea id="bio" class="input-field" placeholder="Tell us about yourself (Max 200 words)" required></textarea>
                         <div class="hint-text" id="bio-counter">0/200 words</div>
                         <div class="error-message" id="bio-error">Bio is required (max 200 words)</div>
                     </div>
@@ -151,7 +881,7 @@
 
                     <div class="input-group">
                         <label for="experience" class="input-label">Previous Pageant Experience (if any)</label>
-                        <textarea id="experience" class="input-field" placeholder="Share your previous pageant or modeling experience"></textarea>
+                        <textarea id="experience" class="input-field" placeholder="Share your pageant experience"></textarea>
                     </div>
 
                     <div class="input-group">
@@ -180,20 +910,22 @@
             <div class="tab-content" id="upload-tab">
                 <div id="uploadSection" style="display:none;">
                     <h2 class="form-subheading">Submit Your Photos (Max 15)</h2>
-                    <p class="hint-text">Upload up to 15 clear, high-quality photos. These will be used for the first round of selection.</p>
+                    <p class="hint-text">Upload clear, high-quality photos for the first round of selection.</p>
 
                     <div class="photo-upload-container" id="dropArea">
                         <div class="upload-icon">
                             <i class="fas fa-cloud-upload-alt"></i>
                         </div>
-                        <div class="photo-upload-text">Click or drop to upload your photos</div>
-                        <div class="photo-requirements">Maximum 5MB each (JPEG or PNG), Up to 15 photos</div>
+                        <div class="photo-upload-text">Click or drag to upload photos</div>
+                        <div class="photo-requirements">Max 5MB each (JPEG/PNG), Up to 15 photos</div>
                         <input type="file" id="fileInput" class="file-input" accept="image/*" multiple>
                     </div>
 
                     <div class="selected-file" id="selectedFile"></div>
 
-                    <progress id="uploadProgress" value="0" max="100" style="display:none;width:100%;"></progress>
+                    <div class="progress-bar" id="uploadProgress">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
                     <p id="status" class="status-message"></p>
 
                     <div id="preview" style="display:none;" class="photo-swatch"></div>
@@ -204,7 +936,7 @@
                     </button>
 
                     <div class="success-message" id="upload-success">
-                        <i class="fas fa-check-circle"></i> Photos uploaded successfully! Your application is complete.
+                        <i class="fas fa-check-circle"></i> Photos uploaded successfully!
                     </div>
 
                     <h2 class="form-subheading">Uploaded Photos</h2>
@@ -253,6 +985,7 @@
         const userDataDiv = document.getElementById("userData");
         const statusText = document.getElementById("status");
         const progressBar = document.getElementById("uploadProgress");
+        const progressFill = document.getElementById("progressFill");
         const uploadBtn = document.getElementById("uploadBtn");
         const fileInput = document.getElementById("fileInput");
         const selectedFileDisplay = document.getElementById("selectedFile");
@@ -270,65 +1003,65 @@
         let currentUser = null;
         let uploadedCount = 0;
         let isRegistrationComplete = false;
+        let hasEdited = false;
 
         function initThreeJS() {
-            const canvas = document.getElementById("leaves-canvas");
+            const canvas = document.getElementById("lotus-canvas");
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
 
             const textureLoader = new THREE.TextureLoader();
-            const leafTexture = textureLoader.load(
-                'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/leaf.png',
-                () => console.log("Leaf texture loaded"),
+            const lotusTexture = textureLoader.load(
+                'https://i.imgur.com/lotus.png',
+                () => console.log("Lotus texture loaded"),
                 undefined,
                 (err) => {
                     console.error("Texture load failed:", err);
-                    leafMaterial.color.set(0x228B22);
+                    lotusMaterial.color.set(0xFF69B4);
                 }
             );
-            leafTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
-            const leaves = [];
-            const leafMaterial = new THREE.MeshBasicMaterial({
-                map: leafTexture,
+            const lotuses = [];
+            const lotusMaterial = new THREE.MeshBasicMaterial({
+                map: lotusTexture,
                 side: THREE.DoubleSide,
                 transparent: true,
                 alphaTest: 0.5
             });
 
-            const leafShape = new THREE.Shape();
-            leafShape.moveTo(0, 0);
-            leafShape.quadraticCurveTo(0.2, 0.4, 0, 0.8);
-            leafShape.quadraticCurveTo(-0.2, 0.4, 0, 0);
-            const leafGeometry = new THREE.ShapeGeometry(leafShape);
+            const lotusShape = new THREE.Shape();
+            lotusShape.moveTo(0, 0);
+            lotusShape.quadraticCurveTo(0.3, 0.5, 0, 1);
+            lotusShape.quadraticCurveTo(-0.3, 0.5, 0, 0);
+            const lotusGeometry = new THREE.ShapeGeometry(lotusShape);
 
-            for (let i = 0; i < 30; i++) {
-                const leaf = new THREE.Mesh(leafGeometry, leafMaterial);
-                leaf.position.set(
-                    Math.random() * 20 - 10,
-                    Math.random() * 20,
+            for (let i = 0; i < 20; i++) {
+                const lotus = new THREE.Mesh(lotusGeometry, lotusMaterial);
+                lotus.position.set(
+                    Math.random() * 15 - 7.5,
+                    Math.random() * 15,
                     Math.random() * 10 - 5
                 );
-                leaf.rotation.set(
+                lotus.rotation.set(
                     Math.random() * Math.PI,
                     Math.random() * Math.PI,
                     Math.random() * Math.PI
                 );
-                leaf.scale.set(0.8 + Math.random() * 0.4, 0.8 + Math.random() * 0.4, 1);
-                leaf.velocity = new THREE.Vector3(
-                    (Math.random() - 0.5) * 0.03,
-                    -Math.random() * 0.04 - 0.02,
-                    (Math.random() - 0.5) * 0.03
-                );
-                leaf.angularVelocity = new THREE.Vector3(
+                lotus.scale.set(1 + Math.random() * 0.5, 1 + Math.random() * 0.5, 1);
+                lotus.velocity = new THREE.Vector3(
                     (Math.random() - 0.5) * 0.02,
-                    (Math.random() - 0.5) * 0.02,
+                    -Math.random() * 0.03 - 0.01,
                     (Math.random() - 0.5) * 0.02
                 );
-                leaves.push(leaf);
-                scene.add(leaf);
+                lotus.angularVelocity = new THREE.Vector3(
+                    (Math.random() - 0.5) * 0.01,
+                    (Math.random() - 0.5) * 0.01,
+                    (Math.random() - 0.5) * 0.01
+                );
+                lotuses.push(lotus);
+                scene.add(lotus);
             }
 
             camera.position.z = 10;
@@ -337,21 +1070,21 @@
             function animate() {
                 requestAnimationFrame(animate);
                 time += 0.016;
-                leaves.forEach(leaf => {
+                lotuses.forEach(lotus => {
                     const wind = new THREE.Vector3(
-                        Math.sin(time + leaf.position.x) * 0.03,
-                        -0.02 + Math.sin(time * 0.5) * 0.01,
-                        Math.cos(time + leaf.position.z) * 0.03
+                        Math.sin(time + lotus.position.x) * 0.02,
+                        -0.01 + Math.sin(time * 0.5) * 0.005,
+                        Math.cos(time + lotus.position.z) * 0.02
                     );
-                    leaf.position.add(leaf.velocity.clone().add(wind));
-                    leaf.rotation.x += leaf.angularVelocity.x;
-                    leaf.rotation.y += leaf.angularVelocity.y;
-                    leaf.rotation.z += leaf.angularVelocity.z;
+                    lotus.position.add(lotus.velocity.clone().add(wind));
+                    lotus.rotation.x += lotus.angularVelocity.x;
+                    lotus.rotation.y += lotus.angularVelocity.y;
+                    lotus.rotation.z += lotus.angularVelocity.z;
 
-                    if (leaf.position.y < -10) {
-                        leaf.position.y = 10;
-                        leaf.position.x = Math.random() * 20 - 10;
-                        leaf.position.z = Math.random() * 10 - 5;
+                    if (lotus.position.y < -10) {
+                        lotus.position.y = 10;
+                        lotus.position.x = Math.random() * 15 - 7.5;
+                        lotus.position.z = Math.random() * 10 - 5;
                     }
                 });
                 renderer.render(scene, camera);
@@ -382,7 +1115,11 @@
                 document.getElementById("theme-toggle").classList.remove("fa-moon");
                 document.getElementById("theme-toggle").classList.add("fa-sun");
             }
-            initThreeJS();
+            try {
+                initThreeJS();
+            } catch (err) {
+                console.error("Three.js initialization failed:", err);
+            }
         });
 
         const tabs = document.querySelectorAll(".tab");
@@ -396,7 +1133,7 @@
                 }
 
                 if (tabId === "upload" && !isRegistrationComplete) {
-                    alert("Please complete the registration form before uploading photos.");
+                    alert("Please complete the registration form.");
                     document.querySelector('[data-tab="registration"]').click();
                     return;
                 }
@@ -425,7 +1162,6 @@
         }
 
         function saveUserData(user) {
-            console.log("Saving user data for UID:", user.uid);
             update(ref(db, "users/" + user.uid), {
                 email: user.email,
                 uid: user.uid,
@@ -434,11 +1170,11 @@
         }
 
         function fetchUserData(uid) {
-            console.log("Fetching user data for UID:", uid);
             onValue(ref(db, "users/" + uid), (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
                     isRegistrationComplete = !!data.registration;
+                    hasEdited = data.hasEdited || false;
                     let uploadsHtml = "";
                     uploadedCount = data.uploads ? Object.keys(data.uploads).length : 0;
                     if (data.uploads) {
@@ -464,6 +1200,7 @@
                     authGreeting.innerText = `Welcome, ${data.name}! You are now authenticated.`;
                     gallery.innerHTML = uploadsHtml;
                     displaySubmittedData(data.registration);
+                    editRegistrationBtn.style.display = isRegistrationComplete && !hasEdited ? "block" : "none";
                 }
             }, err => console.error("Error fetching user data:", err));
         }
@@ -476,13 +1213,13 @@
                     <p><strong>Age:</strong> ${registration.age}</p>
                     <p><strong>Phone:</strong> ${registration.phone}</p>
                     <p><strong>City:</strong> ${registration.city}</p>
+                    ${registration.location ? `<p><strong>Location:</strong> ${registration.location}</p>` : ''}
                     <p><strong>Bio:</strong> ${registration.bio}</p>
                     <p><strong>Experience:</strong> ${registration.experience || 'None'}</p>
                     <p><strong>Talents:</strong> ${registration.talents}</p>
                 `;
                 submittedDataDiv.style.display = "block";
                 registrationForm.style.display = "none";
-                editRegistrationBtn.style.display = "block";
                 nextToUploadBtn.style.display = "block";
             } else {
                 submittedDataDiv.style.display = "none";
@@ -503,7 +1240,6 @@
         }
 
         function saveUploadData(uid, imageData) {
-            console.log("Saving upload data for UID:", uid);
             const uploadRef = push(ref(db, `users/${uid}/uploads`));
             set(uploadRef, {
                 public_id: imageData.public_id,
@@ -524,8 +1260,24 @@
             modalImg.src = "";
         };
 
+        window.getUserLocation = () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        document.getElementById("location").value = `${latitude}, ${longitude}`;
+                    },
+                    (err) => {
+                        alert("Location access denied: " + err.message);
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        };
+
         signUpBtn.addEventListener("click", () => {
-            const气温 = emailInput.value;
+            const email = emailInput.value;
             const password = passwordInput.value;
             if (!email || !password) {
                 alert("Please enter email and password.");
@@ -597,7 +1349,7 @@
         });
 
         nextBtn.addEventListener("click", () => {
-            if (!nextBtn.disabled) {
+            if !{nextBtn.disabled) {
                 document.querySelector('[data-tab="registration"]').click();
             }
         });
@@ -618,6 +1370,7 @@
                     nextBtn.disabled = true;
                     currentUser = null;
                     isRegistrationComplete = false;
+                    hasEdited = false;
                     logoutBtn.style.display = "none";
                     signUpBtn.style.display = "block";
                     loginBtn.style.display = "block";
@@ -636,7 +1389,7 @@
         fileInput.addEventListener("change", function() {
             const files = Array.from(this.files);
             if (files.length + uploadedCount > MAX_UPLOADS) {
-                alert(`You can upload a maximum of ${MAX_UPLOADS} photos. You have already uploaded ${uploadedCount}.`);
+                alert(`You can upload a maximum of ${MAX_UPLOADS} photos.`);
                 this.value = "";
                 return;
             }
@@ -692,7 +1445,7 @@
             const dt = e.dataTransfer;
             const files = dt.files;
             if (files.length + uploadedCount > MAX_UPLOADS) {
-                alert(`You can upload a maximum of ${MAX_UPLOADS} photos. You have already uploaded ${uploadedCount}.`);
+                alert(`You can upload a maximum of ${MAX_UPLOADS} photos.`);
                 return;
             }
             fileInput.files = files;
@@ -706,19 +1459,19 @@
             }
 
             if (!isRegistrationComplete) {
-                alert("Please complete the registration form before uploading photos.");
+                alert("Please complete the registration form.");
                 document.querySelector('[data-tab="registration"]').click();
                 return;
             }
 
             const files = Array.from(fileInput.files);
             if (files.length === 0) {
-                alert("Please select at least one file to upload.");
+                alert("Please select at least one file.");
                 return;
             }
 
             if (files.length + uploadedCount > MAX_UPLOADS) {
-                alert(`You can upload a maximum of ${MAX_UPLOADS} photos. You have already uploaded ${uploadedCount}.`);
+                alert(`You can upload a maximum of ${MAX_UPLOADS} photos.`);
                 return;
             }
 
@@ -728,330 +1481,317 @@
                     return;
                 }
                 if (file.size > 5 * 1024 * 1024) {
-                    alert(`"${file.name}" is too large (max 5MB).`);
-                    return;
-                }
-                const isDuplicate = await checkDuplicatePhoto(currentUser.uid, file.name);
-                if (isDuplicate) {
-                    alert(`"${file.name}" has already been uploaded.`);
-                    return;
-                }
+                alert(`"${file.name}" is too large (max 5MB).`);
+                return;
+            }
+            const isDuplicate = await checkDuplicatePhoto(currentUser.uid, file.name);
+            if (isDuplicate) {
+                alert(`"${file.name}" has already been uploaded.`);
+                return;
+            }
+        }
+
+        statusText.innerText = "Preparing upload...";
+        progressBar.style.display = "block";
+        progressFill.style.width = "0%";
+        uploadBtn.disabled = true;
+
+        try {
+            const sigResponse = await fetch(`${BACKEND_URL}/generate-signature`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    user_uid: currentUser.uid,
+                    user_name: currentUser.displayName || "Anonymous"
+                })
+            });
+
+            if (!sigResponse.ok) {
+                throw new Error("Failed to fetch signature");
             }
 
-            statusText.innerText = "Preparing upload...";
-            progressBar.style.display = "block";
-            progressBar.value = 0;
-            uploadBtn.disabled = true;
+            const sigData = await sigResponse.json();
+            let uploadedFiles = [];
+            let uploaded = 0;
 
-            try {
-                const sigResponse = await fetch(`${BACKEND_URL}/generate-signature`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        user_uid: currentUser.uid,
-                        user_name: currentUser.displayName || "Anonymous"
-                    })
-                });
+            for (const file of files) {
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset", "signed_upload");
+                formData.append("timestamp", sigData.timestamp);
+                formData.append("signature", sigData.signature);
+                formData.append("api_key", sigData.api_key);
+                formData.append("context", `user_uid=${sigData.user_uid}|user_name=${sigData.user_name}`);
 
-                if (!sigResponse.ok) {
-                    const errorText = await sigResponse.text();
-                    throw new Error(`Failed to fetch signature: ${sigResponse.status} - ${errorText}`);
-                }
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", `https://api.cloudinary.com/v1_1/${sigData.cloud_name}/image/upload`, true);
 
-                const sigData = await sigResponse.json();
-                if (!sigData.signature) {
-                    throw new Error("Invalid signature response from server");
-                }
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percent = (event.loaded / event.total) * 100 / files.length + (uploaded / files.length) * 100;
+                        progressFill.style.width = `${percent}%`;
+                        statusText.innerText = `Uploading: ${Math.round(percent)}%`;
+                    }
+                };
 
-                let uploadedFiles = [];
-                let uploaded = 0;
-
-                for (const file of files) {
-                    const formData = new FormData();
-                    formData.append("file", file);
-                    formData.append("upload_preset", "signed_upload");
-                    formData.append("timestamp", sigData.timestamp);
-                    formData.append("signature", sigData.signature);
-                    formData.append("api_key", sigData.api_key);
-                    formData.append("context", `user_uid=${sigData.user_uid}|user_name=${sigData.user_name}`);
-
-                    const xhr = new XMLHttpRequest();
-                    xhr.open("POST", `https://api.cloudinary.com/v1_1/${sigData.cloud_name}/image/upload`, true);
-
-                    xhr.upload.onprogress = (event) => {
-                        if (event.lengthComputable) {
-                            const percent = (event.loaded / event.total) * 100 / files.length + (uploaded / files.length) * 100;
-                            progressBar.value = percent;
-                            statusText.innerText = `Uploading: ${Math.round(percent)}%`;
+                await new Promise((resolve, reject) => {
+                    xhr.onload = () => {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            const data = JSON.parse(xhr.responseText);
+                            saveUploadData(currentUser.uid, data);
+                            uploaded++;
+                            uploadedFiles.push({ fileName: file.name, secure_url: data.secure_url });
+                            resolve();
+                        } else {
+                            reject(new Error(`Upload failed: ${xhr.status}`));
                         }
                     };
 
-                    await new Promise((resolve, reject) => {
-                        xhr.onload = () => {
-                            if (xhr.status >= 200 && xhr.status < 300) {
-                                try {
-                                    const data = JSON.parse(xhr.responseText);
-                                    if (data.secure_url) {
-                                        saveUploadData(currentUser.uid, data);
-                                        uploaded++;
-                                        uploadedFiles.push({ fileName: file.name, secure_url: data.secure_url });
-                                        resolve();
-                                    } else {
-                                        reject(new Error("Upload response missing URL"));
-                                    }
-                                } catch (e) {
-                                    reject(new Error("Failed to parse upload response"));
-                                }
-                            } else {
-                                reject(new Error(`Upload failed with status: ${xhr.status}`));
-                            }
-                        };
-
-                        xhr.onerror = () => reject(new Error("Network error during upload"));
-                        xhr.send(formData);
-                    });
-                }
-
-                const remainingFiles = Array.from(fileInput.files).filter(f => !uploadedFiles.some(uf => uf.fileName === f.name));
-                const dataTransfer = new DataTransfer();
-                remainingFiles.forEach(f => dataTransfer.items.add(f));
-                fileInput.files = dataTransfer.files;
-
-                preview.innerHTML = "";
-                remainingFiles.forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const img = document.createElement("img");
-                        img.src = e.target.result;
-                        img.className = "gallery-img";
-                        img.dataset.fileName = file.name;
-                        preview.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
+                    xhr.onerror = () => reject(new Error("Network error"));
+                    xhr.send(formData);
                 });
-                if (remainingFiles.length === 0) {
-                    preview.style.display = "none";
-                    selectedFileDisplay.style.display = "none";
-                    selectedFileDisplay.textContent = "";
-                }
+            }
 
-                uploadedFiles.forEach(({ secure_url }) => {
-                    const imgContainer = document.createElement("div");
-                    imgContainer.className = "gallery-img-container";
+            const remainingFiles = Array.from(fileInput.files).filter(f => !uploadedFiles.some(uf => uf.fileName === f.name));
+            const dataTransfer = new DataTransfer();
+            remainingFiles.forEach(f => dataTransfer.items.add(f));
+            fileInput.files = dataTransfer.files;
+
+            preview.innerHTML = "";
+            remainingFiles.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
                     const img = document.createElement("img");
-                    img.src = secure_url;
+                    img.src = e.target.result;
                     img.className = "gallery-img";
-                    img.onclick = () => openModal(secure_url);
-                    imgContainer.appendChild(img);
-                    gallery.appendChild(imgContainer);
-                });
-
-                statusText.innerText = "✅ All photos uploaded successfully!";
-                document.getElementById("upload-success").style.display = "block";
-
-            } catch (err) {
-                statusText.innerText = "❌ Upload failed: " + err.message;
-                console.error("Upload error:", err);
-            } finally {
-                progressBar.style.display = "none";
-                uploadBtn.disabled = false;
+                    img.dataset.fileName = file.name;
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+            if (remainingFiles.length === 0) {
+                preview.style.display = "none";
+                selectedFileDisplay.style.display = "none";
+                selectedFileDisplay.textContent = "";
             }
-        };
 
-        window.saveDraft = () => {
-            const formData = {
-                fullName: document.getElementById("full-name").value,
-                age: document.getElementById("age").value,
-                phone: document.getElementById("phone").value,
-                city: document.getElementById("city").value,
-                bio: document.getElementById("bio").value,
-                experience: document.getElementById("experience").value,
-                talents: document.getElementById("talents").value
-            };
-            localStorage.setItem("registrationDraft", JSON.stringify(formData));
-            alert("Draft saved successfully!");
-        };
+            uploadedFiles.forEach(({ secure_url }) => {
+                const imgContainer = document.createElement("div");
+                imgContainer.className = "gallery-img-container";
+                const img = document.createElement("img");
+                img.src = secure_url;
+                img.className = "gallery-img";
+                img.onclick = () => openModal(secure_url);
+                imgContainer.appendChild(img);
+                gallery.appendChild(imgContainer);
+            });
 
-        function loadDraft() {
-            const draft = localStorage.getItem("registrationDraft");
-            if (draft) {
-                try {
-                    const formData = JSON.parse(draft);
-                    document.getElementById("full-name").value = formData.fullName || "";
-                    document.getElementById("age").value = formData.age || "";
-                    document.getElementById("phone").value = formData.phone || "";
-                    document.getElementById("city").value = formData.city || "";
-                    document.getElementById("bio").value = formData.bio || "";
-                    document.getElementById("experience").value = formData.experience || "";
-                    document.getElementById("talents").value = formData.talents || "";
-                    updateBioCounter();
-                    console.log("Draft loaded:", formData);
-                } catch (err) {
-                    console.error("Error loading draft:", err);
-                }
-            }
+            statusText.innerText = "✅ All photos uploaded successfully!";
+            document.getElementById("upload-success").style.display = "block";
+
+        } catch (err) {
+            statusText.innerText = "❌ Upload failed: " + err.message;
+            console.error("Upload error:", err);
+        } finally {
+            progressBar.style.display = "none";
+            uploadBtn.disabled = false;
+        }
+    };
+
+    window.saveDraft = () => {
+        const formData = {
+            fullName: document.getElementById("full-name").value,
+            age: document.getElementById("age").value,
+            phone: document.getElementById("phone").value,
+            city: document.getElementById("city").value,
+            location: document.getElementById("location").value,
+            bio: document.getElementById("bio").value,
+            experience: document.getElementById("experience").value,
+            talents: document.getElementById("talents").value
+        };
+        localStorage.setItem("registrationDraft", JSON.stringify(formData));
+        alert("Draft saved successfully!");
+    };
+
+    function loadDraft() {
+        const draft = localStorage.getItem("registrationDraft");
+        if (draft) {
+            const formData = JSON.parse(draft);
+            document.getElementById("full-name").value = formData.fullName || "";
+            document.getElementById("age").value = formData.age || "";
+            document.getElementById("phone").value = formData.phone || "";
+            document.getElementById("city").value = formData.city || "";
+            document.getElementById("location").value = formData.location || "";
+            document.getElementById("bio").value = formData.bio || "";
+            document.getElementById("experience").value = formData.experience || "";
+            document.getElementById("talents").value = formData.talents || "";
+            updateBioCounter();
+        }
+    }
+
+    document.getElementById("bio").addEventListener("input", updateBioCounter);
+    function updateBioCounter() {
+        const bio = document.getElementById("bio").value;
+        const words = bio.trim().split(/\s+/).filter(word => word.length > 0).length;
+        document.getElementById("bio-counter").textContent = `${words}/200 words`;
+        if (words > 200) {
+            document.getElementById("bio-error").style.display = "block";
+        } else {
+            document.getElementById("bio-error").style.display = "none";
+        }
+    }
+
+    document.getElementById("registration-form").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        if (!currentUser) {
+            alert("Please log in to submit your registration.");
+            return;
         }
 
-        document.getElementById("bio").addEventListener("input", updateBioCounter);
-        function updateBioCounter() {
-            const bio = document.getElementById("bio").value;
-            const words = bio.trim().split(/\s+/).filter(word => word.length > 0).length;
-            document.getElementById("bio-counter").textContent = `${words}/200 words`;
-            if (words > 200) {
-                document.getElementById("bio-error").style.display = "block";
-            } else {
-                document.getElementById("bio-error").style.display = "none";
-            }
+        const fullName = document.getElementById("full-name").value;
+        const age = document.getElementById("age").value;
+        const phone = document.getElementById("phone").value;
+        const city = document.getElementById("city").value;
+        const location = document.getElementById("location").value;
+        const bio = document.getElementById("bio").value;
+        const talents = document.getElementById("talents").value;
+
+        if (!fullName || !age || !phone || !city || !bio || !talents) {
+            alert("Please fill all required fields.");
+            return;
         }
 
-        document.getElementById("registration-form").addEventListener("submit", async function(e) {
-            e.preventDefault();
+        if (parseInt(age) < 16 || parseInt(age) > 30) {
+            document.getElementById("age-error").style.display = "block";
+            return;
+        }
 
-            if (!currentUser) {
-                alert("Please log in to submit your registration.");
-                return;
-            }
+        const bioWords = bio.trim().split(/\s+/).filter(word => word.length > 0).length;
+        if (bioWords > 200) {
+            document.getElementById("bio-error").style.display = "block";
+            return;
+        }
 
-            const fullName = document.getElementById("full-name").value;
-            const age = document.getElementById("age").value;
-            const phone = document.getElementById("phone").value;
-            const city = document.getElementById("city").value;
-            const bio = document.getElementById("bio").value;
-            const talents = document.getElementById("talents").value;
+        const formData = {
+            fullName,
+            age,
+            phone,
+            city,
+            location: location || null,
+            bio,
+            experience: document.getElementById("experience").value,
+            talents,
+            userId: currentUser.uid,
+            userEmail: currentUser.email,
+            timestamp: new Date().toISOString()
+        };
 
-            if (!fullName || !age || !phone || !city || !bio || !talents) {
-                alert("Please fill all required fields marked with *");
-                return;
-            }
+        try {
+            await update(ref(db, `users/${currentUser.uid}`), {
+                registration: formData,
+                hasEdited: hasEdited
+            });
+            alert("Registration submitted successfully!");
+            isRegistrationComplete = true;
+            localStorage.removeItem("registrationDraft");
+            this.reset();
+            displaySubmittedData(formData);
+            document.querySelector('[data-tab="upload"]').click();
+        } catch (err) {
+            alert("Error submitting registration: " + err.message);
+        }
+    });
 
-            if (parseInt(age) < 16 || parseInt(age) > 30) {
-                document.getElementById("age-error").style.display = "block";
-                return;
-            }
-
-            const bioWords = bio.trim().split(/\s+/).filter(word => word.length > 0).length;
-            if (bioWords > 200) {
-                document.getElementById("bio-error").style.display = "block";
-                return;
-            }
-
-            const formData = {
-                fullName,
-                age,
-                phone,
-                city,
-                bio,
-                experience: document.getElementById("experience").value,
-                talents,
-                userId: currentUser.uid,
-                userEmail: currentUser.email,
-                timestamp: new Date().toISOString()
-            };
-
-            try {
-                console.log("Submitting registration for UID:", currentUser.uid, "Data:", formData);
-                await update(ref(db, `users/${currentUser.uid}`), {
-                    registration: formData
-                });
-                console.log("Registration saved to Firebase");
-
-                alert("Registration submitted successfully! You can now upload your photos.");
-                isRegistrationComplete = true;
-                localStorage.removeItem("registrationDraft");
-                this.reset();
-                displaySubmittedData(formData);
-                document.querySelector('[data-tab="upload"]').click();
-            } catch (err) {
-                console.error("Registration submission error:", err);
-                alert("Error submitting registration: " + err.message);
-            }
-        });
-
-        editRegistrationBtn.addEventListener("click", () => {
+    editRegistrationBtn.addEventListener("click", () => {
+        if (!hasEdited) {
             registrationForm.style.display = "block";
             submittedDataDiv.style.display = "none";
             editRegistrationBtn.style.display = "none";
             nextToUploadBtn.style.display = "none";
             loadDraft();
-        });
+            hasEdited = true;
+            update(ref(db, `users/${currentUser.uid}`), { hasEdited: true });
+        }
+    });
 
-        nextToUploadBtn.addEventListener("click", () => {
-            document.querySelector('[data-tab="upload"]').click();
-        });
+    nextToUploadBtn.addEventListener("click", () => {
+        document.querySelector('[data-tab="upload"]').click();
+    });
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                console.log("User authenticated:", user.uid);
-                fetchUserData(user.uid);
-                document.getElementById("auth-section").style.display = "none";
-                userDataDiv.style.display = "block";
-                logoutBtn.style.display = "block";
-                document.getElementById("uploadSection").style.display = "block";
-                loadDraft();
-                onValue(ref(db, `users/${user.uid}/registration`), (snapshot) => {
-                    isRegistrationComplete = !!snapshot.val();
-                    if (isRegistrationComplete) {
-                        document.querySelector('[data-tab="upload"]').click();
-                        nextBtn.style.display = "none";
-                    } else {
-                        document.querySelector('[data-tab="registration"]').click();
-                        nextBtn.style.display = "block";
-                        nextBtn.disabled = false;
-                    }
-                }, { onlyOnce: true }, err => console.error("Error checking registration:", err));
-            } else {
-                currentUser = null;
-                isRegistrationComplete = false;
-                document.getElementById("auth-section").style.display = "block";
-                userDataDiv.style.display = "none";
-                logoutBtn.style.display = "none";
-                document.getElementById("uploadSection").style.display = "none";
-                document.getElementById("auth-success").style.display = "none";
-                nextBtn.style.display = "none";
-                nextBtn.disabled = true;
-                progressBar.style.display = "none";
-                statusText.innerText = "";
-                preview.style.display = "none";
-                gallery.innerHTML = "";
-                submittedDataDiv.style.display = "none";
-                registrationForm.style.display = "block";
-                editRegistrationBtn.style.display = "none";
-                nextToUploadBtn.style.display = "none";
-            }
-        });
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            currentUser = user;
+            fetchUserData(user.uid);
+            document.getElementById("auth-section").style.display = "none";
+            userDataDiv.style.display = "block";
+            logoutBtn.style.display = "block";
+            document.getElementById("uploadSection").style.display = "block";
+            loadDraft();
+            onValue(ref(db, `users/${user.uid}/registration`), (snapshot) => {
+                isRegistrationComplete = !!snapshot.val();
+                if (isRegistrationComplete) {
+                    document.querySelector('[data-tab="upload"]').click();
+                    nextBtn.style.display = "none";
+                } else {
+                    document.querySelector('[data-tab="registration"]').click();
+                    nextBtn.style.display = "block";
+                    nextBtn.disabled = false;
+                }
+            }, { onlyOnce: true });
+        } else {
+            currentUser = null;
+            isRegistrationComplete = false;
+            hasEdited = false;
+            document.getElementById("auth-section").style.display = "block";
+            userDataDiv.style.display = "none";
+            logoutBtn.style.display = "none";
+            document.getElementById("uploadSection").style.display = "none";
+            document.getElementById("auth-success").style.display = "none";
+            nextBtn.style.display = "none";
+            nextBtn.disabled = true;
+            progressBar.style.display = "none";
+            statusText.innerText = "";
+            preview.style.display = "none";
+            gallery.innerHTML = "";
+            submittedDataDiv.style.display = "none";
+            registrationForm.style.display = "block";
+            editRegistrationBtn.style.display = "none";
+            nextToUploadBtn.style.display = "none";
+        }
+    });
 
-        document.getElementById("menu-toggle").addEventListener("click", function() {
-            document.getElementById("nav-links").classList.toggle("active");
-            const spans = this.querySelectorAll("span");
-            spans.forEach(span => span.classList.toggle("active"));
-        });
+    document.getElementById("menu-toggle").addEventListener("click", function() {
+        document.getElementById("nav-links").classList.toggle("active");
+        const spans = this.querySelectorAll("span");
+        spans.forEach(span => span.classList.toggle("active"));
+    });
 
-        const validateField = (field, regex, errorId) => {
-            const value = field.value;
-            const error = document.getElementById(errorId);
-            if (!regex.test(value)) {
-                error.style.display = "block";
-                field.classList.add("error");
-                return false;
-            } else {
-                error.style.display = "none";
-                field.classList.remove("error");
-                return true;
-            }
-        };
+    const validateField = (field, regex, errorId) => {
+        const value = field.value;
+        const error = document.getElementById(errorId);
+        if (!regex.test(value)) {
+            error.style.display = "block";
+            field.classList.add("error");
+            return false;
+        } else {
+            error.style.display = "none";
+            field.classList.remove("error");
+            return true;
+        }
+    };
 
-        emailInput.addEventListener("blur", function() {
-            validateField(this, /^[^\s@]+@[^\s@]+\.[^\s@]+$/, "email-error");
-        });
+    emailInput.addEventListener("blur", function() {
+        validateField(this, /^[^\s@]+@[^\s@]+\.[^\s@]+$/, "email-error");
+    });
 
-        passwordInput.addEventListener("blur", function() {
-            validateField(this, /.{6,}/, "password-error");
-        });
+    passwordInput.addEventListener("blur", function() {
+        validateField(this, /.{6,}/, "password-error");
+    });
 
-        document.getElementById("phone").addEventListener("blur", function() {
-            validateField(this, /^\+?\d{10,}$/, "phone-error");
-        });
-    </script>
+    document.getElementById("phone").addEventListener("blur", function() {
+        validateField(this, /^\+?\d{10,}$/, "phone-error");
+    });
+</script>
 </body>
 </html>
