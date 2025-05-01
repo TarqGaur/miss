@@ -12,7 +12,7 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/generate-signature": {"origins": "http://127.0.0.1:5500"}})  # Allow only Live Server origin
+CORS(app, resources={r"/generate-signature": {"origins": "https://tarqgaur.github.io"}})  # Allow only Live Server origin
 
 # Configure Cloudinary
 CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME")  # Replace with your Cloud Name
