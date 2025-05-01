@@ -2,378 +2,405 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Miss Banaras Competition</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    <title>Beauty Competition - Image Upload</title>
+    <script type="module">
+        // Import Firebase SDK (v10.x)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getDatabase, ref, update, onValue, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAImdjvo3yjfsxwwGKZp5iDx5VwmhfaDs",
+            authDomain: "contact-us-page-missbanaras.firebaseapp.com",
+            databaseURL: "https://contact-us-page-missbanaras-default-rtdb.firebaseio.com",
+            projectId: "contact-us-page-missbanaras",
+            messagingSenderId: "323394332678",
+            appId: "1:323394332678:web:99dde90fa03bf6c85ebb87",
+            measurementId: "G-6MWHVZ5KG9"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        // DOM elements
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const signUpBtn = document.getElementById("signUp");
+        const loginBtn = document.getElementById("login");
+        const googleBtn = document.getElementById("googleSignIn");
+        const logoutBtn = document.getElementById("logout");
+        const userDataDiv = document.getElementById("userData");
+        const statusText = document.getElementById("status");
+        const progressBar = document.getElementById("uploadProgress");
+        const uploadBtn = document.getElementById("uploadBtn");
+
+        let currentUser = null; // Store current user
+
+        // Save user data to Firebase
+        function saveUserData(user) {
+            update(ref(db, "users/" + user.uid), {
+                email: user.email,
+                uid: user.uid,
+                name: user.displayName || "Anonymous"
+            });
         }
 
+        // Fetch and display user data (name, UID, and uploads)
+        function fetchUserData(uid) {
+            onValue(ref(db, "users/" + uid), (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    let uploadsHtml = "";
+                    if (data.uploads) {
+                        uploadsHtml = "<h4>Your Uploads:</h4><div style='display: flex; flex-wrap: wrap;'>";
+                        Object.values(data.uploads).forEach(upload => {
+                            uploadsHtml += `<img src="${upload.secure_url}" style="max-width: 100px; margin: 5px;" title="Uploaded on ${upload.timestamp}">`;
+                        });
+                        uploadsHtml += "</div>";
+                    }
+                    userDataDiv.innerHTML = `
+                        <h3>Welcome, Contestant!</h3>
+                        <p><strong>Name:</strong> ${data.name}</p>
+                        <p><strong>UID:</strong> ${data.uid}</p>
+                        ${uploadsHtml}
+                    `;
+                }
+            });
+        }
+
+        // Save upload data to Firebase
+        function saveUploadData(uid, imageData) {
+            const uploadRef = push(ref(db, `users/${uid}/uploads`));
+            set(uploadRef, {
+                public_id: imageData.public_id,
+                secure_url: imageData.secure_url,
+                timestamp: imageData.created_at,
+                user_uid: currentUser.uid,
+                user_name: currentUser.displayName || "Anonymous"
+            });
+        }
+
+        // Sign up
+        signUpBtn.addEventListener("click", () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            if (!email || !password) {
+                alert("Please enter email and password.");
+                return;
+            }
+            signUpBtn.disabled = true;
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((cred) => {
+                    saveUserData(cred.user);
+                    fetchUserData(cred.user.uid);
+                })
+                .catch((err) => {
+                    alert("Sign-up failed: " + err.message);
+                })
+                .finally(() => {
+                    signUpBtn.disabled = false;
+                });
+        });
+
+        // Login
+        loginBtn.addEventListener("click", () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            if (!email || !password) {
+                alert("Please enter email and password.");
+                return;
+            }
+            loginBtn.disabled = true;
+            signInWithEmailAndPassword(auth, email, password)
+                .then((cred) => {
+                    fetchUserData(cred.user.uid);
+                })
+                .catch((err) => {
+                    alert("Login failed: " + err.message);
+                })
+                .finally(() => {
+                    loginBtn.disabled = false;
+                });
+        });
+
+        // Google Sign-In
+        googleBtn.addEventListener("click", () => {
+            const provider = new GoogleAuthProvider();
+            googleBtn.disabled = true;
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    saveUserData(result.user);
+                    fetchUserData(result.user.uid);
+                })
+                .catch((err) => {
+                    alert("Google Sign-In failed: " + err.message);
+                })
+                .finally(() => {
+                    googleBtn.disabled = false;
+                });
+        });
+
+        // Logout
+        loginBtn.addEventListener("click", () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            if (!email || !password) {
+                alert("Please enter email and password.");
+                return;
+            }
+            loginBtn.disabled = true;
+            signInWithEmailAndPassword(auth, email, password)
+                .then((cred) => {
+                    fetchUserData(cred.user.uid);
+                })
+                .catch((err) => {
+                    alert("Login failed: " + err.message);
+                })
+                .finally(() => {
+                    loginBtn.disabled = false;
+                });
+        });
+
+        // Google Sign-In
+        googleBtn.addEventListener("click", () => {
+            const provider = new GoogleAuthProvider();
+            googleBtn.disabled = true;
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    saveUserData(result.user);
+                    fetchUserData(result.user.uid);
+                })
+                .catch((err) => {
+                    alert("Google Sign-In failed: " + err.message);
+                })
+                .finally(() => {
+                    googleBtn.disabled = false;
+                });
+        });
+
+        // Logout
+        logoutBtn.addEventListener("click", () => {
+            signOut(auth)
+                .then(() => {
+                    userDataDiv.innerHTML = "";
+                    emailInput.value = "";
+                    passwordInput.value = "";
+                    progressBar.style.display = "none";
+                    statusText.innerText = "";
+                    document.getElementById("preview").style.display = "none";
+                    currentUser = null;
+                })
+                .catch((err) => alert("Logout failed: " + err.message));
+        });
+
+        // Cloudinary Signed Upload
+        window.uploadImage = async () => {
+            if (!currentUser) {
+                alert("Please log in to upload an image.");
+                return;
+            }
+
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select a file to upload.");
+                return;
+            }
+            if (!file.type.startsWith("image/")) {
+                alert("Please select an image file.");
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                alert("File too large (max 5MB).");
+                return;
+            }
+
+            statusText.innerText = "Preparing upload...";
+            progressBar.style.display = "block";
+            progressBar.value = 0;
+            uploadBtn.disabled = true;
+
+            try {
+                // Fetch signature from Flask backend with user data
+                const sigResponse = await fetch("http://localhost:5000/generate-signature", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        user_uid: currentUser.uid,
+                        user_name: currentUser.displayName || "Anonymous"
+                    })
+                });
+                if (!sigResponse.ok) {
+                    throw new Error("Failed to fetch signature");
+                }
+                const sigData = await sigResponse.json();
+
+                // Prepare form data
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset", "signed_upload");
+                formData.append("timestamp", sigData.timestamp);
+                formData.append("signature", sigData.signature);
+                formData.append("api_key", sigData.api_key);
+                formData.append("context", `user_uid=${sigData.user_uid}|user_name=${sigData.user_name}`);
+
+                // Upload with progress tracking
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", `https://api.cloudinary.com/v1_1/${sigData.cloud_name}/image/upload`, true);
+
+                // Track upload progress
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percent = (event.loaded / event.total) * 100;
+                        progressBar.value = percent;
+                    }
+                };
+
+                // Handle upload completion
+                xhr.onload = () => {
+                    const data = JSON.parse(xhr.responseText);
+                    if (xhr.status === 200 && data.secure_url) {
+                        statusText.innerText = "✅ Uploaded successfully!";
+                        document.getElementById("preview").src = data.secure_url;
+                        document.getElementById("preview").style.display = "block";
+                        // Save upload data to Firebase
+                        saveUploadData(currentUser.uid, data);
+                    } else {
+                        statusText.innerText = "❌ Upload failed: " + (data.error?.message || "Unknown error");
+                    }
+                    progressBar.style.display = "none";
+                    uploadBtn.disabled = false;
+                };
+
+                // Handle errors
+                xhr.onerror = () => {
+                    statusText.innerText = "❌ Upload failed: Network error";
+                    progressBar.style.display = "none";
+                    uploadBtn.disabled = false;
+                };
+
+                // Send the request
+                xhr.send(formData);
+            } catch (err) {
+                statusText.innerText = "❌ Upload failed: " + err.message;
+                progressBar.style.display = "none";
+                uploadBtn.disabled = false;
+            }
+        };
+
+        // Handle auth state changes
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                fetchUserData(user.uid);
+                logoutBtn.style.display = "block";
+                signUpBtn.style.display = "none";
+                loginBtn.style.display = "none";
+                googleBtn.style.display = "none";
+            } else {
+                currentUser = null;
+                userDataDiv.innerHTML = "";
+                logoutBtn.style.display = "none";
+                signUpBtn.style.display = "block";
+                loginBtn.style.display = "block";
+                googleBtn.style.display = "block";
+                progressBar.style.display = "none";
+                statusText.innerText = "";
+                document.getElementById("preview").style.display = "none";
+            }
+        });
+    </script>
+    <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f8f1e5;
-            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background: #f4f4f4;
+            margin: 0;
         }
-
-        header {
-            width: 100%;
-            padding: 1rem;
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #c71585;
-            text-decoration: none;
-        }
-
-        .login-container {
-            background: #fff;
-            width: 100%;
-            max-width: 600px;
-            padding: 2rem;
+        .container {
+            background: white;
+            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            margin-top: 80px;
+            box-shadow: 0 0 10px #ccc;
+            width: 400px;
             text-align: center;
         }
-
-        .form-heading {
-            font-size: 1.5rem;
-            color: #c71585;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-login {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        input {
             width: 100%;
-            max-width: 180px;
-            padding: 1rem;
-            background: #fff;
+            padding: 10px;
+            margin-top: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 1rem;
-            font-weight: 600;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background: #ff4b5c;
+            color: white;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s ease, color 0.3s ease;
+            font-size: 16px;
         }
-
-        .social-btn.google {
-            border: 1px solid #db4437;
-            color: #db4437;
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
         }
-
-        .social-btn.google:hover {
-            background: #db4437;
-            color: #fff;
+        .google-btn {
+            background: #4285F4;
         }
-
-        .social-btn.facebook {
-            border: 1px solid #4267b2;
-            color: #4267b2;
+        #logout {
+            background: #f44336;
         }
-
-        .social-btn.facebook:hover {
-            background: #4267b2;
-            color: #fff;
-        }
-
-        .social-btn.instagram {
-            border: 1px solid #e4405f;
-            color: #e4405f;
-        }
-
-        .social-btn.instagram:hover {
-            background: #e4405f;
-            color: #fff;
-        }
-
-        .social-btn i {
-            margin-right: 0.5rem;
-        }
-
-        .social-btn .loader {
-            display: none;
-            width: 20px;
+        progress {
+            width: 100%;
+            margin-top: 10px;
             height: 20px;
-            border: 3px solid #fff;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-left: 10px;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .error-message {
-            color: #d32f2f;
-            font-size: 0.9rem;
-            margin-top: 1rem;
             display: none;
         }
-
-        .success-message {
-            color: #388e3c;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            display: none;
+        #userData {
+            margin-top: 20px;
+            text-align: left;
         }
-
-        footer {
-            margin-top: 2rem;
-            padding: 1rem;
-            text-align: center;
-            color: #666;
-            font-size: 0.9rem;
+        #status {
+            margin-top: 10px;
+            min-height: 20px;
+            color: #333;
         }
-
-        @media (max-width: 480px) {
-            .login-container {
-                max-width: 90%;
-                padding: 1.5rem;
-            }
-
-            .form-heading {
-                font-size: 1.3rem;
-            }
-
-            .social-btn {
-                max-width: 160px;
-                padding: 0.8rem;
-                font-size: 0.9rem;
-            }
+        #preview {
+            margin-top: 10px;
+            max-width: 300px;
+            border-radius: 5px;
+        }
+        h2, h3, h4 {
+            color: #ff4b5c;
         }
     </style>
 </head>
 <body>
-    <header>
-        <a href="index.html" class="logo">Miss Banaras</a>
-    </header>
-
-    <div class="login-container">
-        <h2 class="form-heading">Login to Miss Banaras</h2>
-        <div class="social-login">
-            <button class="social-btn google" id="google-btn">
-                <i class="fab fa-google"></i>
-                <span>Google</span>
-                <div class="loader"></div>
-            </button>
-            <button class="social-btn facebook" id="facebook-btn">
-                <i class="fab fa-facebook-f"></i>
-                <span>Facebook</span>
-                <div class="loader"></div>
-            </button>
-            <button class="social-btn instagram" id="instagram-btn">
-                <i class="fab fa-instagram"></i>
-                <span>Instagram</span>
-                <div class="loader"></div>
-            </button>
-        </div>
-        <div class="error-message" id="error-message">Login failed. Please try again.</div>
-        <div class="success-message" id="success-message">Login successful! Redirecting...</div>
+    <div class="container">
+        <h2>Beauty Competition - Submit Your Photo</h2>
+        <input type="email" id="email" placeholder="Enter your email">
+        <input type="password" id="password" placeholder="Enter your password">
+        <button id="signUp">Sign Up</button>
+        <button id="login">Login</button>
+        <button class="google-btn" id="googleSignIn">Sign In with Google</button>
+        <button id="logout" style="display: none;">Sign Out</button>
+        <div id="userData"></div>
+        <h3>Upload Your Photo</h3>
+        <input type="file" id="fileInput" accept="image/*">
+        <button id="uploadBtn" onclick="uploadImage()">Upload Photo</button>
+        <progress id="uploadProgress" value="0" max="100"></progress>
+        <p id="status"></p>
+        <img id="preview" style="display: none;">
     </div>
-
-    <footer>
-        <p>© 2025 Miss Banaras Competition. All Rights Reserved.</p>
-    </footer>
-
-    <script type="module">
-        // Firebase Imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { 
-            getAuth, 
-            GoogleAuthProvider, 
-            FacebookAuthProvider, 
-            OAuthProvider, 
-            signInWithPopup, 
-            onAuthStateChanged 
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDrHqo9pVoyMU38VReK0iENZUGPn7fZZSY",
-            authDomain: "miss-banaras-df6ae.firebaseapp.com",
-            projectId: "miss-banaras-df6ae",
-            storageBucket: "miss-banaras-df6ae.firebasestorage.app",
-            messagingSenderId: "297867452417",
-            appId: "1:297867452417:web:fcfa314026c0a6b008e000",
-            measurementId: "G-Z3DER8515Q"
-        };
-
-        // Initialize Firebase
-        let app, auth, db;
-        try {
-            app = initializeApp(firebaseConfig);
-            auth = getAuth();
-            db = getFirestore();
-            console.log("Firebase initialized successfully");
-        } catch (error) {
-            console.error("Firebase initialization error:", error);
-            document.getElementById("error-message").textContent = "Failed to connect to authentication service.";
-            document.getElementById("error-message").style.display = "block";
-        }
-
-        // DOM Elements
-        const googleBtn = document.getElementById("google-btn");
-        const facebookBtn = document.getElementById("facebook-btn");
-        const instagramBtn = document.getElementById("instagram-btn");
-        const errorMessage = document.getElementById("error-message");
-        const successMessage = document.getElementById("success-message");
-
-        // Check Auth State
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log("User logged in:", user.email || user.displayName);
-                window.location.href = "registered.html";
-            } else {
-                console.log("No user logged in");
-            }
-        });
-
-        // Google Login Handler
-        googleBtn.addEventListener("click", async () => {
-            console.log("Google login button clicked");
-            errorMessage.style.display = "none";
-            const loader = googleBtn.querySelector(".loader");
-            const buttonText = googleBtn.querySelector("span");
-            loader.style.display = "block";
-            buttonText.style.opacity = "0";
-
-            try {
-                const provider = new GoogleAuthProvider();
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-
-                await setDoc(doc(db, "users", user.uid), {
-                    name: user.displayName,
-                    email: user.email,
-                    photoURL: user.photoURL || null,
-                    registrationDate: new Date()
-                }, { merge: true });
-
-                console.log("Google login successful for:", user.email);
-                successMessage.style.display = "block";
-                setTimeout(() => {
-                    window.location.href = "registered.html";
-                }, 2000);
-            } catch (error) {
-                console.error("Google login error:", error);
-                errorMessage.textContent = `Google login failed: ${error.message}`;
-                errorMessage.style.display = "block";
-                loader.style.display = "none";
-                buttonText.style.opacity = "1";
-            }
-        });
-
-        // Facebook Login Handler
-        facebookBtn.addEventListener("click", async () => {
-            console.log("Facebook login button clicked");
-            errorMessage.style.display = "none";
-            const loader = facebookBtn.querySelector(".loader");
-            const buttonText = facebookBtn.querySelector("span");
-            loader.style.display = "block";
-            buttonText.style.opacity = "0";
-
-            try {
-                const provider = new FacebookAuthProvider();
-                provider.addScope("email");
-                provider.addScope("public_profile");
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-
-                await setDoc(doc(db, "users", user.uid), {
-                    name: user.displayName,
-                    email: user.email || null,
-                    photoURL: user.photoURL || null,
-                    registrationDate: new Date()
-                }, { merge: true });
-
-                console.log("Facebook login successful for:", user.email || user.displayName);
-                successMessage.style.display = "block";
-                setTimeout(() => {
-                    window.location.href = "registered.html";
-                }, 2000);
-            } catch (error) {
-                console.error("Facebook login error:", error);
-                let errorText = "Facebook login failed. Please check your Facebook app settings.";
-                if (error.code === "auth/invalid-credential") {
-                    errorText = "Facebook login failed: Invalid credentials. Verify App ID and App Secret in Firebase.";
-                }
-                errorMessage.textContent = errorText;
-                errorMessage.style.display = "block";
-                loader.style.display = "none";
-                buttonText.style.opacity = "1";
-            }
-        });
-
-        // Instagram Login Handler
-        instagramBtn.addEventListener("click", async () => {
-            console.log("Instagram login button clicked");
-            errorMessage.style.display = "none";
-            const loader = instagramBtn.querySelector(".loader");
-            const buttonText = instagramBtn.querySelector("span");
-            loader.style.display = "block";
-            buttonText.style.opacity = "0";
-
-            try {
-                const provider = new OAuthProvider("oidc.instagram");
-                provider.addScope("user_profile");
-                provider.addScope("user_media");
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-
-                await setDoc(doc(db, "users", user.uid), {
-                    name: user.displayName || "Instagram User",
-                    email: user.email || null,
-                    photoURL: user.photoURL || null,
-                    registrationDate: new Date()
-                }, { merge: true });
-
-                console.log("Instagram login successful for:", user.email || user.displayName);
-                successMessage.style.display = "block";
-                setTimeout(() => {
-                    window.location.href = "registered.html";
-                }, 2000);
-            } catch (error) {
-                console.error("Instagram login error:", error);
-                let errorText = "Instagram login failed. Please check your Instagram app settings.";
-                if (error.code === "auth/invalid-credential") {
-                    errorText = "Instagram login failed: Invalid credentials. Verify Client ID and Client Secret in Firebase.";
-                }
-                errorMessage.textContent = errorText;
-                errorMessage.style.display = "block";
-                loader.style.display = "none";
-                buttonText.style.opacity = "1";
-            }
-        });
-    </script>
 </body>
 </html>
