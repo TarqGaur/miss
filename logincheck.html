@@ -25,6 +25,9 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
+        // Configure backend API URL - Using your specific Render.com URL
+        const BACKEND_URL = "https://miss-banaras-backend.onrender.com";
+
         // DOM elements
         const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("password");
@@ -144,44 +147,6 @@
         });
 
         // Logout
-        loginBtn.addEventListener("click", () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            if (!email || !password) {
-                alert("Please enter email and password.");
-                return;
-            }
-            loginBtn.disabled = true;
-            signInWithEmailAndPassword(auth, email, password)
-                .then((cred) => {
-                    fetchUserData(cred.user.uid);
-                })
-                .catch((err) => {
-                    alert("Login failed: " + err.message);
-                })
-                .finally(() => {
-                    loginBtn.disabled = false;
-                });
-        });
-
-        // Google Sign-In
-        googleBtn.addEventListener("click", () => {
-            const provider = new GoogleAuthProvider();
-            googleBtn.disabled = true;
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    saveUserData(result.user);
-                    fetchUserData(result.user.uid);
-                })
-                .catch((err) => {
-                    alert("Google Sign-In failed: " + err.message);
-                })
-                .finally(() => {
-                    googleBtn.disabled = false;
-                });
-        });
-
-        // Logout
         logoutBtn.addEventListener("click", () => {
             signOut(auth)
                 .then(() => {
@@ -224,8 +189,8 @@
             uploadBtn.disabled = true;
 
             try {
-                // Fetch signature from Flask backend with user data
-                const sigResponse = await fetch("https://miss-banaras-backend.onrender.com", {
+                // Fetch signature from backend with user data - using the specific URL
+                const sigResponse = await fetch(`${BACKEND_URL}/generate-signature`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -233,10 +198,19 @@
                         user_name: currentUser.displayName || "Anonymous"
                     })
                 });
+                
                 if (!sigResponse.ok) {
-                    throw new Error("Failed to fetch signature");
+                    const errorText = await sigResponse.text();
+                    throw new Error(`Failed to fetch signature: ${sigResponse.status} - ${errorText}`);
                 }
+                
                 const sigData = await sigResponse.json();
+                if (!sigData.signature) {
+                    throw new Error("Invalid signature response from server");
+                }
+
+                // Log success for debugging
+                console.log("Signature obtained successfully", sigData);
 
                 // Prepare form data
                 const formData = new FormData();
@@ -256,20 +230,32 @@
                     if (event.lengthComputable) {
                         const percent = (event.loaded / event.total) * 100;
                         progressBar.value = percent;
+                        statusText.innerText = `Uploading: ${Math.round(percent)}%`;
                     }
                 };
 
                 // Handle upload completion
                 xhr.onload = () => {
-                    const data = JSON.parse(xhr.responseText);
-                    if (xhr.status === 200 && data.secure_url) {
-                        statusText.innerText = "✅ Uploaded successfully!";
-                        document.getElementById("preview").src = data.secure_url;
-                        document.getElementById("preview").style.display = "block";
-                        // Save upload data to Firebase
-                        saveUploadData(currentUser.uid, data);
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            if (data.secure_url) {
+                                statusText.innerText = "✅ Uploaded successfully!";
+                                document.getElementById("preview").src = data.secure_url;
+                                document.getElementById("preview").style.display = "block";
+                                // Save upload data to Firebase
+                                saveUploadData(currentUser.uid, data);
+                            } else {
+                                statusText.innerText = "❌ Upload response missing URL";
+                                console.error("Upload response:", data);
+                            }
+                        } catch (e) {
+                            statusText.innerText = "❌ Failed to parse upload response";
+                            console.error("Parse error:", e, "Response:", xhr.responseText);
+                        }
                     } else {
-                        statusText.innerText = "❌ Upload failed: " + (data.error?.message || "Unknown error");
+                        statusText.innerText = `❌ Upload failed with status: ${xhr.status}`;
+                        console.error("Upload failed:", xhr.responseText);
                     }
                     progressBar.style.display = "none";
                     uploadBtn.disabled = false;
@@ -278,14 +264,18 @@
                 // Handle errors
                 xhr.onerror = () => {
                     statusText.innerText = "❌ Upload failed: Network error";
+                    console.error("Network error during upload");
                     progressBar.style.display = "none";
                     uploadBtn.disabled = false;
                 };
 
                 // Send the request
                 xhr.send(formData);
+                console.log("Upload request sent");
+                
             } catch (err) {
                 statusText.innerText = "❌ Upload failed: " + err.message;
+                console.error("Upload preparation error:", err);
                 progressBar.style.display = "none";
                 uploadBtn.disabled = false;
             }
@@ -300,6 +290,7 @@
                 signUpBtn.style.display = "none";
                 loginBtn.style.display = "none";
                 googleBtn.style.display = "none";
+                document.getElementById("uploadSection").style.display = "block";
             } else {
                 currentUser = null;
                 userDataDiv.innerHTML = "";
@@ -307,11 +298,31 @@
                 signUpBtn.style.display = "block";
                 loginBtn.style.display = "block";
                 googleBtn.style.display = "block";
+                document.getElementById("uploadSection").style.display = "none";
                 progressBar.style.display = "none";
                 statusText.innerText = "";
                 document.getElementById("preview").style.display = "none";
             }
         });
+        
+        // Test backend connection on page load
+        async function testBackendConnection() {
+            try {
+                const response = await fetch(`${BACKEND_URL}/health`);
+                if (response.ok) {
+                    console.log("Backend connection successful!");
+                } else {
+                    console.error("Backend connection failed with status:", response.status);
+                    statusText.innerText = `⚠️ Backend connection failed with status: ${response.status}`;
+                }
+            } catch (err) {
+                console.error("Backend connection error:", err);
+                statusText.innerText = "⚠️ Warning: Cannot connect to backend server. Upload functionality may not work.";
+            }
+        }
+        
+        // Run the test when the page loads
+        window.addEventListener('load', testBackendConnection);
     </script>
     <style>
         body {
@@ -330,6 +341,7 @@
             box-shadow: 0 0 10px #ccc;
             width: 400px;
             text-align: center;
+            margin: 20px;
         }
         input {
             width: 100%;
@@ -383,6 +395,9 @@
         h2, h3, h4 {
             color: #ff4b5c;
         }
+        #uploadSection {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -395,12 +410,15 @@
         <button class="google-btn" id="googleSignIn">Sign In with Google</button>
         <button id="logout" style="display: none;">Sign Out</button>
         <div id="userData"></div>
-        <h3>Upload Your Photo</h3>
-        <input type="file" id="fileInput" accept="image/*">
-        <button id="uploadBtn" onclick="uploadImage()">Upload Photo</button>
-        <progress id="uploadProgress" value="0" max="100"></progress>
-        <p id="status"></p>
-        <img id="preview" style="display: none;">
+        
+        <div id="uploadSection">
+            <h3>Upload Your Photo</h3>
+            <input type="file" id="fileInput" accept="image/*">
+            <button id="uploadBtn" onclick="uploadImage()">Upload Photo</button>
+            <progress id="uploadProgress" value="0" max="100"></progress>
+            <p id="status"></p>
+            <img id="preview" style="display: none;">
+        </div>
     </div>
 </body>
 </html>
