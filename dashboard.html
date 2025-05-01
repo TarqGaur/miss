@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miss Banaras Registration</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Miss Banaras - Beauty Competition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
-        
         :root {
             --primary-color: #F2B134; /* Warm gold */
             --secondary-color: #D35269; /* Soft pink/rose */
@@ -29,23 +30,25 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #F8F1E5, #FFF8E8);
             min-height: 100vh;
-            color: #333;
+            color: var(--dark-color);
             display: flex;
             flex-direction: column;
         }
         
+        /* Header & Navigation */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 1.5rem 3rem;
+            padding: 1.2rem 3rem;
             z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
             background-color: rgba(255, 248, 232, 0.95);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
         }
         
         .logo {
@@ -54,6 +57,13 @@
             font-weight: 700;
             color: var(--secondary-color);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--accent-color);
         }
         
         .menu-toggle {
@@ -81,92 +91,131 @@
             color: var(--dark-color);
             font-weight: 500;
             transition: all 0.3s;
+            position: relative;
         }
         
         .nav-link:hover {
             color: var(--accent-color);
         }
         
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            height: 2px;
+            width: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Main Container */
         .main-container {
             width: 100%;
             padding-top: 120px;
             padding-bottom: 40px;
             display: flex;
             justify-content: center;
+            min-height: 100vh;
         }
         
+        /* Form Container */
         .form-container {
-            width: 100%;
-            max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.9);
+            background: white;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            width: 90%;
+            max-width: 800px;
+            padding: 40px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Decorative elements */
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
+        }
+        
+        /* Headings */
+        .form-heading {
+            font-family: 'Cinzel', serif;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
             position: relative;
         }
         
-        .auth-section {
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(139, 110, 78, 0.3);
-            padding-bottom: 20px;
-        }
-        
-        .form-heading {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: var(--dark-color);
+        .form-heading::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            margin: 10px auto 0;
         }
         
         .form-subheading {
             font-family: 'Cinzel', serif;
+            color: var(--dark-color);
+            margin: 30px 0 20px;
             font-size: 1.5rem;
-            margin-top: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent-color);
-            border-bottom: 1px solid rgba(139, 110, 78, 0.3);
-            padding-bottom: 0.5rem;
+            font-weight: 600;
+            position: relative;
+            padding-left: 15px;
         }
         
-        .btn-row {
-            display: flex;
-            gap: 10px;
-            justify-content: space-between;
+        .form-subheading::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 80%;
+            background: var(--accent-color);
+            border-radius: 5px;
         }
         
-        .btn-row button {
-            flex: 1;
-            padding: 12px;
-        }
-        
+        /* Form Elements */
         .input-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
+            position: relative;
         }
         
         .input-label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
             font-weight: 500;
             color: var(--dark-color);
         }
         
         .input-field {
             width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid rgba(139, 110, 78, 0.3);
+            padding: 12px 15px;
+            border: 1px solid #ddd;
             border-radius: 8px;
             font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: all 0.3s;
-            background-color: rgba(255, 255, 255, 0.8);
         }
         
         .input-field:focus {
             outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 5px rgba(225, 103, 60, 0.3);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(242, 177, 52, 0.2);
         }
         
         textarea.input-field {
@@ -176,229 +225,222 @@
         
         .hint-text {
             font-size: 0.85rem;
-            color: var(--ghat-color);
-            margin-top: 0.3rem;
-            font-style: italic;
+            color: #777;
+            margin-top: 5px;
         }
         
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        /* Columns Layout */
         .columns-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
         }
         
-        .photo-upload-container {
-            border: 2px dashed rgba(139, 110, 78, 0.4);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-            margin-bottom: 1.5rem;
+        .columns-2 .input-group {
+            flex: 1 1 calc(50% - 10px);
+            min-width: 200px;
+        }
+        
+        /* Buttons */
+        .btn {
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(225, 103, 60, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-text {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .google-btn {
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .google-btn i {
+            color: #4285F4;
+            font-size: 1.2rem;
+        }
+        
+        .google-btn:hover {
+            background: #f8f8f8;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logout-btn {
+            background: linear-gradient(to right, #f44336, #e57373);
+            margin-top: 20px;
+        }
+        
+        .logout-btn:hover {
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+        }
+        
+        /* Photo Upload */
+        .photo-upload-container {
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            position: relative;
         }
         
         .photo-upload-container:hover {
-            border-color: var(--accent-color);
-            background-color: rgba(255, 255, 255, 0.8);
+            border-color: var(--primary-color);
+            background-color: rgba(242, 177, 52, 0.03);
         }
         
         .upload-icon {
             font-size: 2.5rem;
-            color: var(--ghat-color);
-            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .photo-upload-text {
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
         }
         
         .photo-requirements {
             font-size: 0.85rem;
-            color: var(--ghat-color);
+            color: #777;
         }
         
         .file-input {
-            display: none;
-        }
-        
-        .photo-preview-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .photo-preview {
-            position: relative;
-            width: 100%;
-            padding-bottom: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .photo-preview img {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-        }
-        
-        .remove-photo {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            width: 24px;
-            height: 24px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            opacity: 0;
             cursor: pointer;
-            color: var(--error-color);
-            font-size: 0.8rem;
-        }
-        
-        .remove-photo:hover {
-            background-color: var(--error-color);
-            color: white;
-        }
-        
-        .btn {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #F2B134, #D35269);
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(225, 103, 60, 0.3);
-        }
-        
-        .btn:disabled {
-            background: #cccccc;
-            transform: none;
-            box-shadow: none;
-            cursor: not-allowed;
-        }
-        
-        .google-btn {
-            background: linear-gradient(135deg, #4285F4, #34A853);
-        }
-        
-        .logout-btn {
-            background: linear-gradient(135deg, #f44336, #e91e63);
-        }
-        
-        .loader {
-            display: none;
-            width: 30px;
-            height: 30px;
-            border: 3px solid #fff;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s linear infinite;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        
-        @keyframes spin {
-            to {
-                transform: translate(-50%, -50%) rotate(360deg);
-            }
         }
         
         .progress-bar {
-            width: 100%;
             height: 10px;
-            background-color: #eee;
+            background-color: #f0f0f0;
             border-radius: 5px;
-            margin: 10px 0;
+            margin: 15px 0;
+            overflow: hidden;
             display: none;
         }
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
             width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        .error-message {
-            color: var(--error-color);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
+            transition: width 0.3s;
         }
         
         .status-message {
-            margin-top: 10px;
-            min-height: 20px;
-            color: #333;
-            text-align: center;
-        }
-        
-        .thank-you-container {
-            display: none;
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        .thank-you-icon {
-            font-size: 4rem;
-            color: var(--success-color);
-            margin-bottom: 1.5rem;
-        }
-        
-        .footer {
-            background-color: rgba(255, 248, 232, 0.95);
-            padding: 1rem 3rem;
-            text-align: center;
-            border-top: 1px solid rgba(211, 82, 105, 0.1);
-            margin-top: auto;
-        }
-        
-        .footer-text {
-            color: var(--text-color);
             font-size: 0.9rem;
+            margin-bottom: 15px;
+            font-weight: 500;
         }
         
-        .user-info {
-            margin-bottom: 20px;
+        /* Tab System for Integrated Form */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 25px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Success message */
+        .success-message {
+            background-color: rgba(56, 142, 60, 0.1);
+            border-left: 4px solid var(--success-color);
             padding: 15px;
-            background-color: rgba(242, 177, 52, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(242, 177, 52, 0.2);
+            margin: 15px 0;
+            border-radius: 4px;
+            color: var(--success-color);
+            display: none;
         }
         
+        /* Selected file name */
+        .selected-file {
+            margin-top: 10px;
+            color: var(--accent-color);
+            font-weight: 500;
+            display: none;
+        }
+        
+        /* Responsive Styles */
         @media (max-width: 768px) {
-            .form-container {
-                max-width: 90%;
-                padding: 2rem 1.5rem;
-            }
-            
-            .columns-2 {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+            header {
+                padding: 1rem 2rem;
             }
             
             .menu-toggle {
                 display: flex;
-                z-index: 101;
             }
             
             .nav-links {
@@ -425,758 +467,733 @@
                 font-size: 1.2rem;
             }
             
+            .form-container {
+                padding: 30px 20px;
+            }
+            
             .btn-row {
                 flex-direction: column;
             }
-            
-            header {
-                padding: 1rem 2rem;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
         
-        @media (max-width: 480px) {
-            .form-heading {
-                font-size: 1.5rem;
-            }
-            
-            .form-subheading {
-                font-size: 1.3rem;
-            }
-            
-            .photo-preview-container {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            }
+        .animated {
+            animation: fadeIn 0.5s ease forwards;
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <a href="index.html" class="logo">Miss Banaras</a>
+        <a href="#" class="logo">
+            <i class="fas fa-crown logo-icon"></i>
+            Miss Banaras
+        </a>
         <div class="menu-toggle" id="menu-toggle">
             <span></span>
             <span></span>
             <span></span>
         </div>
         <ul class="nav-links" id="nav-links">
-            <li><a href="index.html" class="nav-link">Home</a></li>
-            <li><a href="aboutus.html" class="nav-link">About</a></li>
-            <li><a href="reward.html" class="nav-link">Rewards</a></li>
-            <li><a href="criteria.html" class="nav-link">Criteria</a></li>
-            <li><a href="#" class="nav-link">Register</a></li>
-            <li><a href="contact.html" class="nav-link">Contact</a></li>
+            <li><a href="#" class="nav-link">Home</a></li>
+            <li><a href="#" class="nav-link">About</a></li>
+            <li><a href="#" class="nav-link">Gallery</a></li>
+            <li><a href="#" class="nav-link">Contact</a></li>
         </ul>
     </header>
-    
+
     <div class="main-container">
         <div class="form-container" id="form-container">
-            <h1 class="form-heading">Miss Banaras Registration Form</h1>
+            <h1 class="form-heading">Miss Banaras Registration</h1>
             
-            <!-- Authentication Section -->
-            <div class="auth-section" id="auth-section">
-                <h2 class="form-subheading">Authentication</h2>
-                <div class="input-group">
-                    <label for="email" class="input-label">Email Address*</label>
-                    <input type="email" id="email" class="input-field" placeholder="Enter your email address" required>
-                </div>
-                
-                <div class="input-group">
-                    <label for="password" class="input-label">Password*</label>
-                    <input type="password" id="password" class="input-field" placeholder="Create a password" required>
-                    <div class="hint-text">Minimum 6 characters</div>
-                </div>
-                
-                <div class="btn-row">
-                    <button id="signup-btn" class="btn">Sign Up</button>
-                    <button id="login-btn" class="btn">Login</button>
-                </div>
-                
-                <button id="google-signin-btn" class="btn google-btn">
-                    <i class="fab fa-google"></i> Sign in with Google
-                </button>
+            <!-- Tabs Navigation -->
+            <div class="tabs" id="tabs">
+                <div class="tab active" data-tab="auth">Authentication</div>
+                <div class="tab" data-tab="upload">Photo Upload</div>
+                <div class="tab" data-tab="registration">Registration Form</div>
             </div>
             
-            <div id="user-profile" style="display: none;">
-                <div class="user-info" id="user-info">
-                    <!-- User info will be displayed here -->
-                </div>
-                <button id="logout-btn" class="btn logout-btn">Sign Out</button>
-            </div>
-            
-            <!-- Registration Form (Initially Hidden) -->
-            <div id="registration-form" style="display: none;">
-                <!-- Personal Information Section -->
-                <h2 class="form-subheading">Personal Information</h2>
-                
-                <div class="columns-2">
+            <!-- Authentication Tab -->
+            <div class="tab-content active" id="auth-tab">
+                <div class="auth-section" id="auth-section">
                     <div class="input-group">
-                        <label for="full-name" class="input-label">Full Name*</label>
-                        <input type="text" id="full-name" class="input-field" placeholder="Enter your full name" required>
-                        <div class="error-message" id="full-name-error">Name is required</div>
+                        <label for="email" class="input-label">Email Address*</label>
+                        <input type="email" id="email" class="input-field" placeholder="Enter your email address" required>
+                        <div class="error-message" id="email-error">Please enter a valid email address</div>
                     </div>
                     
                     <div class="input-group">
-                        <label for="age" class="input-label">Age*</label>
-                        <input type="number" id="age" class="input-field" placeholder="Enter your age" min="16" max="30" required>
-                        <div class="error-message" id="age-error">Age must be between 16 and 30</div>
-                    </div>
-                </div>
-                
-                <div class="columns-2">
-                    <div class="input-group">
-                        <label for="school-college" class="input-label">School/College Name</label>
-                        <input type="text" id="school-college" class="input-field" placeholder="Enter your school or college name">
+                        <label for="password" class="input-label">Password*</label>
+                        <input type="password" id="password" class="input-field" placeholder="Create a password" required>
+                        <div class="hint-text">Minimum 6 characters</div>
+                        <div class="error-message" id="password-error">Password must be at least 6 characters</div>
                     </div>
                     
-                    <div class="input-group">
-                        <label for="company" class="input-label">Company Name</label>
-                        <input type="text" id="company" class="input-field" placeholder="If applicable">
-                        <div class="hint-text">Leave blank if you're a student or not employed</div>
+                    <div class="btn-row">
+                        <button id="signUp" class="btn">
+                            <span class="btn-text"><i class="fas fa-user-plus"></i> Sign Up</span>
+                            <div class="loader" id="signup-loader"></div>
+                        </button>
+                        <button id="login" class="btn">
+                            <span class="btn-text"><i class="fas fa-sign-in-alt"></i> Login</span>
+                            <div class="loader" id="login-loader"></div>
+                        </button>
+                    </div>
+                    
+                    <button id="googleSignIn" class="btn google-btn">
+                        <i class="fab fa-google"></i> Sign in with Google
+                        <div class="loader" id="google-loader"></div>
+                    </button>
+                    
+                    <div class="success-message" id="auth-success">
+                        <i class="fas fa-check-circle"></i> Authentication successful! You can now proceed to the next step.
                     </div>
                 </div>
                 
-                <div class="input-group">
-                    <label for="influencers" class="input-label">Two Influencers You Like the Most*</label>
-                    <input type="text" id="influencers" class="input-field" placeholder="Enter names of two influencers you admire" required>
-                    <div class="hint-text">Separate names with a comma</div>
-                    <div class="error-message" id="influencers-error">Please mention two influencers</div>
+                <div id="userData" class="user-info" style="display: none;">
+                    <!-- User info dynamically populated here -->
                 </div>
                 
-                <div class="input-group">
-                    <label for="bio" class="input-label">Short Bio*</label>
-                    <textarea id="bio" class="input-field" placeholder="Tell us a little about yourself, your interests, and aspirations..." required></textarea>
-                    <div class="hint-text">100-300 words recommended</div>
-                    <div class="error-message" id="bio-error">Bio is required (100-300 words recommended)</div>
-                </div>
-                
-                <!-- Deep Questions Section -->
-                <h2 class="form-subheading">Deep Questions</h2>
-                
-                <div class="input-group">
-                    <label for="question1" class="input-label">When you face a tough decision, what inner voice or core value do you rely on for guidance?*</label>
-                    <textarea id="question1" class="input-field" placeholder="Share your thoughts..." required></textarea>
-                    <div class="error-message" id="question1-error">Please answer this question</div>
-                </div>
-                
-                <div class="input-group">
-                    <label for="question2" class="input-label">What dream or goal is closest to your heart, and why does it matter so much to you?*</label>
-                    <textarea id="question2" class="input-field" placeholder="Share your dreams and aspirations..." required></textarea>
-                    <div class="error-message" id="question2-error">Please answer this question</div>
-                </div>
-                
-                <div class="input-group">
-                    <label for="question3" class="input-label">Reflect on how being a girl has shaped your experiences in life. Can you share an example?*</label>
-                    <textarea id="question3" class="input-field" placeholder="Share your reflection..." required></textarea>
-                    <div class="error-message" id="question3-error">Please answer this question</div>
-                </div>
-                
-                <!-- Photo Upload Section -->
-                <h2 class="form-subheading">Photo Upload</h2>
-                
-                <div class="photo-upload-container" id="photo-upload-area">
-                    <div class="upload-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
-                    <div class="photo-upload-text">Click to upload photos</div>
-                    <div class="photo-requirements">Upload minimum 5 photos (JPEG, PNG, Max 5MB each)</div>
-                    <input type="file" id="photo-input" class="file-input" accept="image/jpeg, image/png" multiple>
-                </div>
-                
-                <div class="progress-bar" id="upload-progress">
-                    <div class="progress-fill" id="progress-fill"></div>
-                </div>
-                <div class="status-message" id="status-message"></div>
-                
-                <div class="photo-preview-container" id="photo-preview">
-                    <!-- Photo previews will be inserted here dynamically -->
-                </div>
-                <div class="error-message" id="photo-error">Please upload at least 5 photos</div>
-                
-                <!-- Submit Button -->
-                <button type="button" class="btn" id="submit-btn">
-                    <span class="btn-text">Submit Your Entry</span>
-                    <div class="loader" id="submit-loader"></div>
+                <button id="logout" style="display: none;" class="btn logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
                 </button>
             </div>
             
-            <!-- Thank You Section (Initially Hidden) -->
-            <div class="thank-you-container" id="thank-you-section">
-                <div class="thank-you-icon">
-                    <i class="fas fa-check-circle"></i>
+            <!-- Upload Tab -->
+            <div class="tab-content" id="upload-tab">
+                <div id="uploadSection" style="display: none;">
+                    <h2 class="form-subheading">Submit Your Photo</h2>
+                    <p class="hint-text">Please upload a clear, high-quality photo. This will be used for the first round of selection.</p>
+                    
+                    <div class="photo-upload-container" id="dropArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="photo-upload-text">Click or drop to upload your photo</div>
+                        <div class="photo-requirements">Maximum 5MB (JPEG or PNG)</div>
+                        <input type="file" id="fileInput" class="file-input" accept="image/*">
+                    </div>
+                    
+                    <div class="selected-file" id="selectedFile"></div>
+                    
+                    <progress id="uploadProgress" value="0" max="100" style="display: none; width: 100%;"></progress>
+                    <p id="status" class="status-message"></p>
+                    
+                    <div id="preview" style="display: none; max-width: 300px; margin: 20px auto;">
+                        <img id="previewImg" src="" style="width: 100%; border-radius: 8px;">
+                    </div>
+                    
+                    <button id="uploadBtn" class="btn" onclick="uploadImage()">
+                        <span class="btn-text"><i class="fas fa-upload"></i> Upload Photo</span>
+                        <div class="loader" id="upload-loader"></div>
+                    </button>
+                    
+                    <div class="success-message" id="upload-success">
+                        <i class="fas fa-check-circle"></i> Photo uploaded successfully! You can now complete your registration.
+                    </div>
                 </div>
-                <h2 class="form-heading">Thank You for Submitting!</h2>
-                <p>Your entry for the Miss Banaras Competition has been received. We will review your submission and announce the Round 1 results soon.</p>
+            </div>
+            
+            <!-- Registration Form Tab -->
+            <div class="tab-content" id="registration-tab">
+                <form id="registration-form">
+                    <!-- Personal Information Section -->
+                    <h2 class="form-subheading">Personal Information</h2>
+                    
+                    <div class="columns-2">
+                        <div class="input-group">
+                            <label for="full-name" class="input-label">Full Name*</label>
+                            <input type="text" id="full-name" class="input-field" placeholder="Enter your full name" required>
+                            <div class="error-message" id="full-name-error">Name is required</div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="age" class="input-label">Age*</label>
+                            <input type="number" id="age" class="input-field" placeholder="Enter your age" min="16" max="30" required>
+                            <div class="error-message" id="age-error">Age must be between 16 and 30</div>
+                        </div>
+                    </div>
+                    
+                    <div class="columns-2">
+                        <div class="input-group">
+                            <label for="phone" class="input-label">Phone Number*</label>
+                            <input type="tel" id="phone" class="input-field" placeholder="Enter your phone number" required>
+                            <div class="error-message" id="phone-error">Please enter a valid phone number</div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="city" class="input-label">City*</label>
+                            <input type="text" id="city" class="input-field" placeholder="Enter your city" required>
+                            <div class="error-message" id="city-error">City is required</div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="bio" class="input-label">Brief Bio</label>
+                        <textarea id="bio" class="input-field" placeholder="Tell us about yourself, your interests, and aspirations (Max 200 words)"></textarea>
+                    </div>
+                    
+                    <h2 class="form-subheading">Contest Details</h2>
+                    
+                    <div class="input-group">
+                        <label for="experience" class="input-label">Previous Pageant Experience (if any)</label>
+                        <textarea id="experience" class="input-field" placeholder="Share your previous pageant or modeling experience"></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="talents" class="input-label">Special Talents</label>
+                        <input type="text" id="talents" class="input-field" placeholder="Dancing, Singing, etc.">
+                    </div>
+                    
+                    <button type="submit" class="btn" style="margin-top: 30px;">
+                        <span class="btn-text"><i class="fas fa-paper-plane"></i> Submit Registration</span>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
-    
-    <footer class="footer">
-        <p class="footer-text">© 2025 Miss Banaras Competition. All rights reserved.</p>
-    </footer>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-auth-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-database-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-storage-compat.min.js"></script>
-    
-    <script>
+    <script type="module">
+        // Import Firebase SDK (v10.x)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getDatabase, ref, update, onValue, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
         // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCAImdjvo3yjfsxwwGKZp5iDx5VwmhfaDs",
             authDomain: "contact-us-page-missbanaras.firebaseapp.com",
             databaseURL: "https://contact-us-page-missbanaras-default-rtdb.firebaseio.com",
             projectId: "contact-us-page-missbanaras",
-            storageBucket: "contact-us-page-missbanaras.appspot.com",
             messagingSenderId: "323394332678",
             appId: "1:323394332678:web:99dde90fa03bf6c85ebb87",
             measurementId: "G-6MWHVZ5KG9"
         };
-        
+
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        
-        // Backend URL - Change this to your actual backend URL
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        // Configure backend API URL - Using your specific Render.com URL
         const BACKEND_URL = "https://miss-banaras-backend.onrender.com";
-        
-        // Global variables
-        let currentUser = null;
-        let uploadedPhotos = [];
-        
-        // DOM Elements
-        const menuToggle = document.getElementById('menu-toggle');
-        const navLinks = document.getElementById('nav-links');
-        const authSection = document.getElementById('auth-section');
-        const userProfile = document.getElementById('user-profile');
-        const registrationForm = document.getElementById('registration-form');
-        const thankYouSection = document.getElementById('thank-you-section');
-        const userInfo = document.getElementById('user-info');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const signupBtn = document.getElementById('signup-btn');
-        const loginBtn = document.getElementById('login-btn');
-        const googleSigninBtn = document.getElementById('google-signin-btn');
-        const logoutBtn = document.getElementById('logout-btn');
-        const photoUploadArea = document.getElementById('photo-upload-area');
-        const photoInput = document.getElementById('photo-input');
-        const photoPreview = document.getElementById('photo-preview');
-        const photoError = document.getElementById('photo-error');
-        const uploadProgress = document.getElementById('upload-progress');
-        const progressFill = document.getElementById('progress-fill');
-        const statusMessage = document.getElementById('status-message');
-        const submitBtn = document.getElementById('submit-btn');
-        const submitLoader = document.getElementById('submit-loader');
-        
-        // Mobile menu toggle
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
+
+        // DOM elements
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const signUpBtn = document.getElementById("signUp");
+        const loginBtn = document.getElementById("login");
+        const googleBtn = document.getElementById("googleSignIn");
+        const logoutBtn = document.getElementById("logout");
+        const userDataDiv = document.getElementById("userData");
+        const statusText = document.getElementById("status");
+        const progressBar = document.getElementById("uploadProgress");
+        const uploadBtn = document.getElementById("uploadBtn");
+        const fileInput = document.getElementById("fileInput");
+        const selectedFileDisplay = document.getElementById("selectedFile");
+        const preview = document.getElementById("preview");
+
+        let currentUser = null; // Store current user
+
+        // Tab functionality
+        const tabs = document.querySelectorAll(".tab");
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                const tabId = tab.getAttribute("data-tab");
+                
+                // Remove active class from all tabs and contents
+                document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+                document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add("active");
+                document.getElementById(`${tabId}-tab`).classList.add("active");
+            });
         });
-        
-        // Authentication event listeners
-        signupBtn.addEventListener('click', handleSignUp);
-        loginBtn.addEventListener('click', handleLogin);
-        googleSigninBtn.addEventListener('click', handleGoogleSignIn);
-        logoutBtn.addEventListener('click', handleLogout);
-        
-        // Photo upload event listeners
-        photoUploadArea.addEventListener('click', () => photoInput.click());
-        photoInput.addEventListener('change', handlePhotoSelect);
-        
-        // Form submission
-        submitBtn.addEventListener('click', handleFormSubmit);
-        
-        // Auth state change listener
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                currentUser = user;
-                showUserProfile();
-                fetchUserData();
-            } else {
-                currentUser = null;
-                showAuthSection();
-            }
-        });
-        
-        // Authentication functions
-        function handleSignUp() {
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
-            
+
+        // Save user data to Firebase
+        function saveUserData(user) {
+            update(ref(db, "users/" + user.uid), {
+                email: user.email,
+                uid: user.uid,
+                name: user.displayName || "Anonymous"
+            });
+        }
+
+        // Fetch and display user data (name, UID, and uploads)
+        function fetchUserData(uid) {
+            onValue(ref(db, "users/" + uid), (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    let uploadsHtml = "";
+                    if (data.uploads) {
+                        uploadsHtml = "<h4>Your Uploads:</h4><div style='display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;'>";
+                        Object.values(data.uploads).forEach(upload => {
+                            uploadsHtml += `<img src="${upload.secure_url}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;" title="Uploaded on ${upload.timestamp}">`;
+                        });
+                        uploadsHtml += "</div>";
+                    }
+                    userDataDiv.innerHTML = `
+                        <h3>Welcome, Contestant!</h3>
+                        <p><strong>Name:</strong> ${data.name}</p>
+                        <p><strong>Email:</strong> ${data.email}</p>
+                        ${uploadsHtml}
+                    `;
+                    userDataDiv.style.display = "block";
+                    document.getElementById("auth-success").style.display = "block";
+                }
+            });
+        }
+
+        // Save upload data to Firebase
+        function saveUploadData(uid, imageData) {
+            const uploadRef = push(ref(db, `users/${uid}/uploads`));
+            set(uploadRef, {
+                public_id: imageData.public_id,
+                secure_url: imageData.secure_url,
+                timestamp: imageData.created_at,
+                user_uid: currentUser.uid,
+                user_name: currentUser.displayName || "Anonymous"
+            });
+        }
+
+        // Sign up
+        signUpBtn.addEventListener("click", () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
             if (!email || !password) {
-                showStatus('Please enter email and password', 'error');
+                alert("Please enter email and password.");
                 return;
             }
+            signUpBtn.disabled = true;
+            document.getElementById("signup-loader").style.display = "block";
             
-            signupBtn.disabled = true;
-            showStatus('Creating account...', 'info');
-            
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    saveUserData(userCredential.user);
-                    showStatus('Account created successfully!', 'success');
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((cred) => {
+                    saveUserData(cred.user);
+                    fetchUserData(cred.user.uid);
                 })
-                .catch(error => {
-                    showStatus(`Sign-up failed: ${error.message}`, 'error');
+                .catch((err) => {
+                    alert("Sign-up failed: " + err.message);
                 })
                 .finally(() => {
-                    signupBtn.disabled = false;
+                    signUpBtn.disabled = false;
+                    document.getElementById("signup-loader").style.display = "none";
                 });
-        }
-        
-        function handleLogin() {
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
-            
+        });
+
+        // Login
+        loginBtn.addEventListener("click", () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
             if (!email || !password) {
-                showStatus('Please enter email and password', 'error');
+                alert("Please enter email and password.");
                 return;
             }
-            
             loginBtn.disabled = true;
-            showStatus('Logging in...', 'info');
+            document.getElementById("login-loader").style.display = "block";
             
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    showStatus('Logged in successfully!', 'success');
+            signInWithEmailAndPassword(auth, email, password)
+                .then((cred) => {
+                    fetchUserData(cred.user.uid);
                 })
-                .catch(error => {
-                    showStatus(`Login failed: ${error.message}`, 'error');
+                .catch((err) => {
+                    alert("Login failed: " + err.message);
                 })
                 .finally(() => {
                     loginBtn.disabled = false;
+                    document.getElementById("login-loader").style.display = "none";
                 });
-        }
-        
-        function handleGoogleSignIn() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            googleSigninBtn.disabled = true;
+        });
+
+        // Google Sign-In
+        googleBtn.addEventListener("click", () => {
+            const provider = new GoogleAuthProvider();
+            googleBtn.disabled = true;
+            document.getElementById("google-loader").style.display = "block";
             
-            firebase.auth().signInWithPopup(provider)
-                .then(result => {
+            signInWithPopup(auth, provider)
+                .then((result) => {
                     saveUserData(result.user);
+                    fetchUserData(result.user.uid);
                 })
-                .catch(error => {
-                    showStatus(`Google Sign-In failed: ${error.message}`, 'error');
+                // Google Sign-In (continued from where it was cut off)
+                .catch((err) => {
+                    alert("Google Sign-In failed: " + err.message);
                 })
                 .finally(() => {
-                    googleSigninBtn.disabled = false;
+                    googleBtn.disabled = false;
+                    document.getElementById("google-loader").style.display = "none";
                 });
-        }
-        
-        function handleLogout() {
-            firebase.auth().signOut()
+        });
+
+        // Logout
+        logoutBtn.addEventListener("click", () => {
+            signOut(auth)
                 .then(() => {
-                    emailInput.value = '';
-                    passwordInput.value = '';
-                    uploadedPhotos = [];
-                    resetForm();
+                    userDataDiv.style.display = "none";
+                    userDataDiv.innerHTML = "";
+                    emailInput.value = "";
+                    passwordInput.value = "";
+                    progressBar.style.display = "none";
+                    statusText.innerText = "";
+                    document.getElementById("preview").style.display = "none";
+                    document.getElementById("auth-success").style.display = "none";
+                    currentUser = null;
+                    
+                    // Reset UI
+                    logoutBtn.style.display = "none";
+                    signUpBtn.style.display = "block";
+                    loginBtn.style.display = "block";
+                    googleBtn.style.display = "block";
+                    document.getElementById("uploadSection").style.display = "none";
                 })
-                .catch(error => {
-                    showStatus(`Logout failed: ${error.message}`, 'error');
+                .catch((err) => alert("Logout failed: " + err.message));
+        });
+
+        // File input handling
+        fileInput.addEventListener("change", function() {
+            const file = this.files[0];
+            if (file) {
+                selectedFileDisplay.textContent = file.name;
+                selectedFileDisplay.style.display = "block";
+                
+                // Show preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("previewImg").src = e.target.result;
+                    preview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            } else {
+                selectedFileDisplay.style.display = "none";
+                preview.style.display = "none";
+            }
+        });
+
+        // Drag and drop functionality
+        const dropArea = document.getElementById("dropArea");
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            dropArea.classList.add('highlight');
+        }
+        
+        function unhighlight() {
+            dropArea.classList.remove('highlight');
+        }
+        
+        dropArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                fileInput.files = files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
+        }
+
+        // Cloudinary Signed Upload
+        window.uploadImage = async () => {
+            if (!currentUser) {
+                alert("Please log in to upload an image.");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select a file to upload.");
+                return;
+            }
+            if (!file.type.startsWith("image/")) {
+                alert("Please select an image file.");
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                alert("File too large (max 5MB).");
+                return;
+            }
+
+            statusText.innerText = "Preparing upload...";
+            progressBar.style.display = "block";
+            progressBar.value = 0;
+            uploadBtn.disabled = true;
+
+            try {
+                // Fetch signature from backend with user data
+                const sigResponse = await fetch(`${BACKEND_URL}/generate-signature`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        user_uid: currentUser.uid,
+                        user_name: currentUser.displayName || "Anonymous"
+                    })
                 });
-        }
-        
-        // User data functions
-        function saveUserData(user) {
-            const userData = {
-                email: user.email,
-                uid: user.uid,
-                name: user.displayName || 'Contestant',
-                photoURL: user.photoURL || null,
-                registeredAt: firebase.database.ServerValue.TIMESTAMP
-            };
-            
-            firebase.database().ref(`users/${user.uid}`).update(userData);
-        }
-        
-        function fetchUserData() {
-            if (!currentUser) return;
-            
-            firebase.database().ref(`users/${currentUser.uid}`).once('value')
-                .then(snapshot => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        displayUserInfo(userData);
-                        
-                        // Check if user has registration data
-                        if (userData.registration) {
-                            showThankYouSection();
-                        } else {
-                            showRegistrationForm();
-                        }
-                        
-                        // Check if user has uploaded photos
-                        if (userData.photos) {
-                            displayUploadedPhotos(userData.photos);
+                
+                if (!sigResponse.ok) {
+                    const errorText = await sigResponse.text();
+                    throw new Error(`Failed to fetch signature: ${sigResponse.status} - ${errorText}`);
+                }
+                
+                const sigData = await sigResponse.json();
+                if (!sigData.signature) {
+                    throw new Error("Invalid signature response from server");
+                }
+
+                // Prepare form data
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset", "signed_upload");
+                formData.append("timestamp", sigData.timestamp);
+                formData.append("signature", sigData.signature);
+                formData.append("api_key", sigData.api_key);
+                formData.append("context", `user_uid=${sigData.user_uid}|user_name=${sigData.user_name}`);
+
+                // Upload with progress tracking
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", `https://api.cloudinary.com/v1_1/${sigData.cloud_name}/image/upload`, true);
+
+                // Track upload progress
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percent = (event.loaded / event.total) * 100;
+                        progressBar.value = percent;
+                        statusText.innerText = `Uploading: ${Math.round(percent)}%`;
+                    }
+                };
+
+                // Handle upload completion
+                xhr.onload = () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            if (data.secure_url) {
+                                statusText.innerText = "✅ Uploaded successfully!";
+                                document.getElementById("previewImg").src = data.secure_url;
+                                document.getElementById("preview").style.display = "block";
+                                document.getElementById("upload-success").style.display = "block";
+                                
+                                // Save upload data to Firebase
+                                saveUploadData(currentUser.uid, data);
+                                
+                                // Auto-advance to registration tab after successful upload
+                                setTimeout(() => {
+                                    document.querySelector('[data-tab="registration"]').click();
+                                }, 2000);
+                            } else {
+                                statusText.innerText = "❌ Upload response missing URL";
+                                console.error("Upload response:", data);
+                            }
+                        } catch (e) {
+                            statusText.innerText = "❌ Failed to parse upload response";
+                            console.error("Parse error:", e, "Response:", xhr.responseText);
                         }
                     } else {
-                        showRegistrationForm();
+                        statusText.innerText = `❌ Upload failed with status: ${xhr.status}`;
+                        console.error("Upload failed:", xhr.responseText);
                     }
-                })
-                .catch(error => {
-    console.error('Error fetching user data:', error);
-    showStatus('Error loading your profile data', 'error');
-});
-}
+                    progressBar.style.display = "none";
+                    uploadBtn.disabled = false;
+                };
 
-function displayUserInfo(userData) {
-    userInfo.innerHTML = `
-        <div>
-            <strong>Name:</strong> ${userData.name || 'Contestant'}
-        </div>
-        <div>
-            <strong>Email:</strong> ${userData.email}
-        </div>
-    `;
-}
+                // Handle errors
+                xhr.onerror = () => {
+                    statusText.innerText = "❌ Upload failed: Network error";
+                    console.error("Network error during upload");
+                    progressBar.style.display = "none";
+                    uploadBtn.disabled = false;
+                };
 
-function displayUploadedPhotos(photos) {
-    photoPreview.innerHTML = '';
-    uploadedPhotos = Array.isArray(photos) ? [...photos] : [];
-    
-    uploadedPhotos.forEach((photo, index) => {
-        const photoElement = document.createElement('div');
-        photoElement.className = 'photo-preview';
-        photoElement.innerHTML = `
-            <img src="${photo.url}" alt="Uploaded Photo ${index + 1}">
-            <div class="remove-photo" data-index="${index}">
-                <i class="fas fa-times"></i>
-            </div>
-        `;
-        photoPreview.appendChild(photoElement);
-    });
-    
-    // Add event listeners to remove buttons
-    document.querySelectorAll('.remove-photo').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const index = parseInt(e.currentTarget.dataset.index);
-            removePhoto(index);
-        });
-    });
-    
-    if (uploadedPhotos.length >= 5) {
-        photoError.style.display = 'none';
-    }
-}
+                // Send the request
+                xhr.send(formData);
+                console.log("Upload request sent");
+                
+            } catch (err) {
+                statusText.innerText = "❌ Upload failed: " + err.message;
+                console.error("Upload preparation error:", err);
+                progressBar.style.display = "none";
+                uploadBtn.disabled = false;
+            }
+        };
 
-function removePhoto(index) {
-    if (index >= 0 && index < uploadedPhotos.length) {
-        const photo = uploadedPhotos[index];
-        
-        // Remove from Firebase Storage
-        if (photo.path) {
-            firebase.storage().ref(photo.path).delete()
-                .then(() => {
-                    console.log('Photo deleted from storage');
-                })
-                .catch(error => {
-                    console.error('Error deleting photo:', error);
+        // Registration form submission
+        document.getElementById("registration-form").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            
+            if (!currentUser) {
+                alert("Please log in to submit your registration.");
+                return;
+            }
+            
+            // Basic validation
+            const fullName = document.getElementById("full-name").value;
+            const age = document.getElementById("age").value;
+            const phone = document.getElementById("phone").value;
+            const city = document.getElementById("city").value;
+            
+            if (!fullName || !age || !phone || !city) {
+                alert("Please fill all required fields marked with *");
+                return;
+            }
+            
+            // Age validation
+            if (parseInt(age) < 16 || parseInt(age) > 30) {
+                document.getElementById("age-error").style.display = "block";
+                return;
+            } else {
+                document.getElementById("age-error").style.display = "none";
+            }
+            
+            // Collect form data
+            const formData = {
+                fullName: fullName,
+                age: age,
+                phone: phone,
+                city: city,
+                bio: document.getElementById("bio").value,
+                experience: document.getElementById("experience").value,
+                talents: document.getElementById("talents").value,
+                userId: currentUser.uid,
+                userEmail: currentUser.email,
+                timestamp: new Date().toISOString()
+            };
+            
+            try {
+                // Save registration data to Firebase
+                update(ref(db, `users/${currentUser.uid}`), {
+                    registration: formData
                 });
+                
+                // Optional: Submit to backend API as well
+                await fetch(`${BACKEND_URL}/register`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData)
+                });
+                
+                alert("Registration submitted successfully! We will review your application and contact you soon.");
+                
+                // Reset form
+                this.reset();
+                
+            } catch (err) {
+                console.error("Registration submission error:", err);
+                alert("There was an error submitting your registration. Please try again later.");
+            }
+        });
+
+        // Handle auth state changes
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                fetchUserData(user.uid);
+                document.getElementById("auth-section").style.display = "none";
+                userDataDiv.style.display = "block";
+                logoutBtn.style.display = "block";
+                document.getElementById("uploadSection").style.display = "block";
+            } else {
+                currentUser = null;
+                document.getElementById("auth-section").style.display = "block";
+                userDataDiv.style.display = "none";
+                logoutBtn.style.display = "none";
+                document.getElementById("uploadSection").style.display = "none";
+                document.getElementById("auth-success").style.display = "none";
+                progressBar.style.display = "none";
+                statusText.innerText = "";
+                document.getElementById("preview").style.display = "none";
+            }
+        });
+        
+        // Test backend connection on page load
+        async function testBackendConnection() {
+            try {
+                const response = await fetch(`${BACKEND_URL}/health`);
+                if (response.ok) {
+                    console.log("Backend connection successful!");
+                } else {
+                    console.error("Backend connection failed with status:", response.status);
+                    statusText.innerText = `⚠️ Backend connection failed with status: ${response.status}`;
+                }
+            } catch (err) {
+                console.error("Backend connection error:", err);
+                statusText.innerText = "⚠️ Warning: Cannot connect to backend server. Upload functionality may not work.";
+            }
         }
         
-        // Remove from array and update database
-        uploadedPhotos.splice(index, 1);
-        updatePhotosInDatabase();
-        
-        // Update UI
-        displayUploadedPhotos(uploadedPhotos);
-    }
-}
-
-function updatePhotosInDatabase() {
-    if (!currentUser) return;
-    
-    firebase.database().ref(`users/${currentUser.uid}/photos`).set(uploadedPhotos)
-        .then(() => {
-            console.log('Photos updated in database');
-        })
-        .catch(error => {
-            console.error('Error updating photos in database:', error);
-            showStatus('Failed to update photos', 'error');
+        // Mobile menu toggle
+        document.getElementById("menu-toggle").addEventListener("click", function() {
+            document.getElementById("nav-links").classList.toggle("active");
+            const spans = this.querySelectorAll("span");
+            spans[0].classList.toggle("active");
+            spans[1].classList.toggle("active");
+            spans[2].classList.toggle("active");
         });
-}
-
-// Photo handling functions
-function handlePhotoSelect(e) {
-    const files = Array.from(e.target.files);
-    
-    if (files.length === 0) return;
-    
-    // Validate files
-    const validFiles = files.filter(file => {
-        const validType = ['image/jpeg', 'image/png'].includes(file.type);
-        const validSize = file.size <= 5 * 1024 * 1024; // 5MB
-        return validType && validSize;
-    });
-    
-    if (validFiles.length !== files.length) {
-        showStatus('Some files were skipped. Please ensure they are JPG/PNG and under 5MB.', 'error');
-    }
-    
-    if (validFiles.length === 0) return;
-    
-    uploadProgress.style.display = 'block';
-    progressFill.style.width = '0%';
-    statusMessage.textContent = `Uploading ${validFiles.length} photo(s)...`;
-    
-    // Upload each file
-    let uploadedCount = 0;
-    let totalBytes = validFiles.reduce((acc, file) => acc + file.size, 0);
-    let uploadedBytes = 0;
-    
-    validFiles.forEach(file => {
-        uploadPhoto(file, totalBytes, progress => {
-            uploadedBytes += progress;
-            const totalProgress = Math.round((uploadedBytes / totalBytes) * 100);
-            progressFill.style.width = `${Math.min(totalProgress, 100)}%`;
-        });
-    });
-    
-    function uploadPhoto(file, totalBytes, progressCallback) {
-        const fileName = `${Date.now()}_${file.name}`;
-        const storageRef = firebase.storage().ref(`photos/${currentUser.uid}/${fileName}`);
-        const uploadTask = storageRef.put(file);
         
-        uploadTask.on('state_changed', 
-            (snapshot) => {
-                const progress = snapshot.bytesTransferred;
-                progressCallback(progress);
-            },
-            (error) => {
-                console.error('Upload failed:', error);
-                showStatus('Upload failed. Please try again.', 'error');
-            },
-            () => {
-                uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-                    const photoData = {
-                        url: downloadURL,
-                        path: `photos/${currentUser.uid}/${fileName}`,
-                        name: file.name,
-                        size: file.size,
-                        type: file.type,
-                        uploadedAt: firebase.database.ServerValue.TIMESTAMP
-                    };
-                    
-                    uploadedPhotos.push(photoData);
-                    uploadedCount++;
-                    
-                    // Update UI and database if all uploads are complete
-                    if (uploadedCount === validFiles.length) {
-                        updatePhotosInDatabase();
-                        displayUploadedPhotos(uploadedPhotos);
-                        showStatus('All photos uploaded successfully!', 'success');
-                        setTimeout(() => {
-                            uploadProgress.style.display = 'none';
-                            statusMessage.textContent = '';
-                        }, 3000);
-                    }
-                });
+        // Form field validation
+        const validateField = (field, regex, errorId) => {
+            const value = field.value;
+            const error = document.getElementById(errorId);
+            
+            if (!regex.test(value)) {
+                error.style.display = "block";
+                field.classList.add("error");
+                return false;
+            } else {
+                error.style.display = "none";
+                field.classList.remove("error");
+                return true;
             }
-        );
-    }
-}
-
-// Form handling functions
-function validateForm() {
-    let isValid = true;
-    const fullName = document.getElementById('full-name').value.trim();
-    const age = document.getElementById('age').value;
-    const influencers = document.getElementById('influencers').value.trim();
-    const bio = document.getElementById('bio').value.trim();
-    const question1 = document.getElementById('question1').value.trim();
-    const question2 = document.getElementById('question2').value.trim();
-    const question3 = document.getElementById('question3').value.trim();
-    
-    // Validate name
-    if (!fullName) {
-        showError('full-name-error', true);
-        isValid = false;
-    } else {
-        showError('full-name-error', false);
-    }
-    
-    // Validate age
-    if (!age || age < 16 || age > 30) {
-        showError('age-error', true);
-        isValid = false;
-    } else {
-        showError('age-error', false);
-    }
-    
-    // Validate influencers
-    if (!influencers || !influencers.includes(',')) {
-        showError('influencers-error', true);
-        isValid = false;
-    } else {
-        showError('influencers-error', false);
-    }
-    
-    // Validate bio
-    if (!bio || bio.split(' ').length < 20) {
-        showError('bio-error', true);
-        isValid = false;
-    } else {
-        showError('bio-error', false);
-    }
-    
-    // Validate deep questions
-    if (!question1) {
-        showError('question1-error', true);
-        isValid = false;
-    } else {
-        showError('question1-error', false);
-    }
-    
-    if (!question2) {
-        showError('question2-error', true);
-        isValid = false;
-    } else {
-        showError('question2-error', false);
-    }
-    
-    if (!question3) {
-        showError('question3-error', true);
-        isValid = false;
-    } else {
-        showError('question3-error', false);
-    }
-    
-    // Validate photos
-    if (uploadedPhotos.length < 5) {
-        photoError.style.display = 'block';
-        isValid = false;
-    } else {
-        photoError.style.display = 'none';
-    }
-    
-    return isValid;
-}
-
-function showError(id, show) {
-    const element = document.getElementById(id);
-    element.style.display = show ? 'block' : 'none';
-}
-
-function handleFormSubmit() {
-    if (!validateForm()) {
-        showStatus('Please fix the errors in the form', 'error');
-        window.scrollTo(0, 0);
-        return;
-    }
-    
-    submitBtn.disabled = true;
-    submitLoader.style.display = 'block';
-    showStatus('Submitting your registration...', 'info');
-    
-    const formData = {
-        personalInfo: {
-            fullName: document.getElementById('full-name').value.trim(),
-            age: parseInt(document.getElementById('age').value),
-            schoolCollege: document.getElementById('school-college').value.trim(),
-            company: document.getElementById('company').value.trim(),
-            influencers: document.getElementById('influencers').value.trim()
-        },
-        bio: document.getElementById('bio').value.trim(),
-        deepQuestions: {
-            question1: document.getElementById('question1').value.trim(),
-            question2: document.getElementById('question2').value.trim(),
-            question3: document.getElementById('question3').value.trim()
-        },
-        photos: uploadedPhotos,
-        submittedAt: firebase.database.ServerValue.TIMESTAMP
-    };
-    
-    // Save to Firebase Database
-    firebase.database().ref(`users/${currentUser.uid}/registration`).set(formData)
-        .then(() => {
-            // Send to backend if needed
-            return sendToBackend(formData);
-        })
-        .then(() => {
-            showStatus('Registration submitted successfully!', 'success');
-            showThankYouSection();
-        })
-        .catch(error => {
-            console.error('Registration error:', error);
-            showStatus('Error submitting your registration. Please try again.', 'error');
-        })
-        .finally(() => {
-            submitBtn.disabled = false;
-            submitLoader.style.display = 'none';
+        };
+        
+        // Email validation
+        emailInput.addEventListener("blur", function() {
+            validateField(
+                this,
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                "email-error"
+            );
         });
-}
-
-function sendToBackend(formData) {
-    // You can implement API call to your backend here if needed
-    return new Promise((resolve) => {
-        // Simulating backend call
-        setTimeout(() => {
-            resolve();
-        }, 1000);
-    });
-}
-
-// UI state management functions
-function showAuthSection() {
-    authSection.style.display = 'block';
-    userProfile.style.display = 'none';
-    registrationForm.style.display = 'none';
-    thankYouSection.style.display = 'none';
-}
-
-function showUserProfile() {
-    authSection.style.display = 'none';
-    userProfile.style.display = 'block';
-}
-
-function showRegistrationForm() {
-    registrationForm.style.display = 'block';
-    thankYouSection.style.display = 'none';
-}
-
-function showThankYouSection() {
-    registrationForm.style.display = 'none';
-    thankYouSection.style.display = 'block';
-}
-
-function resetForm() {
-    document.getElementById('full-name').value = '';
-    document.getElementById('age').value = '';
-    document.getElementById('school-college').value = '';
-    document.getElementById('company').value = '';
-    document.getElementById('influencers').value = '';
-    document.getElementById('bio').value = '';
-    document.getElementById('question1').value = '';
-    document.getElementById('question2').value = '';
-    document.getElementById('question3').value = '';
-    photoPreview.innerHTML = '';
-}
-
-function showStatus(message, type = 'info') {
-    statusMessage.textContent = message;
-    statusMessage.className = 'status-message';
-    
-    // Add class based on message type
-    switch (type) {
-        case 'error':
-            statusMessage.classList.add('error-message');
-            break;
-        case 'success':
-            statusMessage.style.color = 'var(--success-color)';
-            break;
-        case 'info':
-        default:
-            statusMessage.style.color = 'var(--accent-color)';
-    }
-    
-    // Auto-hide info and success messages after 5 seconds
-    if (type !== 'error') {
-        setTimeout(() => {
-            statusMessage.textContent = '';
-        }, 5000);
-    }
-}
-</script>
+        
+        // Password validation
+        passwordInput.addEventListener("blur", function() {
+            validateField(
+                this,
+                /.{6,}/,
+                "password-error"
+            );
+        });
+        
+        // Run the backend test when the page loads
+        window.addEventListener('load', testBackendConnection);
+    </script>
 </body>
 </html>
