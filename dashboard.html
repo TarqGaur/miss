@@ -3,27 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form | Miss Banaras Competition</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Miss Banaras Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
         
         :root {
             --primary-color: #F2B134; /* Warm gold */
             --secondary-color: #D35269; /* Soft pink/rose */
-            --ghat-color: #8B6E4E; /* Rich sandstone */
-            --ghat-highlight: #A68B68; /* Lighter sandstone */
             --accent-color: #E1673C; /* Rich vermilion */
             --dark-color: #221A31; /* Deep indigo */
             --light-color: #FFF8E8; /* Warm white */
-            --temple-color: #D9B17D; /* Sandstone */
-            --water-color: #4C96D7; /* Ganges blue */
-            --text-color: #333333; /* Dark gray for text */
-            --btn-gradient: linear-gradient(135deg, #F2B134, #D35269); /* Button gradient */
+            --ghat-color: #8B6E4E; /* Rich sandstone */
             --error-color: #D32F2F; /* Error red */
             --success-color: #388E3C; /* Success green */
         }
@@ -36,12 +27,9 @@
         
         body {
             font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
-            color: var(--text-color);
-            background-color: var(--light-color);
             background: linear-gradient(135deg, #F8F1E5, #FFF8E8);
             min-height: 100vh;
-            margin: 0;
+            color: #333;
             display: flex;
             flex-direction: column;
         }
@@ -56,7 +44,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.5s;
             background-color: rgba(255, 248, 232, 0.95);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
         }
@@ -67,56 +54,6 @@
             font-weight: 700;
             color: var(--secondary-color);
             text-decoration: none;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--secondary-color), transparent);
-            transition: width 0.3s ease;
-        }
-        
-        .logo:hover::after {
-            width: 100%;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-link {
-            margin: 0 1.2rem;
-            text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 500;
-            position: relative;
-            transition: all 0.3s;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover {
-            color: var(--accent-color);
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
         }
         
         .menu-toggle {
@@ -133,40 +70,46 @@
             transition: all 0.3s ease;
         }
         
-        /* Main Content */
-        .registration-container {
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-link {
+            margin: 0 1.2rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .main-container {
             width: 100%;
-            min-height: calc(100vh - 120px);
-            position: relative;
-            overflow: hidden;
-            padding-top: 100px;
+            padding-top: 120px;
             padding-bottom: 40px;
             display: flex;
             justify-content: center;
         }
         
-        .leaves-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-        
         .form-container {
-            position: relative;
-            z-index: 2;
             width: 100%;
             max-width: 800px;
-            margin: 0 auto;
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
             padding: 2.5rem;
             margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .auth-section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(139, 110, 78, 0.3);
+            padding-bottom: 20px;
         }
         
         .form-heading {
@@ -187,6 +130,17 @@
             padding-bottom: 0.5rem;
         }
         
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
+        
+        .btn-row button {
+            flex: 1;
+            padding: 12px;
+        }
+        
         .input-group {
             margin-bottom: 1.5rem;
         }
@@ -205,7 +159,7 @@
             border-radius: 8px;
             font-family: 'Poppins', sans-serif;
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
             background-color: rgba(255, 255, 255, 0.8);
         }
         
@@ -227,21 +181,18 @@
             font-style: italic;
         }
         
-        /* Two columns layout for some sections */
         .columns-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
         }
         
-        /* Photo upload section */
         .photo-upload-container {
             border: 2px dashed rgba(139, 110, 78, 0.4);
             border-radius: 10px;
             padding: 1.5rem;
             text-align: center;
             margin-bottom: 1.5rem;
-            position: relative;
             cursor: pointer;
             transition: all 0.3s ease;
             background-color: rgba(255, 255, 255, 0.5);
@@ -258,18 +209,12 @@
             margin-bottom: 0.5rem;
         }
         
-        .photo-upload-text {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: var(--dark-color);
-        }
-        
         .photo-requirements {
             font-size: 0.85rem;
             color: var(--ghat-color);
         }
         
-        #photo-input {
+        .file-input {
             display: none;
         }
         
@@ -283,7 +228,7 @@
         .photo-preview {
             position: relative;
             width: 100%;
-            padding-bottom: 100%; /* Square aspect ratio */
+            padding-bottom: 100%;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -312,8 +257,6 @@
             cursor: pointer;
             color: var(--error-color);
             font-size: 0.8rem;
-            z-index: 2;
-            transition: all 0.2s ease;
         }
         
         .remove-photo:hover {
@@ -321,13 +264,12 @@
             color: white;
         }
         
-        /* Submit button */
-        .submit-btn {
+        .btn {
             width: 100%;
             padding: 1rem;
             border: none;
             border-radius: 8px;
-            background: var(--btn-gradient);
+            background: linear-gradient(135deg, #F2B134, #D35269);
             color: white;
             font-family: 'Poppins', sans-serif;
             font-size: 1.1rem;
@@ -339,33 +281,26 @@
             overflow: hidden;
         }
         
-        .submit-btn:hover {
+        .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(225, 103, 60, 0.3);
         }
         
-        .submit-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-            z-index: 1;
+        .btn:disabled {
+            background: #cccccc;
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
         }
         
-        .submit-btn:hover::before {
-            left: 100%;
+        .google-btn {
+            background: linear-gradient(135deg, #4285F4, #34A853);
         }
         
-        .submit-btn span {
-            position: relative;
-            z-index: 2;
+        .logout-btn {
+            background: linear-gradient(135deg, #f44336, #e91e63);
         }
         
-        /* Loader */
         .loader {
             display: none;
             width: 30px;
@@ -386,11 +321,37 @@
             }
         }
         
-        .btn-text {
-            transition: opacity 0.3s ease;
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: none;
         }
         
-        /* Thank you section */
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .status-message {
+            margin-top: 10px;
+            min-height: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
         .thank-you-container {
             display: none;
             text-align: center;
@@ -403,76 +364,7 @@
             margin-bottom: 1.5rem;
         }
         
-        .thank-you-heading {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--dark-color);
-        }
-        
-        .thank-you-message {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            color: var(--text-color);
-        }
-        
-        .timer-container {
-            margin: 2rem 0;
-            padding: 1.5rem;
-            background-color: rgba(242, 177, 52, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(242, 177, 52, 0.3);
-        }
-        
-        .timer-label {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: var(--dark-color);
-        }
-        
-        .timer-display {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-        
-        .timer-unit {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .timer-value {
-            font-size: 2rem;
-            font-weight: 600;
-            color: var(--accent-color);
-            background-color: white;
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            min-width: 70px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .timer-label-small {
-            font-size: 0.8rem;
-            color: var(--ghat-color);
-            margin-top: 0.3rem;
-        }
-        
-        .banaras-silhouette {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z' fill='%238B6E4E' fill-opacity='0.2'%3E%3C/path%3E%3Cpath d='M50 50 L100 40 L150 60 L200 45 L250 55 L300 35 L350 60 L400 40 L450 55 L500 45 L550 65 L600 30 L650 55 L700 40 L750 60 L800 35 L850 50 L900 30 L950 55 L1000 45 L1050 65 L1100 40 L1150 50 L1200 40 L1200 120 L0 120 L0 70 Z' fill='%238B6E4E' fill-opacity='0.15'%3E%3C/path%3E%3C/svg%3E");
-            background-size: cover;
-            background-repeat: no-repeat;
-            pointer-events: none;
-        }
-        
-        footer {
+        .footer {
             background-color: rgba(255, 248, 232, 0.95);
             padding: 1rem 3rem;
             text-align: center;
@@ -484,19 +376,18 @@
             color: var(--text-color);
             font-size: 0.9rem;
         }
-
-        /* Error messages */
-        .error-message {
-            color: var(--error-color);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
+        
+        .user-info {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: rgba(242, 177, 52, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(242, 177, 52, 0.2);
         }
         
         @media (max-width: 768px) {
             .form-container {
                 max-width: 90%;
-                margin: 0 auto;
                 padding: 2rem 1.5rem;
             }
             
@@ -534,24 +425,12 @@
                 font-size: 1.2rem;
             }
             
-            .menu-toggle.active span:nth-child(1) {
-                transform: translateY(9px) rotate(45deg);
-            }
-            
-            .menu-toggle.active span:nth-child(2) {
-                opacity: 0;
-            }
-            
-            .menu-toggle.active span:nth-child(3) {
-                transform: translateY(-9px) rotate(-45deg);
+            .btn-row {
+                flex-direction: column;
             }
             
             header {
                 padding: 1rem 2rem;
-            }
-            
-            .timer-display {
-                flex-wrap: wrap;
             }
         }
         
@@ -573,1328 +452,731 @@
 <body>
     <header>
         <a href="index.html" class="logo">Miss Banaras</a>
-        <div class="menu-toggle">
+        <div class="menu-toggle" id="menu-toggle">
             <span></span>
             <span></span>
             <span></span>
         </div>
-        <ul class="nav-links">
+        <ul class="nav-links" id="nav-links">
             <li><a href="index.html" class="nav-link">Home</a></li>
             <li><a href="aboutus.html" class="nav-link">About</a></li>
             <li><a href="reward.html" class="nav-link">Rewards</a></li>
-            <li><a href="Criteria.html" class="nav-link">Criteria</a></li>
-            <li><a href="Register.html" class="nav-link">Register</a></li>
+            <li><a href="criteria.html" class="nav-link">Criteria</a></li>
+            <li><a href="#" class="nav-link">Register</a></li>
             <li><a href="contact.html" class="nav-link">Contact</a></li>
         </ul>
     </header>
     
-    <div class="registration-container">
-        <canvas class="leaves-canvas" id="leaves-canvas"></canvas>
-        
-        <!-- Registration Form -->
-        <div class="form-container" id="registration-form">
+    <div class="main-container">
+        <div class="form-container" id="form-container">
             <h1 class="form-heading">Miss Banaras Registration Form</h1>
             
-            <!-- Personal Information Section -->
-            <h2 class="form-subheading">Personal Information</h2>
-            
-            <div class="columns-2">
+            <!-- Authentication Section -->
+            <div class="auth-section" id="auth-section">
+                <h2 class="form-subheading">Authentication</h2>
                 <div class="input-group">
-                    <label for="full-name" class="input-label">Full Name*</label>
-                    <input type="text" id="full-name" class="input-field" placeholder="Enter your full name" required>
-                    <div class="error-message" id="full-name-error">Name is required</div>
+                    <label for="email" class="input-label">Email Address*</label>
+                    <input type="email" id="email" class="input-field" placeholder="Enter your email address" required>
                 </div>
                 
                 <div class="input-group">
-                    <label for="age" class="input-label">Age*</label>
-                    <input type="number" id="age" class="input-field" placeholder="Enter your age" min="16" max="30" required>
-                    <div class="error-message" id="age-error">Age must be between 16 and 30</div>
+                    <label for="password" class="input-label">Password*</label>
+                    <input type="password" id="password" class="input-field" placeholder="Create a password" required>
+                    <div class="hint-text">Minimum 6 characters</div>
                 </div>
+                
+                <div class="btn-row">
+                    <button id="signup-btn" class="btn">Sign Up</button>
+                    <button id="login-btn" class="btn">Login</button>
+                </div>
+                
+                <button id="google-signin-btn" class="btn google-btn">
+                    <i class="fab fa-google"></i> Sign in with Google
+                </button>
             </div>
             
-            <div class="columns-2">
-                <div class="input-group">
-                    <label for="school-college" class="input-label">School/College Name</label>
-                    <input type="text" id="school-college" class="input-field" placeholder="Enter your school or college name">
+            <div id="user-profile" style="display: none;">
+                <div class="user-info" id="user-info">
+                    <!-- User info will be displayed here -->
+                </div>
+                <button id="logout-btn" class="btn logout-btn">Sign Out</button>
+            </div>
+            
+            <!-- Registration Form (Initially Hidden) -->
+            <div id="registration-form" style="display: none;">
+                <!-- Personal Information Section -->
+                <h2 class="form-subheading">Personal Information</h2>
+                
+                <div class="columns-2">
+                    <div class="input-group">
+                        <label for="full-name" class="input-label">Full Name*</label>
+                        <input type="text" id="full-name" class="input-field" placeholder="Enter your full name" required>
+                        <div class="error-message" id="full-name-error">Name is required</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="age" class="input-label">Age*</label>
+                        <input type="number" id="age" class="input-field" placeholder="Enter your age" min="16" max="30" required>
+                        <div class="error-message" id="age-error">Age must be between 16 and 30</div>
+                    </div>
+                </div>
+                
+                <div class="columns-2">
+                    <div class="input-group">
+                        <label for="school-college" class="input-label">School/College Name</label>
+                        <input type="text" id="school-college" class="input-field" placeholder="Enter your school or college name">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="company" class="input-label">Company Name</label>
+                        <input type="text" id="company" class="input-field" placeholder="If applicable">
+                        <div class="hint-text">Leave blank if you're a student or not employed</div>
+                    </div>
                 </div>
                 
                 <div class="input-group">
-                    <label for="company" class="input-label">Company Name</label>
-                    <input type="text" id="company" class="input-field" placeholder="If applicable">
-                    <div class="hint-text">Leave blank if you're a student or not employed</div>
+                    <label for="influencers" class="input-label">Two Influencers You Like the Most*</label>
+                    <input type="text" id="influencers" class="input-field" placeholder="Enter names of two influencers you admire" required>
+                    <div class="hint-text">Separate names with a comma</div>
+                    <div class="error-message" id="influencers-error">Please mention two influencers</div>
                 </div>
-            </div>
-            
-            <div class="input-group">
-                <label for="influencers" class="input-label">Two Influencers You Like the Most*</label>
-                <input type="text" id="influencers" class="input-field" placeholder="Enter names of two influencers you admire" required>
-                <div class="hint-text">Separate names with a comma</div>
-                <div class="error-message" id="influencers-error">Please mention two influencers</div>
-            </div>
-            
-            <div class="input-group">
-                <label for="bio" class="input-label">Short Bio*</label>
-                <textarea id="bio" class="input-field" placeholder="Tell us a little about yourself, your interests, and aspirations..." required></textarea>
-                <div class="hint-text">100-300 words recommended</div>
-                <div class="error-message" id="bio-error">Bio is required (100-300 words recommended)</div>
-            </div>
-            
-            <!-- Deep Questions Section -->
-            <h2 class="form-subheading">Deep Questions</h2>
-            
-            <div class="input-group">
-                <label for="question1" class="input-label">When you face a tough decision, what inner voice or core value do you rely on for guidance?*</label>
-                <textarea id="question1" class="input-field" placeholder="Share your thoughts..." required></textarea>
-                <div class="error-message" id="question1-error">Please answer this question</div>
-            </div>
-            
-            <div class="input-group">
-                <label for="question2" class="input-label">What dream or goal is closest to your heart, and why does it matter so much to you?*</label>
-                <textarea id="question2" class="input-field" placeholder="Share your dreams and aspirations..." required></textarea>
-                <div class="error-message" id="question2-error">Please answer this question</div>
-            </div>
-            
-            <div class="input-group">
-                <label for="question3" class="input-label">Reflect on how being a girl has shaped your experiences in life. Can you share an example of a time when your identity as a girl influenced a decision you made, a dream you pursued, or how you felt about yourself?*</label>
-                <textarea id="question3" class="input-field" placeholder="Share your reflection..." required></textarea>
-                <div class="error-message" id="question3-error">Please answer this question</div>
-            </div>
-            
-            <!-- Photo Upload Section -->
-            <h2 class="form-subheading">Photo Upload</h2>
-            
-            <label for="photo-input" class="photo-upload-container" id="photo-upload-area">
-                <div class="upload-icon">
-                    <i class="fas fa-cloud-upload-alt"></i>
+                
+                <div class="input-group">
+                    <label for="bio" class="input-label">Short Bio*</label>
+                    <textarea id="bio" class="input-field" placeholder="Tell us a little about yourself, your interests, and aspirations..." required></textarea>
+                    <div class="hint-text">100-300 words recommended</div>
+                    <div class="error-message" id="bio-error">Bio is required (100-300 words recommended)</div>
                 </div>
-                <div class="photo-upload-text">Drag & drop photos or click to browse</div>
-                <div class="photo-requirements">Upload minimum 5 photos and maximum 15 photos (JPEG, PNG, Max 5MB each)</div>
-                <input type="file" id="photo-input" accept="image/jpeg, image/png" multiple>
-            </label>
-            
-            <div class="photo-preview-container" id="photo-preview">
-                <!-- Photo previews will be inserted here dynamically -->
-            </div>
-            <div class="error-message" id="photo-error">Please upload at least 5 photos (maximum 15)</div>
-            
-            <!-- Submit Button -->
-            <button type="button" class="submit-btn" id="submit-btn">
-                <span class="btn-text">Submit Your Entry</span>
-                <div class="loader"></div>
-            </button>
-        </div>
-        
-        <!-- Thank You Section (Initially Hidden) -->
-        <div class="form-container thank-you-container" id="thank-you-section">
-            <div class="thank-you-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h1 class="thank-you-heading">Thank You for Submitting!</h1>
-            <p class="thank-you-message">Your entry for the Miss Banaras Competition has been received. We will review your submission and announce the Round 1 results soon.</p>
-            
-            <div class="timer-container">
-                <div class="timer-label">Time Remaining Until Round 1 Results:</div>
-                <div class="timer-display">
-                    <div class="timer-unit">
-                        <div class="timer-value" id="days">00</div>
-                        <div class="timer-label-small">Days</div>
-                    </div>
-                    <div class="timer-unit">
-                        <div class="timer-value" id="hours">00</div>
-                        <div class="timer-label-small">Hours</div>
-                    </div>
-                    <div class="timer-unit">
-                        <div class="timer-value" id="minutes">00</div>
-                        <div class="timer-label-small">Minutes</div>
-                    </div>
-                    <div class="timer-unit">
-                        <div class="timer-value" id="seconds">00</div>
-                        <div class="timer-label-small">Seconds</div>
-                    </div>
+                
+                <!-- Deep Questions Section -->
+                <h2 class="form-subheading">Deep Questions</h2>
+                
+                <div class="input-group">
+                    <label for="question1" class="input-label">When you face a tough decision, what inner voice or core value do you rely on for guidance?*</label>
+                    <textarea id="question1" class="input-field" placeholder="Share your thoughts..." required></textarea>
+                    <div class="error-message" id="question1-error">Please answer this question</div>
                 </div>
+                
+                <div class="input-group">
+                    <label for="question2" class="input-label">What dream or goal is closest to your heart, and why does it matter so much to you?*</label>
+                    <textarea id="question2" class="input-field" placeholder="Share your dreams and aspirations..." required></textarea>
+                    <div class="error-message" id="question2-error">Please answer this question</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="question3" class="input-label">Reflect on how being a girl has shaped your experiences in life. Can you share an example?*</label>
+                    <textarea id="question3" class="input-field" placeholder="Share your reflection..." required></textarea>
+                    <div class="error-message" id="question3-error">Please answer this question</div>
+                </div>
+                
+                <!-- Photo Upload Section -->
+                <h2 class="form-subheading">Photo Upload</h2>
+                
+                <div class="photo-upload-container" id="photo-upload-area">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="photo-upload-text">Click to upload photos</div>
+                    <div class="photo-requirements">Upload minimum 5 photos (JPEG, PNG, Max 5MB each)</div>
+                    <input type="file" id="photo-input" class="file-input" accept="image/jpeg, image/png" multiple>
+                </div>
+                
+                <div class="progress-bar" id="upload-progress">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="status-message" id="status-message"></div>
+                
+                <div class="photo-preview-container" id="photo-preview">
+                    <!-- Photo previews will be inserted here dynamically -->
+                </div>
+                <div class="error-message" id="photo-error">Please upload at least 5 photos</div>
+                
+                <!-- Submit Button -->
+                <button type="button" class="btn" id="submit-btn">
+                    <span class="btn-text">Submit Your Entry</span>
+                    <div class="loader" id="submit-loader"></div>
+                </button>
+            </div>
+            
+            <!-- Thank You Section (Initially Hidden) -->
+            <div class="thank-you-container" id="thank-you-section">
+                <div class="thank-you-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="form-heading">Thank You for Submitting!</h2>
+                <p>Your entry for the Miss Banaras Competition has been received. We will review your submission and announce the Round 1 results soon.</p>
             </div>
         </div>
-        
-        <div class="banaras-silhouette"></div>
     </div>
     
-    <footer>
+    <footer class="footer">
         <p class="footer-text">© 2025 Miss Banaras Competition. All rights reserved.</p>
     </footer>
 
-    <script type="module">
-        // Import Firebase modules
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { 
-            getAuth, 
-            onAuthStateChanged
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { 
-            getFirestore, 
-            doc, 
-            getDoc, 
-            setDoc, 
-            serverTimestamp 
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { 
-            getStorage, 
-            ref, 
-            uploadBytes, 
-            getDownloadURL 
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-auth-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-database-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-storage-compat.min.js"></script>
+    
+    <script>
         // Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyDrHqo9pVoyMU38VReK0iENZUGPn7fZZSY",
-            authDomain: "miss-banaras-df6ae.firebaseapp.com",
-            projectId: "miss-banaras-df6ae",
-            storageBucket: "miss-banaras-df6ae.firebasestorage.app",
-            messagingSenderId: "297867452417",
-            appId: "1:297867452417:web:fcfa314026c0a6b008e000",
-            measurementId: "G-Z3DER8515Q"
+            apiKey: "AIzaSyCAImdjvo3yjfsxwwGKZp5iDx5VwmhfaDs",
+            authDomain: "contact-us-page-missbanaras.firebaseapp.com",
+            databaseURL: "https://contact-us-page-missbanaras-default-rtdb.firebaseio.com",
+            projectId: "contact-us-page-missbanaras",
+            storageBucket: "contact-us-page-missbanaras.appspot.com",
+            messagingSenderId: "323394332678",
+            appId: "1:323394332678:web:99dde90fa03bf6c85ebb87",
+            measurementId: "G-6MWHVZ5KG9"
         };
-
+        
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth();
-        const db = getFirestore();
-        const storage = getStorage();
-
+        firebase.initializeApp(firebaseConfig);
+        
+        // Backend URL - Change this to your actual backend URL
+        const BACKEND_URL = "https://miss-banaras-backend.onrender.com";
+        
+        // Global variables
+        let currentUser = null;
+        let uploadedPhotos = [];
+        
         // DOM Elements
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        const authSection = document.getElementById('auth-section');
+        const userProfile = document.getElementById('user-profile');
         const registrationForm = document.getElementById('registration-form');
         const thankYouSection = document.getElementById('thank-you-section');
+        const userInfo = document.getElementById('user-info');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const signupBtn = document.getElementById('signup-btn');
+        const loginBtn = document.getElementById('login-btn');
+        const googleSigninBtn = document.getElementById('google-signin-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const photoUploadArea = document.getElementById('photo-upload-area');
         const photoInput = document.getElementById('photo-input');
         const photoPreview = document.getElementById('photo-preview');
-        const photoUploadArea = document.getElementById('photo-upload-area');
+        const photoError = document.getElementById('photo-error');
+        const uploadProgress = document.getElementById('upload-progress');
+        const progressFill = document.getElementById('progress-fill');
+        const statusMessage = document.getElementById('status-message');
         const submitBtn = document.getElementById('submit-btn');
-        const btnText = submitBtn.querySelector('.btn-text');
-        const loader = submitBtn.querySelector('.loader');
-
-    // Form fields
-const formFields = {
-    fullName: document.getElementById('full-name'),
-    age: document.getElementById('age'),
-    schoolCollege: document.getElementById('school-college'),
-    company: document.getElementById('company'),
-    influencers: document.getElementById('influencers'),
-    bio: document.getElementById('bio'),
-    question1: document.getElementById('question1'),
-    question2: document.getElementById('question2'),
-    question3: document.getElementById('question3')
-};
-
-// Error message elements
-const errorMessages = {
-    fullName: document.getElementById('full-name-error'),
-    age: document.getElementById('age-error'),
-    influencers: document.getElementById('influencers-error'),
-    bio: document.getElementById('bio-error'),
-    question1: document.getElementById('question1-error'),
-    question2: document.getElementById('question2-error'),
-    question3: document.getElementById('question3-error'),
-    photo: document.getElementById('photo-error')
-};
-
-// Global variables
-let uploadedPhotos = [];
-const maxPhotos = 15;
-const minPhotos = 5;
-let isFormSubmitting = false;
-
-function initLeavesAnimation() {
-    const canvas = document.getElementById('leaves-canvas');
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
-    
-    // Create much more accurate leaf shapes
-    function createLeafShape() {
-        const shape = new THREE.Shape();
-        const leafType = Math.floor(Math.random() * 4);
-        const size = 0.5 + Math.random() * 0.3;
+        const submitLoader = document.getElementById('submit-loader');
         
-        if (leafType === 0) {
-            // Maple leaf with more precise shape
-            const pointiness = 0.7 + Math.random() * 0.3;
-            const width = size * 0.8;
-            
-            // Central stem
-            shape.moveTo(0, size);
-            
-            // Right side lobes
-            shape.bezierCurveTo(
-                width * 0.3, size * 0.8,
-                width * 0.6, size * 0.7,
-                width, size * 0.6
-            );
-            
-            shape.bezierCurveTo(
-                width * 0.9, size * 0.5,
-                width * 0.95, size * 0.3,
-                width * 0.9, size * 0.1
-            );
-            
-            // Right tip
-            shape.bezierCurveTo(
-                width * 0.95, 0,
-                width * 0.8, -size * 0.2,
-                width * 0.5, -size * 0.2
-            );
-            
-            // Middle right lobe
-            shape.bezierCurveTo(
-                width * 0.5, -size * 0.3,
-                width * 0.3, -size * 0.4,
-                width * 0.2, -size * 0.5 * pointiness
-            );
-            
-            // Bottom point
-            shape.bezierCurveTo(
-                width * 0.1, -size * 0.7 * pointiness,
-                0, -size * 0.9 * pointiness,
-                0, -size * pointiness
-            );
-            
-            // Mirror for left side
-            shape.bezierCurveTo(
-                -width * 0.1, -size * 0.7 * pointiness,
-                -width * 0.2, -size * 0.5 * pointiness,
-                -width * 0.3, -size * 0.4
-            );
-            
-            shape.bezierCurveTo(
-                -width * 0.5, -size * 0.3,
-                -width * 0.5, -size * 0.2,
-                -width * 0.5, -size * 0.2
-            );
-            
-            shape.bezierCurveTo(
-                -width * 0.8, -size * 0.2,
-                -width * 0.95, 0,
-                -width * 0.9, size * 0.1
-            );
-            
-            shape.bezierCurveTo(
-                -width * 0.95, size * 0.3,
-                -width * 0.9, size * 0.5,
-                -width, size * 0.6
-            );
-            
-            shape.bezierCurveTo(
-                -width * 0.6, size * 0.7,
-                -width * 0.3, size * 0.8,
-                0, size
-            );
-            
-        } else if (leafType === 1) {
-            // Oak leaf with more defined lobes
-            const lobeDepth = 0.25 + Math.random() * 0.15;
-            const lobeCount = 5 + Math.floor(Math.random() * 3); // 5-7 lobes
-            
-            // Start at stem
-            shape.moveTo(0, size * 0.8);
-            
-            // Right side lobes
-            for (let i = 0; i < lobeCount; i++) {
-                const t = i / (lobeCount - 1);
-                const y = size * 0.8 - t * size * 1.6;
-                const nextY = size * 0.8 - (i + 1) / (lobeCount - 1) * size * 1.6;
-                
-                if (i < lobeCount - 1) {
-                    // Create lobe
-                    shape.bezierCurveTo(
-                        size * 0.3, y - size * 0.05,
-                        size * 0.5, y - size * 0.1,
-                        size * lobeDepth, y - size * 0.2
-                    );
-                    
-                    // Create indent between lobes
-                    shape.bezierCurveTo(
-                        size * 0.4, y - size * 0.25,
-                        size * 0.3, y - size * 0.3,
-                        size * 0.2, nextY
-                    );
-                } else {
-                    // Last lobe to tip
-                    shape.bezierCurveTo(
-                        size * 0.2, y - size * 0.2,
-                        size * 0.1, y - size * 0.3,
-                        0, -size * 0.8
-                    );
-                }
-            }
-            
-            // Left side lobes (mirrored)
-            for (let i = lobeCount - 1; i >= 0; i--) {
-                const t = i / (lobeCount - 1);
-                const y = size * 0.8 - t * size * 1.6;
-                const nextY = i > 0 ? size * 0.8 - (i - 1) / (lobeCount - 1) * size * 1.6 : size * 0.8;
-                
-                if (i > 0) {
-                    // Create indent between lobes
-                    shape.bezierCurveTo(
-                        -size * 0.2, y,
-                        -size * 0.3, y - size * 0.3,
-                        -size * 0.4, y - size * 0.25
-                    );
-                    
-                    // Create lobe
-                    shape.bezierCurveTo(
-                        -size * 0.5, y - size * 0.1,
-                        -size * 0.3, y - size * 0.05,
-                        0, nextY
-                    );
-                } else {
-                    // Connect back to stem
-                    shape.lineTo(0, size * 0.8);
-                }
-            }
-            
-        } else if (leafType === 2) {
-            // Elliptical leaf with serrated edges
-            const aspectRatio = 0.4 + Math.random() * 0.2;
-            const pointiness = 0.8 + Math.random() * 0.4;
-            
-            // Base ellipse control points
-            const points = [];
-            const segments = 40;
-            
-            for (let i = 0; i < segments; i++) {
-                const theta = (i / segments) * Math.PI * 2;
-                const x = Math.cos(theta) * size * aspectRatio;
-                const y = Math.sin(theta) * size;
-                points.push({ x, y });
-            }
-            
-            // Add serration to edge
-            shape.moveTo(0, size);
-            
-            for (let i = 0; i < segments; i++) {
-                const point = points[i];
-                const nextPoint = points[(i + 1) % segments];
-                
-                // For the bottom part, make a pointed tip
-                if (i === Math.floor(segments * 0.5)) {
-                    shape.lineTo(0, -size * pointiness);
-                } else if (Math.abs(i - segments * 0.5) < 5) {
-                    // Smoother near the bottom point
-                    shape.lineTo(point.x, point.y);
-                } else {
-                    // Add slight serration to the edges
-                    const serrationAmount = 0.05 * size * Math.random();
-                    const midX = (point.x + nextPoint.x) / 2;
-                    const midY = (point.y + nextPoint.y) / 2;
-                    const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) + Math.PI/2;
-                    
-                    // Calculate serration point
-                    const serrX = midX + Math.cos(angle) * serrationAmount;
-                    const serrY = midY + Math.sin(angle) * serrationAmount;
-                    
-                    shape.lineTo(point.x, point.y);
-                    shape.lineTo(serrX, serrY);
-                }
-            }
-            
-        } else {
-            // Teardrop/Heart-shaped leaf with pointed tip
-            const width = size * (0.6 + Math.random() * 0.2);
-            const pointiness = 0.9 + Math.random() * 0.3;
-            
-            shape.moveTo(0, size);
-            
-            // Right side curve
-            shape.bezierCurveTo(
-                width * 0.8, size * 0.8,
-                width, size * 0.5,
-                width, 0
-            );
-            
-            // Bottom point curve
-            shape.bezierCurveTo(
-                width * 0.8, -size * 0.5,
-                width * 0.4, -size * 0.7,
-                0, -size * pointiness
-            );
-            
-            // Left side curve (mirror of right)
-            shape.bezierCurveTo(
-                -width * 0.4, -size * 0.7,
-                -width * 0.8, -size * 0.5,
-                -width, 0
-            );
-            
-            shape.bezierCurveTo(
-                -width, size * 0.5,
-                -width * 0.8, size * 0.8,
-                0, size
-            );
-        }
-        
-        return shape;
-    }
-
-    // Create stem for leaf
-    function addStemToLeaf(leafMesh) {
-        const stemLength = 0.2 + Math.random() * 0.15;
-        const stemWidth = 0.02 + Math.random() * 0.01;
-        const bend = Math.random() * 0.05;
-        
-        // Create curved stem
-        const stemCurve = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(0, 0, 0),
-            new THREE.Vector3(bend, -stemLength/2, 0),
-            new THREE.Vector3(0, -stemLength, 0)
-        ]);
-        
-        const stemGeometry = new THREE.TubeGeometry(
-            stemCurve, 
-            8,         // tubular segments
-            stemWidth, // radius
-            6,         // radial segments
-            false      // closed
-        );
-        
-        stemGeometry.translate(0, -0.1, 0.01);
-        
-        const stemMaterial = new THREE.MeshBasicMaterial({
-            color: new THREE.Color(
-                Math.random() * 0.1 + 0.25, 
-                Math.random() * 0.1 + 0.15, 
-                Math.random() * 0.05 + 0.05
-            ),
-            transparent: true,
-            opacity: leafMesh.material.opacity * 1.2
+        // Mobile menu toggle
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
         });
         
-        const stem = new THREE.Mesh(stemGeometry, stemMaterial);
-        leafMesh.add(stem);
+        // Authentication event listeners
+        signupBtn.addEventListener('click', handleSignUp);
+        loginBtn.addEventListener('click', handleLogin);
+        googleSigninBtn.addEventListener('click', handleGoogleSignIn);
+        logoutBtn.addEventListener('click', handleLogout);
         
-        return leafMesh;
-    }
-    
-    // Create veins for the leaf
-    function addVeinsToLeaf(leafMesh, leafType) {
-        // Only add veins to larger leaves
-        if (leafMesh.scale.x < 1.0) return leafMesh;
+        // Photo upload event listeners
+        photoUploadArea.addEventListener('click', () => photoInput.click());
+        photoInput.addEventListener('change', handlePhotoSelect);
         
-        const veinsGeometry = new THREE.BufferGeometry();
-        const veinsPoints = [];
+        // Form submission
+        submitBtn.addEventListener('click', handleFormSubmit);
         
-        if (leafType === 0) {  // Maple
-            // Central vein
-            veinsPoints.push(new THREE.Vector3(0, 0.5, 0.01));
-            veinsPoints.push(new THREE.Vector3(0, -0.4, 0.01));
-            
-            // Side veins
-            for (let i = 0; i < 3; i++) {
-                const y = 0.3 - i * 0.25;
-                
-                // Right veins
-                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
-                veinsPoints.push(new THREE.Vector3(0.3, y - 0.1, 0.01));
-                
-                // Left veins
-                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
-                veinsPoints.push(new THREE.Vector3(-0.3, y - 0.1, 0.01));
-            }
-            
-        } else if (leafType === 1) {  // Oak
-            // Central vein
-            veinsPoints.push(new THREE.Vector3(0, 0.4, 0.01));
-            veinsPoints.push(new THREE.Vector3(0, -0.4, 0.01));
-            
-            // Side veins
-            for (let i = 0; i < 5; i++) {
-                const y = 0.3 - i * 0.15;
-                
-                // Right veins
-                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
-                veinsPoints.push(new THREE.Vector3(0.25, y - 0.05, 0.01));
-                
-                // Left veins
-                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
-                veinsPoints.push(new THREE.Vector3(-0.25, y - 0.05, 0.01));
-            }
-            
-        } else {  // Other leaf types
-            // Central vein
-            veinsPoints.push(new THREE.Vector3(0, 0.4, 0.01));
-            veinsPoints.push(new THREE.Vector3(0, -0.4, 0.01));
-            
-            // Side veins
-            for (let i = 0; i < 4; i++) {
-                const y = 0.3 - i * 0.2;
-                const angle = Math.PI/6 + (i * Math.PI/20);
-                
-                // Right veins
-                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
-                veinsPoints.push(new THREE.Vector3(Math.sin(angle) * 0.3, y - Math.cos(angle) * 0.3, 0.01));
-                
-                // Left veins
-                veinsPoints.push(new THREE.Vector3(0, y, 0.01));
-                veinsPoints.push(new THREE.Vector3(-Math.sin(angle) * 0.3, y - Math.cos(angle) * 0.3, 0.01));
-            }
-        }
-        
-        veinsGeometry.setFromPoints(veinsPoints);
-        
-        const veinsMaterial = new THREE.LineBasicMaterial({ 
-            color: new THREE.Color(
-                leafMesh.material.color.r * 0.7,
-                leafMesh.material.color.g * 0.7,
-                leafMesh.material.color.b * 0.7
-            ),
-            transparent: true,
-            opacity: leafMesh.material.opacity * 0.6,
-            linewidth: 1
-        });
-        
-        const veins = new THREE.LineSegments(veinsGeometry, veinsMaterial);
-        leafMesh.add(veins);
-        
-        return leafMesh;
-    }
-    
-    // Enhanced leaf colors with better autumn palette
-    const leafColors = [
-        new THREE.Color('#F2B134'),  // gold
-        new THREE.Color('#F8C471'),  // lighter gold
-        new THREE.Color('#D35269'),  // rose
-        new THREE.Color('#CB4335'),  // darker red
-        new THREE.Color('#E1673C'),  // vermilion
-        new THREE.Color('#FF7F50'),  // coral
-        new THREE.Color('#8B6E4E'),  // sandstone
-        new THREE.Color('#6E2C00'),  // dark brown
-        new THREE.Color('#D68910'),  // golden brown
-        new THREE.Color('#7D6608'),  // dark olive
-        new THREE.Color('#F1C40F'),  // yellow
-        new THREE.Color('#A93226')   // brick red
-    ];
-    
-    // Track created leaves
-    const leaves = [];
-    const totalLeaves = 90; // Increased leaf count for better effect
-    
-    // Create leaves with varied shapes
-    for (let i = 0; i < totalLeaves; i++) {
-        const leafType = Math.floor(Math.random() * 4);
-        const leafShape = createLeafShape(leafType);
-        const leafGeometry = new THREE.ShapeGeometry(leafShape, 16); // Higher detail for better shape
-        
-        // Add more natural texture
-        const vertices = leafGeometry.attributes.position;
-        for (let v = 0; v < vertices.count; v++) {
-            const x = vertices.getX(v);
-            const y = vertices.getY(v);
-            
-            // Create natural curling effect at edges
-            const distFromCenter = Math.sqrt(x*x + y*y);
-            const maxDist = 0.5;
-            const curl = Math.max(0, distFromCenter - 0.2) / maxDist * 0.05;
-            
-            // Apply displacement
-            vertices.setZ(v, curl + (Math.sin(x * 20) * Math.cos(y * 20) * 0.005));
-        }
-        
-        // Pick base color and add variation
-        const baseColor = leafColors[Math.floor(Math.random() * leafColors.length)];
-        const finalColor = baseColor.clone().lerp(
-            new THREE.Color(
-                baseColor.r + (Math.random() * 0.1 - 0.05),
-                baseColor.g + (Math.random() * 0.1 - 0.05),
-                baseColor.b + (Math.random() * 0.1 - 0.05)
-            ),
-            0.3
-        );
-        
-        const material = new THREE.MeshBasicMaterial({
-            color: finalColor,
-            transparent: true,
-            opacity: Math.random() * 0.3 + 0.4, // Increased opacity for better visibility
-            side: THREE.DoubleSide
-        });
-        
-        const leaf = new THREE.Mesh(leafGeometry, material);
-        
-        // Add stem to most leaves
-        if (Math.random() < 0.85) {
-            addStemToLeaf(leaf);
-        }
-        
-        // Add veins to some leaves
-        if (Math.random() < 0.6) {
-            addVeinsToLeaf(leaf, leafType);
-        }
-        
-        // Position leaves at staggered heights
-        const layer = Math.floor(i / (totalLeaves / 5)); // Create 5 layers
-        const layerHeight = 30; // Total height of animation area
-        
-        leaf.position.x = Math.random() * 30 - 15;
-        leaf.position.y = 15 - layer * (layerHeight/5) + Math.random() * 3;
-        leaf.position.z = Math.random() * 8 - 4;
-        
-        // Random initial rotation
-        leaf.rotation.x = Math.random() * Math.PI;
-        leaf.rotation.y = Math.random() * Math.PI;
-        leaf.rotation.z = Math.random() * Math.PI;
-        
-        // Random scale for variety
-        const scale = 0.8 + Math.random() * 0.9;
-        leaf.scale.set(scale, scale, scale);
-        
-        // Custom properties for better physics
-        leaf.velocity = {
-            x: Math.random() * 0.01 - 0.005,
-            y: -(0.01 + Math.random() * 0.02), // Consistent downward speed
-            z: Math.random() * 0.004 - 0.002,
-            rotationX: Math.random() * 0.004 - 0.002,
-            rotationY: Math.random() * 0.004 - 0.002,
-            rotationZ: Math.random() * 0.008 - 0.004
-        };
-        
-        // Different falling styles
-        leaf.fallStyle = Math.floor(Math.random() * 4);
-        
-        // Add wobble effect
-        leaf.wobble = {
-            x: Math.random() * 0.02 + 0.01,
-            y: Math.random() * 0.02 + 0.01,
-            z: Math.random() * 0.02 + 0.01,
-            phaseX: Math.random() * Math.PI * 2,
-            phaseY: Math.random() * Math.PI * 2,
-            phaseZ: Math.random() * Math.PI * 2,
-            speedX: 0.01 + Math.random() * 0.01,
-            speedY: 0.01 + Math.random() * 0.01,
-            speedZ: 0.01 + Math.random() * 0.01
-        };
-        
-        // Give each leaf a unique ID for tracking
-        leaf.leafId = i;
-        
-        scene.add(leaf);
-        leaves.push(leaf);
-    }
-    
-    // Add soft ambient light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambientLight);
-    
-    // Animation variables
-    let time = 0;
-    let windStrength = 0.2;
-    let windChangeTime = 0;
-    let currentWind = { x: 0.5, y: 0.1 };
-    let targetWind = { x: 0.5, y: 0.1 };
-    
-    // Define visible boundaries for leaf recycling
-    const bounds = {
-        xMin: -20,
-        xMax: 20,
-        yMin: -15,
-        yMax: 15,
-        zMin: -10,
-        zMax: 10
-    };
-    
-    // Animation loop
-    function animate() {
-        requestAnimationFrame(animate);
-        
-        time += 0.01;
-        
-        // Gradually change wind direction
-        windChangeTime -= 0.01;
-        if (windChangeTime <= 0) {
-            targetWind = {
-                x: Math.random() * 2 - 1,
-                y: Math.random() * 0.5 - 0.25
-            };
-            windStrength = 0.1 + Math.random() * 0.3;
-            windChangeTime = 3 + Math.random() * 5;
-        }
-        
-        // Smooth transition to new wind
-        currentWind.x += (targetWind.x - currentWind.x) * 0.01;
-        currentWind.y += (targetWind.y - currentWind.y) * 0.01;
-        
-        // Track how many leaves were recycled this frame
-        let recycledLeaves = 0;
-        
-        // Update each leaf
-        leaves.forEach(leaf => {
-            // Different falling patterns based on fall style
-            switch(leaf.fallStyle) {
-                case 0: // Simple falling with slight drift
-                    leaf.position.x += leaf.velocity.x + (currentWind.x * windStrength * 0.5);
-                    leaf.position.y += leaf.velocity.y;
-                    leaf.position.z += leaf.velocity.z;
-                    break;
-                
-                case 1: // Spiral falling
-                    leaf.position.x += leaf.velocity.x + (currentWind.x * windStrength * 0.5);
-                    leaf.position.y += leaf.velocity.y;
-                    leaf.position.z += leaf.velocity.z;
-                    
-                    // Add spiral motion
-                    const spiralAmount = 0.008 * (1 - Math.random() * 0.2);
-                    leaf.position.x += Math.sin(time * spiralAmount * 2 + leaf.leafId) * 0.06;
-                    leaf.position.z += Math.cos(time * spiralAmount * 2 + leaf.leafId) * 0.06;
-                    break;
-                
-                case 2: // Side-to-side swaying
-                    leaf.position.x += leaf.velocity.x + (currentWind.x * windStrength * 0.7);
-                    leaf.position.y += leaf.velocity.y * 1.2; // Fall a bit faster
-                    leaf.position.z += leaf.velocity.z;
-                    
-                    // Exaggerated side sway
-                    leaf.position.x += Math.sin(time * 1.5 + leaf.leafId * 0.5) * 0.04;
-                    break;
-                
-                case 3: // Flutter falling (rapid rotation)
-                    leaf.position.x += leaf.velocity.x + (currentWind.x * windStrength * 0.8);
-                    leaf.position.y += leaf.velocity.y * 0.8; // Fall a bit slower
-                    leaf.position.z += leaf.velocity.z;
-                    
-                    // Extra rotation for flutter effect
-                    leaf.velocity.rotationZ = Math.sin(time * 3 + leaf.leafId) * 0.03;
-                    break;
-            }
-            
-            // Apply rotational forces
-            leaf.rotation.x += leaf.velocity.rotationX;
-            leaf.rotation.y += leaf.velocity.rotationY;
-            leaf.rotation.z += leaf.velocity.rotationZ;
-            
-            // Apply wobble effect for realistic movement
-            leaf.rotation.x += Math.sin(time * leaf.wobble.speedX + leaf.wobble.phaseX) * leaf.wobble.x * 0.02;
-            leaf.rotation.y += Math.sin(time * leaf.wobble.speedY + leaf.wobble.phaseY) * leaf.wobble.y * 0.02;
-            leaf.rotation.z += Math.sin(time * leaf.wobble.speedZ + leaf.wobble.phaseZ) * leaf.wobble.z * 0.02;
-            
-            // Wind gusts
-            if (Math.random() < 0.01) {
-                leaf.position.x += (Math.random() - 0.5) * 0.2;
-            }
-            
-            // Check if leaf is out of bounds
-            if (leaf.position.y < bounds.yMin || 
-                leaf.position.x > bounds.xMax || 
-                leaf.position.x < bounds.xMin || 
-                leaf.position.z > bounds.zMax || 
-                leaf.position.z < bounds.zMin) {
-                
-                // Ensure we don't recycle too many leaves at once (can cause flash of emptiness)
-                if (recycledLeaves < 5) {
-                    recycleLeaf(leaf);
-                    recycledLeaves++;
-                }
+        // Auth state change listener
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                currentUser = user;
+                showUserProfile();
+                fetchUserData();
+            } else {
+                currentUser = null;
+                showAuthSection();
             }
         });
         
-        renderer.render(scene, camera);
-    }
-    
-    // Function to properly recycle a leaf
-    function recycleLeaf(leaf) {
-        // Store original opacity for fade-in
-        const originalOpacity = leaf.material.opacity;
-        
-        // Reset position to top with random horizontal position
-        leaf.position.y = bounds.yMax + Math.random() * 5;
-        leaf.position.x = Math.random() * (bounds.xMax - bounds.xMin) + bounds.xMin;
-        leaf.position.z = Math.random() * (bounds.zMax - bounds.zMin) + bounds.zMin;
-        
-        // Reset rotations for variety
-        leaf.rotation.x = Math.random() * Math.PI;
-        leaf.rotation.y = Math.random() * Math.PI;
-        leaf.rotation.z = Math.random() * Math.PI;
-        
-        // Randomize velocity again
-        leaf.velocity.y = -(0.01 + Math.random() * 0.02);
-        leaf.velocity.x = Math.random() * 0.01 - 0.005;
-        leaf.velocity.z = Math.random() * 0.004 - 0.002;
-        
-        // Choose new fall style
-        leaf.fallStyle = Math.floor(Math.random() * 4);
-        
-        // Make invisible initially
-        leaf.material.opacity = 0;
-        
-        // Fade in effect
-        fadeInLeaf(leaf, originalOpacity);
-        
-        // Also update any attached meshes (stem, veins)
-        if (leaf.children.length > 0) {
-            leaf.children.forEach(child => {
-                if (child.material) {
-                    child.material.opacity = 0;
-                }
-            });
-        }
-    }
-    
-    // Function to fade in a leaf
-    function fadeInLeaf(leaf, targetOpacity) {
-        // Simple fade using opacity increments
-        let opacity = 0;
-        const fadeInterval = setInterval(() => {
-            opacity += 0.05;
-            if (opacity >= targetOpacity) {
-                opacity = targetOpacity;
-                clearInterval(fadeInterval);
-            }
+        // Authentication functions
+        function handleSignUp() {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
             
-            leaf.material.opacity = opacity;
-            
-            // Update child meshes too
-            if (leaf.children.length > 0) {
-                leaf.children.forEach(child => {
-                    if (child.material) {
-                        child.material.opacity = opacity * (child.originalOpacity || 1.0);
-                    }
-                });
-            }
-        }, 50);
-    }
-    
-    // Handle window resize
-    function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        
-        // Update bounds based on new window size
-        const aspectRatio = window.innerWidth / window.innerHeight;
-        bounds.xMin = -15 * aspectRatio;
-        bounds.xMax = 15 * aspectRatio;
-    }
-    
-    window.addEventListener('resize', onWindowResize);
-    onWindowResize(); // Initialize bounds
-    
-    // Start animation
-    animate();
-    
-    // Return controller for external access
-    return {
-        setWindStrength: (strength) => {
-            windStrength = Math.max(0, Math.min(1, strength));
-        },
-        addLeaves: (count) => {
-            // Add more leaves dynamically
-            const currentCount = leaves.length;
-            for (let i = 0; i < count; i++) {
-                const leafType = Math.floor(Math.random() * 4);
-                const leafShape = createLeafShape(leafType);
-                const leafGeometry = new THREE.ShapeGeometry(leafShape, 16);
-                
-                // Create and add leaf using existing code...
-                // (Similar to the leaf creation code above)
-                
-                const leaf = new THREE.Mesh(leafGeometry, material);
-                leaf.leafId = currentCount + i;
-                
-                // Position at top of screen
-                leaf.position.y = bounds.yMax + Math.random() * 5;
-                leaf.position.x = Math.random() * (bounds.xMax - bounds.xMin) + bounds.xMin;
-                leaf.position.z = Math.random() * (bounds.zMax - bounds.zMin) + bounds.zMin;
-                
-                scene.add(leaf);
-                leaves.push(leaf);
-            }
-        },
-        getLeafCount: () => {
-            return leaves.length;
-        }
-    };
-}
-// Drag and drop functionality for photo upload
-function initPhotoUpload() {
-    // Prevent default drag behaviors
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        photoUploadArea.addEventListener(eventName, preventDefaults, false);
-    });
-    
-    function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-    
-    // Highlight drop area when item is dragged over it
-    ['dragenter', 'dragover'].forEach(eventName => {
-        photoUploadArea.addEventListener(eventName, highlight, false);
-    });
-    
-    ['dragleave', 'drop'].forEach(eventName => {
-        photoUploadArea.addEventListener(eventName, unhighlight, false);
-    });
-    
-    function highlight() {
-        photoUploadArea.classList.add('active');
-    }
-    
-    function unhighlight() {
-        photoUploadArea.classList.remove('active');
-    }
-    
-    // Handle dropped files
-    photoUploadArea.addEventListener('drop', handleDrop, false);
-    
-    function handleDrop(e) {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        handleFiles(files);
-    }
-    
-    // Handle selected files from input
-    photoInput.addEventListener('change', function() {
-        handleFiles(this.files);
-    });
-    
-    function handleFiles(files) {
-        if (uploadedPhotos.length >= maxPhotos) {
-            alert(`Maximum ${maxPhotos} photos allowed.`);
-            return;
-        }
-        
-        const newFiles = Array.from(files).slice(0, maxPhotos - uploadedPhotos.length);
-        
-        newFiles.forEach(file => {
-            // Check file type and size
-            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-                alert('Only JPEG and PNG images are allowed.');
+            if (!email || !password) {
+                showStatus('Please enter email and password', 'error');
                 return;
             }
             
-            if (file.size > 5 * 1024 * 1024) {
-                alert('File size must be less than 5MB.');
+            signupBtn.disabled = true;
+            showStatus('Creating account...', 'info');
+            
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    saveUserData(userCredential.user);
+                    showStatus('Account created successfully!', 'success');
+                })
+                .catch(error => {
+                    showStatus(`Sign-up failed: ${error.message}`, 'error');
+                })
+                .finally(() => {
+                    signupBtn.disabled = false;
+                });
+        }
+        
+        function handleLogin() {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (!email || !password) {
+                showStatus('Please enter email and password', 'error');
                 return;
             }
             
-            // Create preview
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const preview = document.createElement('div');
-                preview.className = 'photo-preview';
-                
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                
-                const removeBtn = document.createElement('div');
-                removeBtn.className = 'remove-photo';
-                removeBtn.innerHTML = '<i class="fas fa-times"></i>';
-                removeBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    // Remove from DOM and array
-                    const index = uploadedPhotos.findIndex(photo => photo.preview === preview);
-                    if (index !== -1) {
-                        uploadedPhotos.splice(index, 1);
-                    }
-                    photoPreview.removeChild(preview);
-                    updatePhotoUploadStatus();
-                });
-                
-                preview.appendChild(img);
-                preview.appendChild(removeBtn);
-                photoPreview.appendChild(preview);
-                
-                // Store file and preview reference
-                uploadedPhotos.push({
-                    file: file,
-                    preview: preview
-                });
-                
-                updatePhotoUploadStatus();
-            };
+            loginBtn.disabled = true;
+            showStatus('Logging in...', 'info');
             
-            reader.readAsDataURL(file);
-        });
-    }
-    
-    function updatePhotoUploadStatus() {
-        // Update UI based on number of photos
-        if (uploadedPhotos.length >= minPhotos) {
-            errorMessages.photo.style.display = 'none';
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    showStatus('Logged in successfully!', 'success');
+                })
+                .catch(error => {
+                    showStatus(`Login failed: ${error.message}`, 'error');
+                })
+                .finally(() => {
+                    loginBtn.disabled = false;
+                });
         }
         
-        // Update upload area text
-        if (uploadedPhotos.length >= maxPhotos) {
-            photoUploadArea.querySelector('.photo-upload-text').textContent = `Maximum ${maxPhotos} photos reached`;
-            photoUploadArea.style.pointerEvents = 'none';
-        } else {
-            photoUploadArea.querySelector('.photo-upload-text').textContent = `Drag & drop photos or click to browse (${uploadedPhotos.length}/${maxPhotos})`;
-            photoUploadArea.style.pointerEvents = 'auto';
+        function handleGoogleSignIn() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            googleSigninBtn.disabled = true;
+            
+            firebase.auth().signInWithPopup(provider)
+                .then(result => {
+                    saveUserData(result.user);
+                })
+                .catch(error => {
+                    showStatus(`Google Sign-In failed: ${error.message}`, 'error');
+                })
+                .finally(() => {
+                    googleSigninBtn.disabled = false;
+                });
         }
+        
+        function handleLogout() {
+            firebase.auth().signOut()
+                .then(() => {
+                    emailInput.value = '';
+                    passwordInput.value = '';
+                    uploadedPhotos = [];
+                    resetForm();
+                })
+                .catch(error => {
+                    showStatus(`Logout failed: ${error.message}`, 'error');
+                });
+        }
+        
+        // User data functions
+        function saveUserData(user) {
+            const userData = {
+                email: user.email,
+                uid: user.uid,
+                name: user.displayName || 'Contestant',
+                photoURL: user.photoURL || null,
+                registeredAt: firebase.database.ServerValue.TIMESTAMP
+            };
+            
+            firebase.database().ref(`users/${user.uid}`).update(userData);
+        }
+        
+        function fetchUserData() {
+            if (!currentUser) return;
+            
+            firebase.database().ref(`users/${currentUser.uid}`).once('value')
+                .then(snapshot => {
+                    const userData = snapshot.val();
+                    if (userData) {
+                        displayUserInfo(userData);
+                        
+                        // Check if user has registration data
+                        if (userData.registration) {
+                            showThankYouSection();
+                        } else {
+                            showRegistrationForm();
+                        }
+                        
+                        // Check if user has uploaded photos
+                        if (userData.photos) {
+                            displayUploadedPhotos(userData.photos);
+                        }
+                    } else {
+                        showRegistrationForm();
+                    }
+                })
+                .catch(error => {
+    console.error('Error fetching user data:', error);
+    showStatus('Error loading your profile data', 'error');
+});
+}
+
+function displayUserInfo(userData) {
+    userInfo.innerHTML = `
+        <div>
+            <strong>Name:</strong> ${userData.name || 'Contestant'}
+        </div>
+        <div>
+            <strong>Email:</strong> ${userData.email}
+        </div>
+    `;
+}
+
+function displayUploadedPhotos(photos) {
+    photoPreview.innerHTML = '';
+    uploadedPhotos = Array.isArray(photos) ? [...photos] : [];
+    
+    uploadedPhotos.forEach((photo, index) => {
+        const photoElement = document.createElement('div');
+        photoElement.className = 'photo-preview';
+        photoElement.innerHTML = `
+            <img src="${photo.url}" alt="Uploaded Photo ${index + 1}">
+            <div class="remove-photo" data-index="${index}">
+                <i class="fas fa-times"></i>
+            </div>
+        `;
+        photoPreview.appendChild(photoElement);
+    });
+    
+    // Add event listeners to remove buttons
+    document.querySelectorAll('.remove-photo').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const index = parseInt(e.currentTarget.dataset.index);
+            removePhoto(index);
+        });
+    });
+    
+    if (uploadedPhotos.length >= 5) {
+        photoError.style.display = 'none';
     }
 }
 
-// Form validation
+function removePhoto(index) {
+    if (index >= 0 && index < uploadedPhotos.length) {
+        const photo = uploadedPhotos[index];
+        
+        // Remove from Firebase Storage
+        if (photo.path) {
+            firebase.storage().ref(photo.path).delete()
+                .then(() => {
+                    console.log('Photo deleted from storage');
+                })
+                .catch(error => {
+                    console.error('Error deleting photo:', error);
+                });
+        }
+        
+        // Remove from array and update database
+        uploadedPhotos.splice(index, 1);
+        updatePhotosInDatabase();
+        
+        // Update UI
+        displayUploadedPhotos(uploadedPhotos);
+    }
+}
+
+function updatePhotosInDatabase() {
+    if (!currentUser) return;
+    
+    firebase.database().ref(`users/${currentUser.uid}/photos`).set(uploadedPhotos)
+        .then(() => {
+            console.log('Photos updated in database');
+        })
+        .catch(error => {
+            console.error('Error updating photos in database:', error);
+            showStatus('Failed to update photos', 'error');
+        });
+}
+
+// Photo handling functions
+function handlePhotoSelect(e) {
+    const files = Array.from(e.target.files);
+    
+    if (files.length === 0) return;
+    
+    // Validate files
+    const validFiles = files.filter(file => {
+        const validType = ['image/jpeg', 'image/png'].includes(file.type);
+        const validSize = file.size <= 5 * 1024 * 1024; // 5MB
+        return validType && validSize;
+    });
+    
+    if (validFiles.length !== files.length) {
+        showStatus('Some files were skipped. Please ensure they are JPG/PNG and under 5MB.', 'error');
+    }
+    
+    if (validFiles.length === 0) return;
+    
+    uploadProgress.style.display = 'block';
+    progressFill.style.width = '0%';
+    statusMessage.textContent = `Uploading ${validFiles.length} photo(s)...`;
+    
+    // Upload each file
+    let uploadedCount = 0;
+    let totalBytes = validFiles.reduce((acc, file) => acc + file.size, 0);
+    let uploadedBytes = 0;
+    
+    validFiles.forEach(file => {
+        uploadPhoto(file, totalBytes, progress => {
+            uploadedBytes += progress;
+            const totalProgress = Math.round((uploadedBytes / totalBytes) * 100);
+            progressFill.style.width = `${Math.min(totalProgress, 100)}%`;
+        });
+    });
+    
+    function uploadPhoto(file, totalBytes, progressCallback) {
+        const fileName = `${Date.now()}_${file.name}`;
+        const storageRef = firebase.storage().ref(`photos/${currentUser.uid}/${fileName}`);
+        const uploadTask = storageRef.put(file);
+        
+        uploadTask.on('state_changed', 
+            (snapshot) => {
+                const progress = snapshot.bytesTransferred;
+                progressCallback(progress);
+            },
+            (error) => {
+                console.error('Upload failed:', error);
+                showStatus('Upload failed. Please try again.', 'error');
+            },
+            () => {
+                uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+                    const photoData = {
+                        url: downloadURL,
+                        path: `photos/${currentUser.uid}/${fileName}`,
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        uploadedAt: firebase.database.ServerValue.TIMESTAMP
+                    };
+                    
+                    uploadedPhotos.push(photoData);
+                    uploadedCount++;
+                    
+                    // Update UI and database if all uploads are complete
+                    if (uploadedCount === validFiles.length) {
+                        updatePhotosInDatabase();
+                        displayUploadedPhotos(uploadedPhotos);
+                        showStatus('All photos uploaded successfully!', 'success');
+                        setTimeout(() => {
+                            uploadProgress.style.display = 'none';
+                            statusMessage.textContent = '';
+                        }, 3000);
+                    }
+                });
+            }
+        );
+    }
+}
+
+// Form handling functions
 function validateForm() {
     let isValid = true;
+    const fullName = document.getElementById('full-name').value.trim();
+    const age = document.getElementById('age').value;
+    const influencers = document.getElementById('influencers').value.trim();
+    const bio = document.getElementById('bio').value.trim();
+    const question1 = document.getElementById('question1').value.trim();
+    const question2 = document.getElementById('question2').value.trim();
+    const question3 = document.getElementById('question3').value.trim();
     
-    // Validate full name
-    if (!formFields.fullName.value.trim()) {
-        errorMessages.fullName.style.display = 'block';
+    // Validate name
+    if (!fullName) {
+        showError('full-name-error', true);
         isValid = false;
     } else {
-        errorMessages.fullName.style.display = 'none';
+        showError('full-name-error', false);
     }
     
     // Validate age
-    const age = parseInt(formFields.age.value);
-    if (isNaN(age) || age < 16 || age > 30) {
-        errorMessages.age.style.display = 'block';
+    if (!age || age < 16 || age > 30) {
+        showError('age-error', true);
         isValid = false;
     } else {
-        errorMessages.age.style.display = 'none';
+        showError('age-error', false);
     }
     
-    // Validate influencers (check if there are at least two names separated by comma)
-    const influencers = formFields.influencers.value.trim();
-    if (!influencers || influencers.indexOf(',') === -1) {
-        errorMessages.influencers.style.display = 'block';
+    // Validate influencers
+    if (!influencers || !influencers.includes(',')) {
+        showError('influencers-error', true);
         isValid = false;
     } else {
-        errorMessages.influencers.style.display = 'none';
+        showError('influencers-error', false);
     }
     
     // Validate bio
-    if (!formFields.bio.value.trim()) {
-        errorMessages.bio.style.display = 'block';
+    if (!bio || bio.split(' ').length < 20) {
+        showError('bio-error', true);
         isValid = false;
     } else {
-        errorMessages.bio.style.display = 'none';
+        showError('bio-error', false);
     }
     
-    // Validate questions
-    if (!formFields.question1.value.trim()) {
-        errorMessages.question1.style.display = 'block';
+    // Validate deep questions
+    if (!question1) {
+        showError('question1-error', true);
         isValid = false;
     } else {
-        errorMessages.question1.style.display = 'none';
+        showError('question1-error', false);
     }
     
-    if (!formFields.question2.value.trim()) {
-        errorMessages.question2.style.display = 'block';
+    if (!question2) {
+        showError('question2-error', true);
         isValid = false;
     } else {
-        errorMessages.question2.style.display = 'none';
+        showError('question2-error', false);
     }
     
-    if (!formFields.question3.value.trim()) {
-        errorMessages.question3.style.display = 'block';
+    if (!question3) {
+        showError('question3-error', true);
         isValid = false;
     } else {
-        errorMessages.question3.style.display = 'none';
+        showError('question3-error', false);
     }
     
     // Validate photos
-    if (uploadedPhotos.length < minPhotos) {
-        errorMessages.photo.style.display = 'block';
+    if (uploadedPhotos.length < 5) {
+        photoError.style.display = 'block';
         isValid = false;
     } else {
-        errorMessages.photo.style.display = 'none';
+        photoError.style.display = 'none';
     }
     
     return isValid;
 }
 
-// Handle form submission
-async function handleSubmit() {
-    if (isFormSubmitting) return;
-    
+function showError(id, show) {
+    const element = document.getElementById(id);
+    element.style.display = show ? 'block' : 'none';
+}
+
+function handleFormSubmit() {
     if (!validateForm()) {
-        // Scroll to the first error
-        const firstError = document.querySelector('.error-message[style="display: block"]');
-        if (firstError) {
-            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        showStatus('Please fix the errors in the form', 'error');
+        window.scrollTo(0, 0);
         return;
     }
     
-    try {
-        isFormSubmitting = true;
-        btnText.style.opacity = '0';
-        loader.style.display = 'block';
-        
-        // Create unique user ID
-        const userId = `user_${Date.now()}`;
-        
-        // Upload photos
-        const photoURLs = await uploadPhotos(userId);
-        
-        // Save user data
-        await saveUserData(userId, photoURLs);
-        
-        // Show thank you section
-        registrationForm.style.display = 'none';
-        thankYouSection.style.display = 'block';
-        
-        // Start countdown timer
-        startCountdown();
-        
-    } catch (error) {
-        console.error('Error submitting form:', error);
-        alert('There was an error submitting your form. Please try again.');
-        
-        isFormSubmitting = false;
-        btnText.style.opacity = '1';
-        loader.style.display = 'none';
-    }
-}
-
-// Upload photos to Firebase Storage
-async function uploadPhotos(userId) {
-    const photoURLs = [];
+    submitBtn.disabled = true;
+    submitLoader.style.display = 'block';
+    showStatus('Submitting your registration...', 'info');
     
-    for (let i = 0; i < uploadedPhotos.length; i++) {
-        const file = uploadedPhotos[i].file;
-        const fileExt = file.name.split('.').pop();
-        const filePath = `users/${userId}/photos/photo_${i + 1}.${fileExt}`;
-        const storageRef = ref(storage, filePath);
-        
-        await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(storageRef);
-        photoURLs.push(downloadURL);
-    }
-    
-    return photoURLs;
-}
-
-// Save user data to Firestore
-async function saveUserData(userId, photoURLs) {
-    const userData = {
-        fullName: formFields.fullName.value.trim(),
-        age: parseInt(formFields.age.value),
-        schoolCollege: formFields.schoolCollege.value.trim(),
-        company: formFields.company.value.trim(),
-        influencers: formFields.influencers.value.trim(),
-        bio: formFields.bio.value.trim(),
-        question1: formFields.question1.value.trim(),
-        question2: formFields.question2.value.trim(),
-        question3: formFields.question3.value.trim(),
-        photoURLs: photoURLs,
-        submissionDate: serverTimestamp(),
-        status: 'pending' // pending, selected, rejected
+    const formData = {
+        personalInfo: {
+            fullName: document.getElementById('full-name').value.trim(),
+            age: parseInt(document.getElementById('age').value),
+            schoolCollege: document.getElementById('school-college').value.trim(),
+            company: document.getElementById('company').value.trim(),
+            influencers: document.getElementById('influencers').value.trim()
+        },
+        bio: document.getElementById('bio').value.trim(),
+        deepQuestions: {
+            question1: document.getElementById('question1').value.trim(),
+            question2: document.getElementById('question2').value.trim(),
+            question3: document.getElementById('question3').value.trim()
+        },
+        photos: uploadedPhotos,
+        submittedAt: firebase.database.ServerValue.TIMESTAMP
     };
     
-    await setDoc(doc(db, "contestants", userId), userData);
+    // Save to Firebase Database
+    firebase.database().ref(`users/${currentUser.uid}/registration`).set(formData)
+        .then(() => {
+            // Send to backend if needed
+            return sendToBackend(formData);
+        })
+        .then(() => {
+            showStatus('Registration submitted successfully!', 'success');
+            showThankYouSection();
+        })
+        .catch(error => {
+            console.error('Registration error:', error);
+            showStatus('Error submitting your registration. Please try again.', 'error');
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitLoader.style.display = 'none';
+        });
 }
 
-// Countdown timer
-function startCountdown() {
-    // Set end date to 14 days from now
-    const endDate = new Date();
-    endDate.setDate(endDate.getDate() + 14);
+function sendToBackend(formData) {
+    // You can implement API call to your backend here if needed
+    return new Promise((resolve) => {
+        // Simulating backend call
+        setTimeout(() => {
+            resolve();
+        }, 1000);
+    });
+}
+
+// UI state management functions
+function showAuthSection() {
+    authSection.style.display = 'block';
+    userProfile.style.display = 'none';
+    registrationForm.style.display = 'none';
+    thankYouSection.style.display = 'none';
+}
+
+function showUserProfile() {
+    authSection.style.display = 'none';
+    userProfile.style.display = 'block';
+}
+
+function showRegistrationForm() {
+    registrationForm.style.display = 'block';
+    thankYouSection.style.display = 'none';
+}
+
+function showThankYouSection() {
+    registrationForm.style.display = 'none';
+    thankYouSection.style.display = 'block';
+}
+
+function resetForm() {
+    document.getElementById('full-name').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('school-college').value = '';
+    document.getElementById('company').value = '';
+    document.getElementById('influencers').value = '';
+    document.getElementById('bio').value = '';
+    document.getElementById('question1').value = '';
+    document.getElementById('question2').value = '';
+    document.getElementById('question3').value = '';
+    photoPreview.innerHTML = '';
+}
+
+function showStatus(message, type = 'info') {
+    statusMessage.textContent = message;
+    statusMessage.className = 'status-message';
     
-    const daysEl = document.getElementById('days');
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
-    
-    function updateTimer() {
-        const now = new Date();
-        const diff = endDate - now;
-        
-        if (diff <= 0) {
-            daysEl.textContent = '00';
-            hoursEl.textContent = '00';
-            minutesEl.textContent = '00';
-            secondsEl.textContent = '00';
-            return;
-        }
-        
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        
-        daysEl.textContent = days.toString().padStart(2, '0');
-        hoursEl.textContent = hours.toString().padStart(2, '0');
-        minutesEl.textContent = minutes.toString().padStart(2, '0');
-        secondsEl.textContent = seconds.toString().padStart(2, '0');
-        
-        setTimeout(updateTimer, 1000);
+    // Add class based on message type
+    switch (type) {
+        case 'error':
+            statusMessage.classList.add('error-message');
+            break;
+        case 'success':
+            statusMessage.style.color = 'var(--success-color)';
+            break;
+        case 'info':
+        default:
+            statusMessage.style.color = 'var(--accent-color)';
     }
     
-    updateTimer();
+    // Auto-hide info and success messages after 5 seconds
+    if (type !== 'error') {
+        setTimeout(() => {
+            statusMessage.textContent = '';
+        }, 5000);
+    }
 }
-
-// Mobile menu toggle
-function initMobileMenu() {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('active');
-        navLinks.classList.toggle('active');
-    });
-    
-    // Close menu when clicking a link
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            menuToggle.classList.remove('active');
-            navLinks.classList.remove('active');
-        });
-    });
-}
-
-// Initialize animations with GSAP
-function initAnimations() {
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // Fade in form elements on scroll
-    gsap.utils.toArray('.form-subheading, .input-group, .photo-upload-container, .submit-btn').forEach((element, i) => {
-        gsap.from(element, {
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: element,
-                start: "top 85%",
-                toggleActions: "play none none none"
-            }
-        });
-    });
-}
-
-// Initialize everything
-function init() {
-    initLeavesAnimation();
-    initPhotoUpload();
-    initMobileMenu();
-    initAnimations();
-    
-    // Add event listeners
-    submitBtn.addEventListener('click', handleSubmit);
-    
-    // Optional: Basic form field validation on input change
-    Object.keys(formFields).forEach(field => {
-        if (formFields[field] && errorMessages[field]) {
-            formFields[field].addEventListener('input', () => {
-                if (formFields[field].value.trim()) {
-                    errorMessages[field].style.display = 'none';
-                }
-            });
-        }
-    });
-}
-
-// Start everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', init);
-
-// Initialize auth state observer
-onAuthStateChanged(auth, (user) => {
-    // If authentication is required, handle it here
-    // For now, we're allowing anonymous submissions
-});
 </script>
 </body>
+</html>
