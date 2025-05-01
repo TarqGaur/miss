@@ -1,5 +1,4 @@
-echo "flask==3.0.3" > requirements.txt
-echo "flask-cors==5.0.0" >> requirements.txt
-echo "cloudinary==1.41.0" >> requirements.txt
-echo "gunicorn==23.0.0" >> requirements.txt
-gunicorn
+flask==3.0.3
+flask-cors==5.0.0
+cloudinary==1.41.0
+gunicorn==23.0.0
