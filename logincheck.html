@@ -196,100 +196,100 @@
                 .catch((err) => alert("Logout failed: " + err.message));
         });
 
- // Cloudinary Signed Upload
-window.uploadImage = async () => {
-    if (!currentUser) {
-        alert("Please log in to upload an image.");
-        return;
-    }
+        // Cloudinary Signed Upload
+        window.uploadImage = async () => {
+            if (!currentUser) {
+                alert("Please log in to upload an image.");
+                return;
+            }
 
-    const fileInput = document.getElementById("fileInput");
-    const file = fileInput.files[0];
-    if (!file) {
-        alert("Please select a file to upload.");
-        return;
-    }
-    if (!file.type.startsWith("image/")) {
-        alert("Please select an image file.");
-        return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-        alert("File too large (max 5MB).");
-        return;
-    }
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select a file to upload.");
+                return;
+            }
+            if (!file.type.startsWith("image/")) {
+                alert("Please select an image file.");
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                alert("File too large (max 5MB).");
+                return;
+            }
 
-    statusText.innerText = "Preparing upload...";
-    progressBar.style.display = "block";
-    progressBar.value = 0;
-    uploadBtn.disabled = true;
+            statusText.innerText = "Preparing upload...";
+            progressBar.style.display = "block";
+            progressBar.value = 0;
+            uploadBtn.disabled = true;
 
-    try {
-        // Fetch signature from live backend
-        const sigResponse = await fetch("https://miss-banaras-backend.onrender.com/generate-signature", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                user_uid: currentUser.uid,
-                user_name: currentUser.displayName || "Anonymous"
-            })
-        });
-        if (!sigResponse.ok) {
-            throw new Error("Failed to fetch signature");
-        }
-        const sigData = await sigResponse.json();
+            try {
+                // Fetch signature from Flask backend with user data
+                const sigResponse = await fetch("https://miss-banaras-backend.onrender.com", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        user_uid: currentUser.uid,
+                        user_name: currentUser.displayName || "Anonymous"
+                    })
+                });
+                if (!sigResponse.ok) {
+                    throw new Error("Failed to fetch signature");
+                }
+                const sigData = await sigResponse.json();
 
-        // Prepare form data
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", "signed_upload");
-        formData.append("timestamp", sigData.timestamp);
-        formData.append("signature", sigData.signature);
-        formData.append("api_key", sigData.api_key);
-        formData.append("context", `user_uid=${sigData.user_uid}|user_name=${sigData.user_name}`);
+                // Prepare form data
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset", "signed_upload");
+                formData.append("timestamp", sigData.timestamp);
+                formData.append("signature", sigData.signature);
+                formData.append("api_key", sigData.api_key);
+                formData.append("context", `user_uid=${sigData.user_uid}|user_name=${sigData.user_name}`);
 
-        // Upload with progress tracking
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", `https://api.cloudinary.com/v1_1/${sigData.cloud_name}/image/upload`, true);
+                // Upload with progress tracking
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", `https://api.cloudinary.com/v1_1/${sigData.cloud_name}/image/upload`, true);
 
-        // Track upload progress
-        xhr.upload.onprogress = (event) => {
-            if (event.lengthComputable) {
-                const percent = (event.loaded / event.total) * 100;
-                progressBar.value = percent;
+                // Track upload progress
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percent = (event.loaded / event.total) * 100;
+                        progressBar.value = percent;
+                    }
+                };
+
+                // Handle upload completion
+                xhr.onload = () => {
+                    const data = JSON.parse(xhr.responseText);
+                    if (xhr.status === 200 && data.secure_url) {
+                        statusText.innerText = "✅ Uploaded successfully!";
+                        document.getElementById("preview").src = data.secure_url;
+                        document.getElementById("preview").style.display = "block";
+                        // Save upload data to Firebase
+                        saveUploadData(currentUser.uid, data);
+                    } else {
+                        statusText.innerText = "❌ Upload failed: " + (data.error?.message || "Unknown error");
+                    }
+                    progressBar.style.display = "none";
+                    uploadBtn.disabled = false;
+                };
+
+                // Handle errors
+                xhr.onerror = () => {
+                    statusText.innerText = "❌ Upload failed: Network error";
+                    progressBar.style.display = "none";
+                    uploadBtn.disabled = false;
+                };
+
+                // Send the request
+                xhr.send(formData);
+            } catch (err) {
+                statusText.innerText = "❌ Upload failed: " + err.message;
+                progressBar.style.display = "none";
+                uploadBtn.disabled = false;
             }
         };
-
-        // Handle upload completion
-        xhr.onload = () => {
-            const data = JSON.parse(xhr.responseText);
-            if (xhr.status === 200 && data.secure_url) {
-                statusText.innerText = "✅ Uploaded successfully!";
-                document.getElementById("preview").src = data.secure_url;
-                document.getElementById("preview").style.display = "block";
-                // Save upload data to Firebase
-                saveUploadData(currentUser.uid, data);
-            } else {
-                statusText.innerText = "❌ Upload failed: " + (data.error?.message || "Unknown error");
-            }
-            progressBar.style.display = "none";
-            uploadBtn.disabled = false;
-        };
-
-        // Handle errors
-        xhr.onerror = () => {
-            statusText.innerText = "❌ Upload failed: Network error";
-            progressBar.style.display = "none";
-            uploadBtn.disabled = false;
-        };
-
-        // Send the request
-        xhr.send(formData);
-    } catch (err) {
-        statusText.innerText = "❌ Upload failed: " + err.message;
-        progressBar.style.display = "none";
-        uploadBtn.disabled = false;
-    }
-};
 
         // Handle auth state changes
         onAuthStateChanged(auth, (user) => {
