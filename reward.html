@@ -1276,17 +1276,7 @@
             }, 1000);
         }
         
-        // Button hover effect
-        function setupButtonEffects() {
-            const btn = document.getElementById('register-btn');
-            
-            btn.addEventListener('mouseenter', () => {
-                gsap.to(btn, {
-                    scale: 1.05,
-                    duration: 0.3,
-                    ease: "back.out(1.5)"
-                });
-            });
+   
             
             btn.addEventListener('mouseleave', () => {
                 gsap.to(btn, {
