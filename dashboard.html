@@ -1118,8 +1118,8 @@
 
                         <div class="input-group">
                             <label for="age" class="input-label">Age*</label>
-                            <input type="number" id="age" class="input-field" placeholder="Enter your age" min="16" max="30" required>
-                            <div class="error-message" id="age-error">Age must be between 16 and 30</div>
+                            <input type="number" id="age" class="input-field" placeholder="Enter your age" min="14" max="30" required>
+                            <div class="error-message" id="age-error">Age must be between 14 and 30</div>
                         </div>
                     </div>
 
@@ -2019,7 +2019,7 @@
             return;
         }
 
-        if (parseInt(age) < 16 || parseInt(age) > 30) {
+        if (parseInt(age) < 13 || parseInt(age) > 30) {
             document.getElementById("age-error").style.display = "block";
             return;
         }
