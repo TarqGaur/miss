@@ -11,9 +11,10 @@ load_dotenv()
 app = Flask(__name__)
 
 # Configure CORS for GitHub Pages domain
-allowed_origins = ["https://tarqgaur.github.io"]
+allowed_origins = ["https://banarasia.site"]
 # You can add more origins if needed, like localhost for development
-# allowed_origins.append("http://localhost:5000")
+allowed_origins.append("https://tarqgaur.github.io")
+
 
 cors_config = {
     "origins": allowed_origins,
