@@ -836,15 +836,6 @@
             .submitted-data p strong {
                 width: 100px;
             }
-
-            .preview-grid {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            }
-            
-            .preview-item {
-                width: 80px;
-                height: 80px;
-            }
         }
 
         @media (max-width: 576px) {
@@ -916,91 +907,31 @@
                 font-size: 0.8rem;
             }
         }
-
         .btn-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
 
-        .next-btn {
-            padding: 0.8rem 2rem;
-            font-size: 1rem;
-        }
+.next-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+}
 
-        @media (max-width: 768px) {
-            .btn-row {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-            .next-btn {
-                margin-left: 0;
-                width: auto;
-                max-width: none;
-            }
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .next-auth-btn {
-            background: var(--btn-gradient);
-            color: white;
-            flex: 1;
-            max-width: 250px;
-        }
-
-        .logout-btn {
-            background: linear-gradient(to right, #B22222, #FF4040);
-            flex: 1;
-            max-width: 150px;
-        }
-
-        .preview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 8px;
-            margin: 15px 0;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 8px;
-            border: 1px solid rgba(211, 82, 105, 0.2);
-            max-height: 220px;
-            overflow-y: auto;
-        }
-
-        .preview-item {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            background: white;
-        }
-
-        .preview-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .preview-item:hover {
-            transform: translateY(-2px);
-        }
-
-        .preview-item:hover img {
-            transform: scale(1.05);
-        }
+@media (max-width: 768px) {
+    .btn-row {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .next-btn {
+        margin-left: 0;
+        width: auto;
+        max-width: none;
+    }
+}
     </style>
 </head>
 <body>
@@ -1015,12 +946,10 @@
             <span></span>
         </div>
         <ul class="nav-links" id="nav-links">
-            <li><a href="index.html" class="nav-link">Home</a></li>
-            <li><a href="aboutus.html" class="nav-link">About</a></li>
-            <li><a href="reward.html" class="nav-link">Rewards</a></li>
-            <li><a href="Criteria.html" class="nav-link">Criteria</a></li>
-            <li><a href="Register.html" class="nav-link">Register</a></li>
-            <li><a href="contact.html" class="nav-link">Contact</a></li>
+            <li><a href="https://tarqgaur.github.io/" class="nav-link">Home</a></li>
+            <li><a href="https://tarqgaur.github.io/#about" class="nav-link">About</a></li>
+            <li><a href="https://tarqgaur.github.io/#gallery" class="nav-link">Gallery</a></li>
+            <li><a href="https://tarqgaur.github.io/#contact" class="nav-link">Contact</a></li>
         </ul>
     </header>
 
@@ -1094,14 +1023,9 @@
 
                 <div id="userData" class="user-info" style="display:none;"></div>
 
-                <div class="auth-buttons">
-                    <button id="nextToRegistration" class="btn next-auth-btn" style="display:none;">
-                        <i class="fas fa-arrow-right"></i> Next: Registration Form
-                    </button>
-                    <button id="logout" style="display:none;" class="btn logout-btn">
-                        <i class="fas fa-sign-out-alt"></i> Sign Out
-                    </button>
-                </div>
+                <button id="logout" style="display:none;" class="btn logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
             </div>
 
             <div class="tab-content" id="registration-tab">
@@ -1206,7 +1130,7 @@
                     <progress id="uploadProgress" value="0" max="100" style="display:none;width:100%;"></progress>
                     <p id="status" class="status-message"></p>
 
-                    <div id="preview" style="display:none;" class="preview-grid"></div>
+                    <div id="preview" style="display:none;" class="photo-swatch"></div>
 
                     <button id="uploadBtn" class="btn" onclick="uploadImages()">
                         <span class="btn-text"><i class="fas fa-upload"></i> Upload Photos</span>
@@ -1280,7 +1204,6 @@
         const submittedDataDiv = document.getElementById("submittedData");
         const nextToUploadBtn = document.getElementById("nextToUpload");
         const authGreeting = document.getElementById("auth-greeting");
-        const nextToRegistrationBtn = document.getElementById("nextToRegistration");
 
         let currentUser = null;
         let uploadedCount = 0;
@@ -1698,7 +1621,6 @@
                     submittedDataDiv.style.display = "none";
                     registrationForm.style.display = "block";
                     nextToUploadBtn.style.display = "none";
-                    nextToRegistrationBtn.style.display = "none";
                     document.querySelector('.tab[data-tab="auth"]').click();
                 })
                 .catch((err) => alert("Logout failed: " + err.message));
@@ -1720,13 +1642,11 @@
             files.forEach(file => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const previewItem = document.createElement("div");
-                    previewItem.className = "preview-item";
                     const img = document.createElement("img");
                     img.src = e.target.result;
-                    img.alt = file.name;
-                    previewItem.appendChild(img);
-                    preview.appendChild(previewItem);
+                    img.className = "gallery-img";
+                    img.dataset.fileName = file.name;
+                    preview.appendChild(img);
                 };
                 reader.readAsDataURL(file);
             });
@@ -1894,13 +1814,11 @@
                 remainingFiles.forEach(file => {
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        const previewItem = document.createElement("div");
-                        previewItem.className = "preview-item";
                         const img = document.createElement("img");
                         img.src = e.target.result;
-                        img.alt = file.name;
-                        previewItem.appendChild(img);
-                        preview.appendChild(previewItem);
+                        img.className = "gallery-img";
+                        img.dataset.fileName = file.name;
+                        preview.appendChild(img);
                     };
                     reader.readAsDataURL(file);
                 });
@@ -2142,7 +2060,6 @@
     if (user) {
         currentUser = user;
         fetchUserData(user.uid);
-        nextToRegistrationBtn.style.display = "block";
         logoutBtn.style.display = "block";
         signUpBtn.style.display = "none";
         loginBtn.style.display = "none";
@@ -2162,60 +2079,15 @@
         submittedDataDiv.style.display = "none";
         registrationForm.style.display = "block";
         nextToUploadBtn.style.display = "none";
-        nextToRegistrationBtn.style.display = "none";
         document.getElementById("uploadSection").style.display = "none";
         document.querySelector('.tab[data-tab="auth"]').click();
     }
 });
-
-    // Next to Registration button
-    nextToRegistrationBtn.addEventListener("click", () => {
-        document.querySelector('[data-tab="registration"]').click();
-    });
-
     // Initialize form with draft data
     document.addEventListener('DOMContentLoaded', () => {
         loadDraft();
         updateWordCounters();
     });
 </script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
 </body>
-</html>
+</html> 
