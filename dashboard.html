@@ -1190,14 +1190,14 @@
 
             <div class="tab-content" id="upload-tab">
                 <div id="uploadSection" style="display:none;">
-                    <h2 class="form-subheading">Submit Your Photos (Max 15)</h2>
-                    <p class="hint-text">Upload up to 15 clear, high-quality photos. These will be used for the first round of selection.</p>
+                    <h2 class="form-subheading">Max 15 photos – only name & score saved</h2>
+                    <p class="hint-text">Add up to 15 clear, high-quality photos. These will be used for the first round of selection.</p>
 
                     <div class="photo-upload-container" id="dropArea">
                         <div class="upload-icon">
                             <i class="fas fa-cloud-upload-alt"></i>
                         </div>
-                        <div class="photo-upload-text">Click or drop to upload your photos</div>
+                        <div class="photo-upload-text">Click or drop to add your photos</div>
                         <div class="photo-requirements">Maximum 5MB each (JPEG or PNG), Up to 15 photos</div>
                         <input type="file" id="fileInput" class="file-input" accept="image/*" multiple>
                     </div>
@@ -1210,15 +1210,15 @@
                     <div id="preview" style="display:none;" class="preview-grid"></div>
 
                     <button id="uploadBtn" class="btn" onclick="uploadImages()">
-                        <span class="btn-text"><i class="fas fa-upload"></i> Upload Photos</span>
+                        <span class="btn-text"><i class="fas fa-upload"></i> Submit</span>
                         <div class="loader" id="upload-loader"></div>
                     </button>
 
                     <div class="success-message" id="upload-success">
-                        <i class="fas fa-check-circle"></i> Photos uploaded successfully! Your application is complete.
+                        <i class="fas fa-check-circle"></i> Submission successful — only your name and score have been securely recorded.
                     </div>
 
-                    <h2 class="form-subheading">Uploaded Photos</h2>
+                    <h2 class="form-subheading">Photos</h2>
                     <div id="gallery" class="photo-swatch"></div>
                 </div>
             </div>
@@ -1514,7 +1514,7 @@
                     let uploadsHtml = "";
                     uploadedCount = data.uploads ? Object.keys(data.uploads).length : 0;
                     if (data.uploads) {
-                        uploadsHtml = "<h4>Your Uploaded Photos:</h4><div class='photo-swatch'>";
+                        uploadsHtml = "<h4>Your Submitted Photos:</h4><div class='photo-swatch'>";
                         Object.entries(data.uploads).forEach(([key, upload]) => {
                             uploadsHtml += `
                                 <div class="gallery-img-container">
@@ -1527,7 +1527,7 @@
                     userDataDiv.innerHTML = `
                         <h3>Welcome, ${data.name}!</h3>
                         <p><strong>Email:</strong> ${data.email}</p>
-                        <p><strong>Uploaded Photos:</strong> ${uploadedCount}/${MAX_UPLOADS}</p>
+                        <p><strong>Submitted Photos:</strong> ${uploadedCount}/${MAX_UPLOADS}</p>
                         ${!isRegistrationComplete ? '<p style="color: var(--error-color);"><strong>Note:</strong> Please complete the registration form to unlock photo uploads.</p>' : ''}
                         ${uploadsHtml}
                     `;
@@ -1708,7 +1708,7 @@
         fileInput.addEventListener("change", function() {
             const files = Array.from(this.files);
             if (files.length + uploadedCount > MAX_UPLOADS) {
-                alert(`You can upload a maximum of ${MAX_UPLOADS} photos. You have already uploaded ${uploadedCount}.`);
+                alert(`You can submit a maximum of ${MAX_UPLOADS} photos. You have already submitted ${uploadedCount}.`);
                 this.value = "";
                 return;
             }
@@ -1766,7 +1766,7 @@
             const dt = e.dataTransfer;
             const files = dt.files;
             if (files.length + uploadedCount > MAX_UPLOADS) {
-                alert(`You can upload a maximum of ${MAX_UPLOADS} photos. You have already uploaded ${uploadedCount}.`);
+                alert(`You can submit a maximum of ${MAX_UPLOADS} photos. You have already submitted ${uploadedCount}.`);
                 return;
             }
             fileInput.files = files;
@@ -1775,24 +1775,24 @@
 
         window.uploadImages = async () => {
             if (!currentUser) {
-                alert("Please log in to upload images.");
+                alert("Please log in to submit images.");
                 return;
             }
 
             if (!isRegistrationComplete) {
-                alert("Please complete the registration form before uploading photos.");
+                alert("Please complete the registration form before submitting photos.");
                 document.querySelector('.tab[data-tab="registration"]').click();
                 return;
             }
 
             const files = Array.from(fileInput.files);
             if (files.length === 0) {
-                alert("Please select at least one file to upload.");
+                alert("Please select at least one file to submit.");
                 return;
             }
 
             if (files.length + uploadedCount > MAX_UPLOADS) {
-                alert(`You can upload a maximum of ${MAX_UPLOADS} photos. You have already uploaded ${uploadedCount}.`);
+                alert(`You can submit a maximum of ${MAX_UPLOADS} photos. You have already submitted ${uploadedCount}.`);
                 return;
             }
 
@@ -1807,12 +1807,12 @@
                 }
                 const isDuplicate = await checkDuplicatePhoto(currentUser.uid, file.name);
                 if (isDuplicate) {
-                    alert(`"${file.name}" has already been uploaded.`);
+                    alert(`"${file.name}" has already been submitted.`);
                     return;
                 }
             }
 
-            statusText.innerText = "Preparing upload...";
+            statusText.innerText = "Preparing submission...";
             progressBar.style.display = "block";
             progressBar.value = 0;
             uploadBtn.disabled = true;
@@ -1856,7 +1856,7 @@
                         if (event.lengthComputable) {
                             const percent = (event.loaded / event.total) * 100 / files.length + (uploaded / files.length) * 100;
                             progressBar.value = percent;
-                            statusText.innerText = `Uploading: ${Math.round(percent)}%`;
+                            statusText.innerText = `Submitting: ${Math.round(percent)}%`;
                         }
                     };
 
@@ -1871,17 +1871,17 @@
                                         uploadedFiles.push({ fileName: file.name, secure_url: data.secure_url });
                                         resolve();
                                     } else {
-                                        reject(new Error("Upload response missing URL"));
+                                        reject(new Error("Submission response missing URL"));
                                     }
                                 } catch (e) {
-                                    reject(new Error("Failed to parse upload response"));
+                                    reject(new Error("Failed to parse submission response"));
                                 }
                             } else {
-                                reject(new Error(`Upload failed with status: ${xhr.status}`));
+                                reject(new Error(`Submission failed with status: ${xhr.status}`));
                             }
                         };
 
-                        xhr.onerror = () => reject(new Error("Network error during upload"));
+                        xhr.onerror = () => reject(new Error("Network error during submission"));
                         xhr.send(formData);
                     });
                 }
@@ -1922,12 +1922,12 @@
                     gallery.appendChild(imgContainer);
                 });
 
-                statusText.innerText = "✅ All photos uploaded successfully!";
+                statusText.innerText = "✅ All photos submitted successfully!";
                 document.getElementById("upload-success").style.display = "block";
 
             } catch (err) {
-                statusText.innerText = "❌ Upload failed: " + err.message;
-                console.error("Upload error:", err);
+                statusText.innerText = "❌ Submission failed: " + err.message;
+                console.error("Submission error:", err);
             } finally {
                 progressBar.style.display = "none";
                 uploadBtn.disabled = false;

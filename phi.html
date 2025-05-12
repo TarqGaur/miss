@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHI - Golden Ratio AI System</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary: #f59e0b;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --gray: #9ca3af;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        .active {
+            color: var(--secondary);
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d97706;
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .use-cases {
+            background-color: #e5e7eb;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-item {
+            padding: 1rem 2rem;
+            position: relative;
+            background-color: white;
+            width: calc(50% - 2rem);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .left::after {
+            right: -17px;
+        }
+        
+        .right::after {
+            left: -17px;
+        }
+        
+        .timeline-item h3 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-links h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #374151;
+        }
+        
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .close {
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        /* Upload section */
+        .upload-section {
+            display: none;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--primary);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            background-color: #f0f9ff;
+        }
+        
+        .upload-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .preview-item {
+            position: relative;
+            height: 150px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 15px;
+            }
+            
+            .left::after, .right::after {
+                left: 15px;
+            }
+            
+            .right {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="logo-icon">φ</span> PHI
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#use-cases">Use Cases</a></li>
+                    <li><a href="#future">Future</a></li>
+                    <li><a href="#" id="login-btn">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>PHI - The Golden Ratio AI System</h1>
+            <p>Discover the mathematical beauty in everything from faces to galaxies with our advanced AI system that calculates the golden ratio.</p>
+            <a href="#features" class="btn">Explore Features</a>
+            <a href="#" class="btn btn-secondary" id="try-btn">Try PHI</a>
+        </div>
+    </section>
+    
+    <section id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About PHI</h2>
+                <p>PHI is an advanced AI system designed to calculate the golden ratio from any image, starting with human facial analysis.</p>
+            </div>
+            <div class="about-content">
+                <p>The golden ratio (approximately 1.618) is a mathematical ratio that appears in nature and has been used in art and architecture for centuries. It's often associated with aesthetic beauty and harmony.</p>
+                <p>Our AI system can analyze images to detect and measure golden ratio proportions, providing an objective score based on classical indicators of aesthetic balance and symmetry.</p>
+                <p>The debut application of PHI is in the Miss Banaras competition, where it objectively scores contestants based on facial proportions and symmetry using golden ratio calculations.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="features" class="feature-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>PHI Features</h2>
+                <p>Discover what makes PHI unique and powerful</p>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Advanced Image Analysis</h3>
+                    <p>PHI uses cutting-edge AI to analyze images and detect golden ratio proportions with precision.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h3>Fair & Objective Scoring</h3>
+                    <p>Our system provides unbiased evaluation based purely on mathematical ratios, eliminating subjective judgment.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy-First Approach</h3>
+                    <p>Images are temporarily used for training and then permanently deleted, storing only names and scores.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Ethical AI Training</h3>
+                    <p>PHI is trained once on all competition entries to ensure equal accuracy for all participants.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌟</div>
+                    <h3>Universal Ratio Detection</h3>
+                    <p>Beyond faces, PHI can identify golden ratios in objects, nature, architecture, and even astronomical bodies.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Accessible Interface</h3>
+                    <p>Simple upload and analysis process makes using PHI intuitive for everyone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="use-cases" class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2>Current Use Case</h2>
+                <p>Miss Banaras Competition - Golden Ratio Evaluation</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <h3>User Registration & Image Collection</h3>
+                    <p>Participants upload their image and name during registration for temporary AI training.</p>
+                </div>
+                <div class="timeline-item right">
+                    <h3>Accuracy & Fairness Solution</h3>
+                    <p>Entries close 5 days before results to train the model once, ensuring fixed and equal accuracy.</p>
+                </div>
+                <div class="timeline-item left">
+                    <h3>Ethical Data Handling</h3>
+                    <p>After scoring, all images are permanently deleted, storing only names and golden ratio scores.</p>
+                </div>
+                <div class="timeline-item right">
+                    <h3>Final Result & Announcement</h3>
+                    <p>Results are announced based on PHI's fair, unbiased scoring of facial golden ratios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="future">
+        <div class="container">
+            <div class="section-header">
+                <h2>Future Applications</h2>
+                <p>The expanding horizons of PHI technology</p>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Public Tool Launch</h3>
+                    <p>PHI will soon be available on our Aerospace website for anyone to upload images and get golden ratio scores.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌿</div>
+                    <h3>Natural Formations</h3>
+                    <p>Analyze golden ratios in natural patterns, from seashells to flower petals, deepening our understanding of nature's mathematics.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🪐</div>
+                    <h3>Astronomical Applications</h3>
+                    <p>Detect golden ratios in galaxies, stars, and planetary surfaces to identify mathematically significant patterns.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Scientific Exploration</h3>
+                    <p>When deployed in rovers, PHI could detect unusually perfect golden ratios in rocks, signaling objects worthy of deeper study.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="upload-section" id="upload-section">
+            <h2>Upload Images</h2>
+            <p>Upload 5-6 photos for PHI analysis</p>
+            <div class="upload-area" id="upload-area">
+                <p>Drag and drop files here or click to browse</p>
+                <input type="file" id="file-input" multiple accept="image/*" style="display: none;">
+            </div>
+            <div class="upload-preview" id="preview-container"></div>
+            <button class="btn" id="submit-uploads">Submit Images</button>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <span>φ</span> PHI
+                </div>
+                <p>Advanced AI system for golden ratio analysis and aesthetic evaluation.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#use-cases">Use Cases</a></li>
+                    <li><a href="#future">Future</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">API</a></li>
+                    <li><a href="#">Press Kit</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="mailto:info@phi-ai.com">info@phi-ai.com</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Partnerships</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 PHI AI System. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login to PHI</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <div class="error-message" id="login-error">Invalid username or password</div>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Modal functionality
+        const loginModal = document.getElementById('login-modal');
+        const loginBtn = document.getElementById('login-btn');
+        const tryBtn = document.getElementById('try-btn');
+        const closeBtn = document.querySelector('.close');
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+        const uploadSection = document.getElementById('upload-section');
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const previewContainer = document.getElementById('preview-container');
+        const submitUploads = document.getElementById('submit-uploads');
+        
+        // Open modal
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'flex';
+        });
+        
+        tryBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'flex';
+        });
+        
+        // Close modal
+        closeBtn.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+        
+        // Login validation
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'surbhi' && password === 'juthisurbhi') {
+                loginModal.style.display = 'none';
+                uploadSection.style.display = 'block';
+                loginBtn.textContent = 'Logout';
+                loginBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.reload();
+                });
+            } else {
+                loginError.style.display = 'block';
+            }
+        });
+        
+        // Upload functionality
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '#f0f9ff';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.backgroundColor = 'transparent';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = 'transparent';
+            
+            if (e.dataTransfer.files.length > 0) {
+                handleFiles(e.dataTransfer.files);
+            }
+        });
+        
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                handleFiles(fileInput.files);
+            }
+        });
+        
+        function handleFiles(files) {
+            const currentFiles = document.querySelectorAll('.preview-item').length;
+            const totalAfterUpload = currentFiles + files.length;
+            
+            if (totalAfterUpload > 6) {
+                alert('You can only upload a maximum of 6 images.');
+                return;
+            }
+            
+            for (const file of files) {
+                if (!file.type.startsWith('image/')) continue;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'preview-item';
+                    
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-btn';
+                    removeBtn.innerHTML = '×';
+                    removeBtn.addEventListener('click', () => {
+                        previewContainer.removeChild(previewItem);
+                    });
+                    
+                    previewItem.appendChild(img);
+                    previewItem.appendChild(removeBtn);
+                    previewContainer.appendChild(previewItem);
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        submitUploads.addEventListener('click', () => {
+            const uploadCount = document.querySelectorAll('.preview-item').length;
+            
+            if (uploadCount < 5) {
+                alert('Please upload at least 5 images.');
+            } else {
+                alert('Images successfully uploaded for PHI analysis!');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#' || this.getAttribute('id') === 'login-btn' || this.getAttribute('id') === 'try-btn') return;
+                
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
